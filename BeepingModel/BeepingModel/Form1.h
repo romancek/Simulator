@@ -35,6 +35,18 @@ namespace BeepingModel {
 			}
 		}
 
+	protected: 
+
+
+
+
+
+
+
+
+
+
+
 	private:
 		/// <summary>
 		/// 必要なデザイナー変数です。
@@ -54,9 +66,9 @@ namespace BeepingModel {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(823, 691);
+			this->ClientSize = System::Drawing::Size(789, 616);
 			this->Name = L"Form1";
-			this->Text = L"Form1";
+			this->Text = L"Simulator";
 			this->ResumeLayout(false);
 
 		}
