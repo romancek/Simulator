@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <boost/version.hpp>
+#include "Controller.h"
+#include "Node.h"
 
 namespace BeepingModel {
 
@@ -10,12 +12,15 @@ namespace BeepingModel {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
+	using namespace System::IO;
 	/// <summary>
 	/// Form1 の概要
 	/// </summary>
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
+	private: Controller^ controller;
+	private: String^ fileName;      // 読み書きファイル名
+
 	public:
 		Form1(void)
 		{
@@ -23,6 +28,7 @@ namespace BeepingModel {
 			//
 			//TODO: ここにコンストラクター コードを追加します
 			//
+			this->controller = gcnew Controller();
 		}
 
 	protected:
@@ -195,7 +201,7 @@ namespace BeepingModel {
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Size = System::Drawing::Size(862, 24);
-			this->menuStrip1->TabIndex = 10;
+			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
 			// fileToolStripMenuItem
@@ -210,15 +216,17 @@ namespace BeepingModel {
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
 			this->openToolStripMenuItem->Size = System::Drawing::Size(96, 22);
-			this->openToolStripMenuItem->Text = L"Open";
+			this->openToolStripMenuItem->Text = L"Open(&O)";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Open);
+			this->openToolStripMenuItem->ShortcutKeys = Keys::Control | Keys::O;
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
 			this->saveToolStripMenuItem->Size = System::Drawing::Size(96, 22);
-			this->saveToolStripMenuItem->Text = L"Save";
+			this->saveToolStripMenuItem->Text = L"Save(&S)";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_FileSave);
+			this->saveToolStripMenuItem->ShortcutKeys = Keys::Control | Keys::S;
 			// 
 			// exitToolStripMenuItem
 			// 
@@ -246,7 +254,7 @@ namespace BeepingModel {
 			// 
 			this->saveFileDialog1->DefaultExt = L"Save";
 			this->saveFileDialog1->FileName = L"Save file";
-			this->saveFileDialog1->Filter = L"JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*.*";
+			this->saveFileDialog1->Filter = L"PNGファイル(*.png)|*.png|JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*.*";
 			this->saveFileDialog1->RestoreDirectory = true;
 			this->saveFileDialog1->SupportMultiDottedExtensions = true;
 			// 
@@ -278,27 +286,87 @@ namespace BeepingModel {
 
 		}
 #pragma endregion
-	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 
-			 }
-			 void panel1_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
-				 label1->Text=String::Format("({0},{1})", e->X, e->Y);
-			 }
-			 System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
-				 this->Close();
-			 }
+	}
+private: void panel1_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
+		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);
+	}
+private: System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
+		this->Close();
+	}
+private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e) {
+		this->openFileDialog1->Title = L"Open File";
 
-			 System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e) {
-				 this->openFileDialog1->Title = L"Open File";
+		if (openFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK) return;
 
-				 if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel) return;
+	}
+private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
+		this->saveFileDialog1->Title = L"Save File";
 
-			 }
-			 System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
-				 this->saveFileDialog1->Title = L"Save File";
+		if (saveFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK) return;
 
-				 if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel) return;
-			 }
-	};
+		SaveFile( saveFileDialog1->FileName );
+		this->fileName = saveFileDialog1->FileName;
+
+	}
+//
+// Save
+//
+private: bool SaveFile( String^ path ) {
+		if ( path->EndsWith(".csv")) {
+			// CSV形式で保存
+			return SaveCsvFile( path );
+		} else if ( path->EndsWith(".json")) {
+			// JSON形式で保存
+			return SaveJsonFile( path );
+		}else if  ( path->EndsWith(".png")) {
+			return SavePngFile( path );
+		} else {
+			// その他の場合はCSV形式で保存
+			return SaveCsvFile( path );
+		}
+	}
+private: bool SaveCsvFile( String^ path ) {
+		StreamWriter^ writer = gcnew StreamWriter( path, false,System::Text::Encoding::GetEncoding("UTF-8"));
+		writer->WriteLine("THIS,IS,TEST,WRITE,FILE");
+		writer->Close();
+		return true;
+	}
+private: bool SaveJsonFile( String^ path ) {
+		return true;
+	}
+private: bool SavePngFile( String^ path ) {
+		return true;
+	}
+//
+// Open
+//
+private: bool OpenFile( String^ path ) {
+		
+		if ( path->EndsWith(".csv")) {
+			// CSV形式で開く
+			return LoadCsvFile( path );
+		} else if ( path->EndsWith(".json")) {
+			// JSON形式で開く
+			return LoadJsonFile( path );
+		} else if ( path->EndsWith(".png")) {
+			// PNG形式で開く
+			return LoadPngFile( path );	
+		} else {
+			// その他の場合はCSV形式で開く
+			return LoadCsvFile( path );
+		}
+	}
+private: bool LoadCsvFile( String^ path ) {
+		return true;
+	}
+private: bool LoadJsonFile( String^ path ) {
+		return true;
+	}
+private: bool LoadPngFile( String^ path ) {
+	return true;
+	}
+};
 }
 

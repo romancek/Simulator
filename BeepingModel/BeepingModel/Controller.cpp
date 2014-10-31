@@ -4,4 +4,5 @@
 using namespace BeepingModel;
 Controller::Controller(void)
 {
+
 }

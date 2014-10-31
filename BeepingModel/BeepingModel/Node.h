@@ -6,6 +6,6 @@ namespace BeepingModel{
 	ref class Node
 	{
 	public:
-		Node(void);
+		Node();
 	};
 }
