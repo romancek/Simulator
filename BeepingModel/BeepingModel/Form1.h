@@ -47,6 +47,14 @@ namespace BeepingModel {
 	private: System::Windows::Forms::PictureBox^  pict_graph;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Panel^  panel1;
+	private: System::Windows::Forms::MenuStrip^  menuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^  fileToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  openToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  saveToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  exitToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  exeToolStripMenuItem;
+	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
+	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
 
 
 	protected: 
@@ -86,12 +94,21 @@ namespace BeepingModel {
 			this->pict_graph = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->openToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->saveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->exeToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pict_graph))->BeginInit();
+			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// btn_auto
 			// 
-			this->btn_auto->Location = System::Drawing::Point(757, 62);
+			this->btn_auto->Location = System::Drawing::Point(756, 93);
 			this->btn_auto->Name = L"btn_auto";
 			this->btn_auto->Size = System::Drawing::Size(60, 23);
 			this->btn_auto->TabIndex = 0;
@@ -100,7 +117,7 @@ namespace BeepingModel {
 			// 
 			// btn_step
 			// 
-			this->btn_step->Location = System::Drawing::Point(757, 17);
+			this->btn_step->Location = System::Drawing::Point(756, 48);
 			this->btn_step->Name = L"btn_step";
 			this->btn_step->Size = System::Drawing::Size(60, 23);
 			this->btn_step->TabIndex = 1;
@@ -109,7 +126,7 @@ namespace BeepingModel {
 			// 
 			// btn_stop
 			// 
-			this->btn_stop->Location = System::Drawing::Point(757, 107);
+			this->btn_stop->Location = System::Drawing::Point(756, 138);
 			this->btn_stop->Name = L"btn_stop";
 			this->btn_stop->Size = System::Drawing::Size(60, 23);
 			this->btn_stop->TabIndex = 2;
@@ -148,9 +165,9 @@ namespace BeepingModel {
 			// 
 			// pict_graph
 			// 
-			this->pict_graph->Location = System::Drawing::Point(10, 10);
+			this->pict_graph->Location = System::Drawing::Point(10, 27);
 			this->pict_graph->Name = L"pict_graph";
-			this->pict_graph->Size = System::Drawing::Size(700, 600);
+			this->pict_graph->Size = System::Drawing::Size(700, 583);
 			this->pict_graph->TabIndex = 7;
 			this->pict_graph->TabStop = false;
 			// 
@@ -165,11 +182,73 @@ namespace BeepingModel {
 			// 
 			// panel1
 			// 
-			this->panel1->Location = System::Drawing::Point(10, 10);
+			this->panel1->Location = System::Drawing::Point(10, 27);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(700, 600);
+			this->panel1->Size = System::Drawing::Size(700, 583);
 			this->panel1->TabIndex = 9;
 			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::panel1_MouseMove);
+			// 
+			// menuStrip1
+			// 
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->fileToolStripMenuItem, 
+				this->exeToolStripMenuItem});
+			this->menuStrip1->Location = System::Drawing::Point(0, 0);
+			this->menuStrip1->Name = L"menuStrip1";
+			this->menuStrip1->Size = System::Drawing::Size(862, 24);
+			this->menuStrip1->TabIndex = 10;
+			this->menuStrip1->Text = L"menuStrip1";
+			// 
+			// fileToolStripMenuItem
+			// 
+			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->openToolStripMenuItem, 
+				this->saveToolStripMenuItem, this->exitToolStripMenuItem});
+			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(36, 20);
+			this->fileToolStripMenuItem->Text = L"File";
+			// 
+			// openToolStripMenuItem
+			// 
+			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
+			this->openToolStripMenuItem->Size = System::Drawing::Size(96, 22);
+			this->openToolStripMenuItem->Text = L"Open";
+			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Open);
+			// 
+			// saveToolStripMenuItem
+			// 
+			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(96, 22);
+			this->saveToolStripMenuItem->Text = L"Save";
+			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_FileSave);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(96, 22);
+			this->exitToolStripMenuItem->Text = L"Exit";
+			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Exit);
+			// 
+			// exeToolStripMenuItem
+			// 
+			this->exeToolStripMenuItem->Name = L"exeToolStripMenuItem";
+			this->exeToolStripMenuItem->Size = System::Drawing::Size(36, 20);
+			this->exeToolStripMenuItem->Text = L"Exe";
+			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->DefaultExt = L"fileopen";
+			this->openFileDialog1->FileName = L"Let open file";
+			this->openFileDialog1->Filter = L"JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|Dataファイル(*.dat)|*.dat|すべてのファイル(*.*)|" 
+				L"*.*";
+			this->openFileDialog1->RestoreDirectory = true;
+			this->openFileDialog1->SupportMultiDottedExtensions = true;
+			// 
+			// saveFileDialog1
+			// 
+			this->saveFileDialog1->DefaultExt = L"Save";
+			this->saveFileDialog1->FileName = L"Save file";
+			this->saveFileDialog1->Filter = L"JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*.*";
+			this->saveFileDialog1->RestoreDirectory = true;
+			this->saveFileDialog1->SupportMultiDottedExtensions = true;
 			// 
 			// Form1
 			// 
@@ -186,10 +265,14 @@ namespace BeepingModel {
 			this->Controls->Add(this->btn_stop);
 			this->Controls->Add(this->btn_step);
 			this->Controls->Add(this->btn_auto);
+			this->Controls->Add(this->menuStrip1);
+			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"Form1";
 			this->Text = L"Simulator";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pict_graph))->EndInit();
+			this->menuStrip1->ResumeLayout(false);
+			this->menuStrip1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -200,6 +283,21 @@ namespace BeepingModel {
 			 }
 			 void panel1_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
 				 label1->Text=String::Format("({0},{1})", e->X, e->Y);
+			 }
+			 System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
+				 this->Close();
+			 }
+
+			 System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e) {
+				 this->openFileDialog1->Title = L"Open File";
+
+				 if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel) return;
+
+			 }
+			 System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
+				 this->saveFileDialog1->Title = L"Save File";
+
+				 if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel) return;
 			 }
 	};
 }
