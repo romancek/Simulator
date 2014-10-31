@@ -1,10 +1,11 @@
 #pragma once
 
-using namespace System;
+namespace BeepingModel{
+	using namespace System;
 	
-ref class Node
-{
-public:
-	Node(void);
-};
-
+	ref class Node
+	{
+	public:
+		Node(void);
+	};
+}
