@@ -3,6 +3,7 @@
 #include <boost/version.hpp>
 #include "Controller.h"
 #include "Node.h"
+#include "picojson.h"
 
 namespace BeepingModel {
 
