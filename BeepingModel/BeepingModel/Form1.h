@@ -289,6 +289,9 @@ namespace BeepingModel {
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 
 	}
+private: void UpdateDistributedSystem( void ){
+
+	}
 private: void panel1_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
 		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);
 	}
@@ -300,6 +303,12 @@ private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e)
 
 		if (openFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK) return;
 
+		if( OpenFile( openFileDialog1->FileName ) == false){
+			MessageBox::Show("ƒtƒ@ƒCƒ‹‚Ì“Ç‚Ýž‚Ý‚ÉŽ¸”s‚µ‚Ü‚µ‚½", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+		this->fileName = openFileDialog1->FileName;
+		UpdateDistributedSystem();
 	}
 private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
 		this->saveFileDialog1->Title = L"Save File";
