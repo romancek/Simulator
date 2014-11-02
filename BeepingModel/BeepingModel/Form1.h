@@ -5,8 +5,8 @@
 #include "Node.h"
 #include "picojson.h"
 
-namespace BeepingModel {
 
+namespace BeepingModel {
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
