@@ -4,5 +4,5 @@
 using namespace BeepingModel;
 Node::Node(void)
 {
-
+	
 }
