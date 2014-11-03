@@ -91,6 +91,7 @@ namespace BeepingModel {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(Form1::typeid));
 			this->btn_auto = (gcnew System::Windows::Forms::Button());
 			this->btn_step = (gcnew System::Windows::Forms::Button());
 			this->btn_stop = (gcnew System::Windows::Forms::Button());
@@ -274,6 +275,7 @@ namespace BeepingModel {
 			this->Controls->Add(this->btn_step);
 			this->Controls->Add(this->btn_auto);
 			this->Controls->Add(this->menuStrip1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"Form1";
 			this->Text = L"Simulator";
