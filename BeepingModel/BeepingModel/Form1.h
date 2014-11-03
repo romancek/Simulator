@@ -409,6 +409,8 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		fs->ShowDialog();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		System::Diagnostics::Debug::WriteLine(fs->GetValue());
+		Node^ node = fs->GetNodeInfo();
+		System::Diagnostics::Debug::WriteLine(node->Id);
 	}
 };
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "Node.h"
 
 namespace BeepingModel {
 
@@ -14,6 +15,7 @@ namespace BeepingModel {
 	/// </summary>
 	public ref class FormSetting : public System::Windows::Forms::Form
 	{
+	private: Node^ node;
 	public:
 		FormSetting(void)
 		{
@@ -26,6 +28,12 @@ namespace BeepingModel {
 		int GetValue()
 		{
 			return 1;
+		}
+		Node^ GetNodeInfo()
+		{
+			node = gcnew Node();
+			node->Id = 123;
+			return node;
 		}
 	protected:
 		/// <summary>

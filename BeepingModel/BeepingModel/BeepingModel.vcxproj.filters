@@ -72,5 +72,8 @@
     <EmbeddedResource Include="Form1.resX">
       <Filter>リソース ファイル</Filter>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSetting.resx">
+      <Filter>リソース ファイル</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
