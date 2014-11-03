@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <boost/version.hpp>
+#include "FormSetting.h"
 #include "Controller.h"
 #include "Node.h"
 #include "picojson.h"
@@ -20,6 +21,7 @@ namespace BeepingModel {
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	private: Controller^ controller;
+	private: System::Windows::Forms::ToolStripMenuItem^  settingSToolStripMenuItem;
 	private: String^ fileName;      // 読み書きファイル名
 
 	public:
@@ -59,7 +61,8 @@ namespace BeepingModel {
 	private: System::Windows::Forms::ToolStripMenuItem^  openToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  saveToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  exitToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  exeToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolToolStripMenuItem;
+
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
 
@@ -107,9 +110,10 @@ namespace BeepingModel {
 			this->openToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->exeToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
+			this->settingSToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pict_graph))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -208,7 +212,7 @@ namespace BeepingModel {
 			// menuStrip1
 			// 
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->fileToolStripMenuItem, 
-				this->exeToolStripMenuItem});
+				this->toolToolStripMenuItem});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Padding = System::Windows::Forms::Padding(7, 2, 0, 2);
@@ -245,11 +249,12 @@ namespace BeepingModel {
 			this->exitToolStripMenuItem->Text = L"Exit(&C)";
 			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Exit);
 			// 
-			// exeToolStripMenuItem
+			// toolToolStripMenuItem
 			// 
-			this->exeToolStripMenuItem->Name = L"exeToolStripMenuItem";
-			this->exeToolStripMenuItem->Size = System::Drawing::Size(36, 20);
-			this->exeToolStripMenuItem->Text = L"Exe";
+			this->toolToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->settingSToolStripMenuItem});
+			this->toolToolStripMenuItem->Name = L"toolToolStripMenuItem";
+			this->toolToolStripMenuItem->Size = System::Drawing::Size(54, 20);
+			this->toolToolStripMenuItem->Text = L"Tool(&T)";
 			// 
 			// openFileDialog1
 			// 
@@ -269,10 +274,19 @@ namespace BeepingModel {
 			this->saveFileDialog1->RestoreDirectory = true;
 			this->saveFileDialog1->SupportMultiDottedExtensions = true;
 			// 
+			// settingSToolStripMenuItem
+			// 
+			this->settingSToolStripMenuItem->Name = L"settingSToolStripMenuItem";
+			this->settingSToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->settingSToolStripMenuItem->Text = L"Setting(&S)";
+			this->settingSToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::settingSToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoSize = true;
+			this->BackColor = System::Drawing::Color::Gainsboro;
 			this->ClientSize = System::Drawing::Size(1006, 770);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->label1);
@@ -291,6 +305,7 @@ namespace BeepingModel {
 			this->MainMenuStrip = this->menuStrip1;
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"Form1";
+			this->Opacity = 1.0;
 			this->Text = L"Simulator";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pict_graph))->EndInit();
@@ -332,7 +347,6 @@ private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^
 
 		SaveFile( saveFileDialog1->FileName );
 		this->fileName = saveFileDialog1->FileName;
-
 	}
 //
 // Save
@@ -367,7 +381,6 @@ private: bool SavePngFile( String^ path ) {
 // Open
 //
 private: bool OpenFile( String^ path ) {
-		
 		if ( path->EndsWith(".csv")) {
 			// CSV形式で開く
 			return LoadCsvFile( path );
@@ -389,7 +402,11 @@ private: bool LoadJsonFile( String^ path ) {
 		return true;
 	}
 private: bool LoadPngFile( String^ path ) {
-	return true;
+		return true;
+	}
+private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+		FormSetting^ fs = gcnew FormSetting();
+		fs->ShowDialog();
 	}
 };
 }
