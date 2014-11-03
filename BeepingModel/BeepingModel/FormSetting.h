@@ -22,7 +22,11 @@ namespace BeepingModel {
 			//TODO: ここにコンストラクター コードを追加します
 			//
 		}
-
+		//設定出力
+		int GetValue()
+		{
+			return 1;
+		}
 	protected:
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。

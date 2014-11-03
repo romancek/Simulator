@@ -407,6 +407,8 @@ private: bool LoadPngFile( String^ path ) {
 private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		FormSetting^ fs = gcnew FormSetting();
 		fs->ShowDialog();
+		System::Diagnostics::Debug::WriteLine("Setting Form return");
+		System::Diagnostics::Debug::WriteLine(fs->GetValue());
 	}
 };
 }
