@@ -20,9 +20,7 @@ namespace BeepingModel {
 		FormSetting(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: ここにコンストラクター コードを追加します
-			//
+			node = gcnew Node();
 		}
 		//設定出力
 		int GetValue()
@@ -31,8 +29,6 @@ namespace BeepingModel {
 		}
 		Node^ GetNodeInfo()
 		{
-			node = gcnew Node();
-			node->Id = 123;
 			return node;
 		}
 	protected:
@@ -105,6 +101,7 @@ namespace BeepingModel {
 			this->Name = L"FormSetting";
 			this->Text = L"Setting";
 			this->Load += gcnew System::EventHandler(this, &FormSetting::FormSetting_Load);
+			this->Opacity = 0.95;
 			this->ResumeLayout(false);
 
 		}
@@ -115,7 +112,7 @@ private: System::Void btn_cancel_Click(System::Object^  sender, System::EventArg
 		this->Close();
 	}
 private: System::Void btn_ok_Click(System::Object^  sender, System::EventArgs^  e) {
-
+		node->Id = 54321;
 		this->Close();
 	}
 };
