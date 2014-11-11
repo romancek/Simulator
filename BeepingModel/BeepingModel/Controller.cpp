@@ -8,10 +8,12 @@
 using namespace BeepingModel;
 using namespace boost;
 using namespace System::Diagnostics;
+
 Controller::Controller(void)
 {
 	this->n = N_SIZE;
 	this->m = M_SIZE;
+	this->graph_topology = "random";
 	hellekalek1995 gen( 100 );
 	bernoulli_distribution<> dst( 0.5 );
 	variate_generator< hellekalek1995&, bernoulli_distribution<> > rand( gen, dst );
@@ -34,4 +36,17 @@ void Controller::InitializeGraph(void)
 	for each( Node^ n in nodes){
 		Debug::WriteLine(n->Id);
 	}
+}
+
+void Controller::CreateGraph(String^ topology)
+{
+	this->graph_topology = topology;
+	if(graph_topology == "random"){
+		this->CreateRandomGraph();
+	}
+}
+
+void Controller::CreateRandomGraph(void)
+{
+
 }

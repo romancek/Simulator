@@ -16,5 +16,7 @@ namespace BeepingModel{
 	public:
 		Controller(void);
 		void InitializeGraph(void);
+		void CreateGraph(String^);
+		void CreateRandomGraph(void);
 	};
 }
