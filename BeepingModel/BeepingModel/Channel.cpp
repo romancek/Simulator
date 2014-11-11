@@ -4,7 +4,8 @@
 using namespace BeepingModel;
 Channel::Channel(void)
 {
-
+	this->id = -1;
+	this->endpoint = gcnew array<int>(2);
 }
 
 Channel::Channel(int id)

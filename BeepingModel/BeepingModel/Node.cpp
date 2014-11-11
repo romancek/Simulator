@@ -4,7 +4,7 @@
 using namespace BeepingModel;
 Node::Node(void)
 {
-	this->id = 12345;
+	this->id = -1;
 	this->ch_num = 0;
 	this->states = gcnew array<int>{listen,inactive,silent};
 	this->channels = gcnew array<Channel^>(M_SIZE);
