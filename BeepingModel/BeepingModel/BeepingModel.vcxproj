@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="BeepingModel.cpp" />
+    <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="FormSetting.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -99,6 +100,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Channel.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
