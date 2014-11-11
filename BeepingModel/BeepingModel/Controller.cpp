@@ -51,15 +51,25 @@ void Controller::CreateGraph(String^ topology)
 	}
 }
 
-//multisetにval1とval2のペアが含まれていたらtrueを返す
+//multisetにval1とval2のペアが含まれていたらfalseを返す
 template <typename C, class T1, class T2> bool findit(const C& c, T1 val1, T2 val2) {
     auto result1 = c.find(val1);
 	auto result2 = c.find(val2);
-    if (result1 !=  c.end() && result2 != c.end()) {
+	std::multimap<int,int>::iterator it;
+    if (result1 ==  c.end() && result2 == c.end()) {
        return true;
-    } else {
-        return false;
-    }
+    } else{
+		if(result1 != c.end() && result2 == c.end()){
+			for(it = c.lower_bound(val1);it != c.upper_bound(val1); it++){
+				if((*it).second == val2)return false;
+			}
+		} else if(result1 == c.end() && result2 != c.end()){
+			for(it = c.lower_bound(val2);it != c.upper_bound(val2); it++){
+				if((*it).second == val1)return false;
+			}
+		}
+		return true;
+	}
 }
 void Controller::CreateRandomGraph(void)
 {
@@ -75,7 +85,7 @@ void Controller::CreateRandomGraph(void)
 		rand_edge[1] = dist(gen);
 		if(rand_edge[0] == rand_edge[1]) continue;
 		//edges already selected
-		if(findit(created_edge, rand_edge[0], rand_edge[1]) ){
+		if(findit(created_edge, rand_edge[0], rand_edge[1]) ){//TODO
 			channels[i]->EndPoint = rand_edge;
 			created_edge.insert(pair <int, int> (rand_edge[0], rand_edge[1]));
 #ifdef _DEBUG
