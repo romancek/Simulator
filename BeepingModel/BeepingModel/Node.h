@@ -1,20 +1,20 @@
 #pragma once
 #include "StdAfx.h"
 #include "Channel.h"
+#include <vector>
 
 namespace BeepingModel{
 	using namespace System;
+	using namespace std;
 	ref class Node
 	{
 	private:
 		int id;
 		int ch_num;
-		array<Channel^>^ channels;
 		array<int>^ states;
 	public:
 		Node();
 		Node(int);
-		Node(int,Channel^);
 		array<int>^ GetState(void);
 	public:
 		property int Id {

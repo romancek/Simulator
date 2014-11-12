@@ -30,7 +30,7 @@ void Controller::InitializeGraph(void)
 {
 	//‰Šú‰»ˆ—
 	nodes = gcnew array<Node^>(n);
-	channels = gcnew array<Channel^>(n);
+	channels = gcnew array<Channel^>(m);
 	for(int i = 0;i < n;i++){
 		nodes[i] = gcnew Node(i);
 		channels[i] = gcnew Channel(i);
@@ -79,13 +79,13 @@ void Controller::CreateRandomGraph(void)
 	array<int>^ rand_edge = gcnew array<int>(2);
 	multimap<int,int> created_edge;
 	random::mt19937 gen;
-	random::uniform_int_distribution<> dist(0,N_SIZE);
+	random::uniform_int_distribution<> dist(0,M_SIZE);
 	while(i < M_SIZE){
 		rand_edge[0] = dist(gen);
 		rand_edge[1] = dist(gen);
 		if(rand_edge[0] == rand_edge[1]) continue;
 		//edges already selected
-		if(findit(created_edge, rand_edge[0], rand_edge[1]) ){//TODO
+		if(true){//TODO
 			channels[i]->EndPoint = rand_edge;
 			created_edge.insert(pair <int, int> (rand_edge[0], rand_edge[1]));
 #ifdef _DEBUG

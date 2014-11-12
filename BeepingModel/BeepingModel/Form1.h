@@ -31,6 +31,7 @@ namespace BeepingModel {
 			//
 			//TODO: ここにコンストラクター コードを追加します
 			//
+			Graphics^ g = pict_graph->CreateGraphics();
 			this->controller = gcnew Controller();
 			this->controller->InitializeGraph();
 		}
