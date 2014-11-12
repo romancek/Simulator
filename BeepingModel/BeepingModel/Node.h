@@ -11,10 +11,12 @@ namespace BeepingModel{
 	private:
 		int id;
 		int ch_num;
+		vector<int> neighbors;
 		array<int>^ states;
 	public:
 		Node();
 		Node(int);
+		void SetNeighbor(int);
 		array<int>^ GetState(void);
 	public:
 		property int Id {

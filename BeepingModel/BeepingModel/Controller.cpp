@@ -51,27 +51,6 @@ void Controller::CreateGraph(String^ topology)
 	}
 }
 
-//multiset‚Éval1‚Æval2‚ÌƒyƒA‚ªŠÜ‚Ü‚ê‚Ä‚¢‚½‚çfalse‚ð•Ô‚·
-template <typename C, class T1, class T2> bool findit(const C& c, T1 val1, T2 val2) {
-    auto result1 = c.find(val1);
-	auto result2 = c.find(val2);
-	std::multimap<int,int>::iterator it;
-    if (result1 ==  c.end() && result2 == c.end()) {
-       return true;
-    } else{
-		if(result1 != c.end() && result2 == c.end()){
-			for(it = c.lower_bound(val1);it != c.upper_bound(val1); it++){
-				if((*it).second == val2)return false;
-			}
-		} else if(result1 == c.end() && result2 != c.end()){
-			for(it = c.lower_bound(val2);it != c.upper_bound(val2); it++){
-				if((*it).second == val1)return false;
-			}
-		}
-		return true;
-	}
-}
-
 void Controller::CreateRandomGraph(void)
 {
 	using namespace std;
@@ -80,7 +59,7 @@ void Controller::CreateRandomGraph(void)
 	//M_SIZE edges random selected and add
 	array<int>^ rand_edge = gcnew array<int>(2);
 	multimap<int,int> created_edge;
-	random::mt19937 gen;
+	random::mt19937 gen( 100 );	//TODO seed use devicecontext
 	random::uniform_int_distribution<> dist(0,M_SIZE);
 
 	while(i < M_SIZE){
@@ -99,9 +78,10 @@ void Controller::CreateRandomGraph(void)
 		//edges already selected
 		if(!selected){//TODO
 			channels[i]->EndPoint = rand_edge;
+			
 			created_edge.insert(pair <int, int> (rand_edge[0], rand_edge[1]));
 #ifdef _DEBUG
-			String^ a = String::Format("channel{0}:({1},{2})",i,rand_edge[0],rand_edge[1]);
+			String^ a = String::Format("channel[{0}]:({1},{2})",i,rand_edge[0],rand_edge[1]);
 			Debug::WriteLine(a);
 #endif
 			selected = false;
