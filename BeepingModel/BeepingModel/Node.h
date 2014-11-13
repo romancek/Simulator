@@ -1,17 +1,16 @@
 #pragma once
 #include "StdAfx.h"
 #include "Channel.h"
-#include <vector>
+#include <cliext/vector>
 
 namespace BeepingModel{
 	using namespace System;
-	using namespace std;
 	ref class Node
 	{
 	private:
 		int id;
 		int ch_num;
-		vector<int> neighbors;
+		cliext::vector<int> neighbors;
 		array<int>^ states;
 	public:
 		Node();
