@@ -60,7 +60,7 @@ void Controller::CreateRandomGraph(void)
 	array<int>^ rand_edge = gcnew array<int>(2);
 	multimap<int,int> created_edge;
 	random::mt19937 gen( 100 );	//TODO seed use devicecontext
-	random::uniform_int_distribution<> dist(0,M_SIZE);
+	random::uniform_int_distribution<> dist(0,M_SIZE-1);
 
 	while(i < M_SIZE){
 		rand_edge[0] = dist(gen);
@@ -78,7 +78,8 @@ void Controller::CreateRandomGraph(void)
 		//edges already selected
 		if(!selected){//TODO
 			channels[i]->EndPoint = rand_edge;
-			
+			nodes[rand_edge[0]]->SetNeighbor(rand_edge[1]);
+			nodes[rand_edge[1]]->SetNeighbor(rand_edge[0]);
 			created_edge.insert(pair <int, int> (rand_edge[0], rand_edge[1]));
 #ifdef _DEBUG
 			String^ a = String::Format("channel[{0}]:({1},{2})",i,rand_edge[0],rand_edge[1]);
