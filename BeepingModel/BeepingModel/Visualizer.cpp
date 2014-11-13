@@ -2,23 +2,37 @@
 #include "Visualizer.h"
 #include "Channel.h"
 #include "Form1.h"
+#include <boost/random.hpp>
+#include "Controller.h"
+#include "Node.h"
 
 using namespace BeepingModel;
 using namespace System::Drawing;
+using namespace boost;
 Visualizer::Visualizer(void)
 {
 
 }
 
-Visualizer::Visualizer(Controller^ c,Graphics^ gr)
+Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
 {
 	this->controller = c;
 	this->g = gr;
+	this->x = x;
+	this->y = y;
 }
 
 void Visualizer::Draw(void)
 {
-	Pen^ p = gcnew Pen(Color::Blue,3.0f);
-	Rectangle rect = Rectangle(100,100,50,50);
-	this->g->DrawLine(p, 100.0F,240.0F,160.0F,20.0F);
+	Pen^ p = gcnew Pen(Color::Black,0.5f);
+	int dx=0;
+	int dy=0;
+	random::mt19937 gen( 100 );	//TODO seed use devicecontext
+	random::uniform_int_distribution<> distX(0,this->x);
+	random::uniform_int_distribution<> distY(0,this->y);
+	for each(Node^ n in this->controller->nodes){
+		dx = distX(gen);
+		dy = distY(gen);
+		this->g->DrawEllipse(p,Rectangle(dx,dy,5,5));
+	}
 }

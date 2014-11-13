@@ -6,9 +6,11 @@ namespace BeepingModel{
 	private:
 		Controller^ controller;
 		Graphics^ g;
+		int x;
+		int y;
 	public:
 		Visualizer(void);
-		Visualizer(Controller^,Graphics^);
+		Visualizer(Controller^,Graphics^,int,int);
 		void Draw(void);
 	};
 }

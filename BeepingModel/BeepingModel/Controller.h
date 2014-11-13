@@ -11,6 +11,7 @@ namespace BeepingModel{
 		int n;		//network size
 		int m;	//channel size
 		String^ graph_topology;
+	public:
 		array<Node^>^ nodes;
 		array<Channel^>^ channels;
 	public:
