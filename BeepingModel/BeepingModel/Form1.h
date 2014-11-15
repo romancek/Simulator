@@ -35,6 +35,7 @@ namespace BeepingModel {
 			//
 			this->controller = gcnew Controller();
 			this->controller->InitializeGraph();
+			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
 		}
 
 	protected:
@@ -317,7 +318,6 @@ private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms:
 		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);
 	}
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
-		this->visualizer = gcnew Visualizer(controller,e->Graphics,this->graph_panel->Size.Width,this->graph_panel->Size.Height);
 		this->visualizer->Draw();
 	}
 private: System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
