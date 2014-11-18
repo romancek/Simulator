@@ -9,6 +9,7 @@ namespace BeepingModel{
 	public:
 		Channel(void);
 		Channel(int);
+		void SetEndPoint(int,int);
 	public:
 		property int Id {
 			int get() { return this->id; }

@@ -33,6 +33,8 @@ void Controller::InitializeGraph(void)
 	channels = gcnew array<Channel^>(m);
 	for(int i = 0;i < n;i++){
 		nodes[i] = gcnew Node(i);
+	}
+	for(int i = 0;i < m;i++){
 		channels[i] = gcnew Channel(i);
 	}
 #ifdef _DEBUG
@@ -76,9 +78,9 @@ void Controller::CreateRandomGraph(void)
 				selected = false;
 			}
 		}
-		//edges already selected
+		//edges not selected
 		if(!selected){//TODO
-			channels[i]->EndPoint = rand_edge;
+			channels[i]->SetEndPoint(rand_edge[0],rand_edge[1]);//
 			nodes[rand_edge[0]]->SetNeighbor(rand_edge[1]);
 			nodes[rand_edge[1]]->SetNeighbor(rand_edge[0]);
 			created_edge.insert(pair <int, int> (rand_edge[0], rand_edge[1]));
@@ -88,7 +90,7 @@ void Controller::CreateRandomGraph(void)
 #endif
 			selected = false;
 			i++;
-		}else{//edges not selected
+		}else{//edges already selected
 			continue;
 		}
 	}

@@ -30,6 +30,17 @@ array<int>^ Node::GetState(void)
 void Node::SetPosition(array<int>^ p)
 {
 	this->position = p;
+#ifdef _DEBUG
 	String^ a = String::Format("node:[{0}],[x,y]:[{1},{2}]",this->id,p[0],p[1]);
 	System::Diagnostics::Debug::WriteLine(a);
+#endif
+}
+
+array<int>^ Node::GetPosition(void)
+{
+	return this->position;
+#ifdef _DEBUG
+	String^ a = String::Format("GetPosition:[{0}],[x,y]:[{1},{2}]",this->id,this->position[0],this->position[1]);
+	System::Diagnostics::Debug::WriteLine(a);
+#endif
 }

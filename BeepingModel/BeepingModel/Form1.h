@@ -25,6 +25,9 @@ namespace BeepingModel {
 	private: Visualizer^ visualizer;
 	private: System::Windows::Forms::ToolStripMenuItem^  settingSToolStripMenuItem;
 	private: String^ fileName;      // “Ç‚Ý‘‚«ƒtƒ@ƒCƒ‹–¼
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
 	private: Node^ node;
 
 	public:
@@ -54,9 +57,12 @@ namespace BeepingModel {
 	protected: 
 	private: System::Windows::Forms::Button^  btn_step;
 	private: System::Windows::Forms::Button^  btn_stop;
-	private: System::Windows::Forms::TextBox^  textBox1;
-	private: System::Windows::Forms::TextBox^  textBox2;
-	private: System::Windows::Forms::TextBox^  textBox3;
+	private: System::Windows::Forms::TextBox^  textBox_n;
+	private: System::Windows::Forms::TextBox^  textBox_m;
+	private: System::Windows::Forms::TextBox^  textBox_density;
+
+
+
 	private: System::Windows::Forms::Button^  btn_set;
 
 	private: System::Windows::Forms::Label^  label1;
@@ -104,9 +110,9 @@ namespace BeepingModel {
 			this->btn_auto = (gcnew System::Windows::Forms::Button());
 			this->btn_step = (gcnew System::Windows::Forms::Button());
 			this->btn_stop = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox_n = (gcnew System::Windows::Forms::TextBox());
+			this->textBox_m = (gcnew System::Windows::Forms::TextBox());
+			this->textBox_density = (gcnew System::Windows::Forms::TextBox());
 			this->btn_set = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->graph_panel = (gcnew System::Windows::Forms::Panel());
@@ -119,6 +125,9 @@ namespace BeepingModel {
 			this->settingSToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -152,29 +161,29 @@ namespace BeepingModel {
 			this->btn_stop->Text = L"Stop";
 			this->btn_stop->UseVisualStyleBackColor = true;
 			// 
-			// textBox1
+			// textBox_n
 			// 
-			this->textBox1->Location = System::Drawing::Point(882, 266);
-			this->textBox1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(69, 21);
-			this->textBox1->TabIndex = 3;
+			this->textBox_n->Location = System::Drawing::Point(882, 266);
+			this->textBox_n->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->textBox_n->Name = L"textBox_n";
+			this->textBox_n->Size = System::Drawing::Size(69, 21);
+			this->textBox_n->TabIndex = 3;
 			// 
-			// textBox2
+			// textBox_m
 			// 
-			this->textBox2->Location = System::Drawing::Point(882, 298);
-			this->textBox2->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(69, 21);
-			this->textBox2->TabIndex = 4;
+			this->textBox_m->Location = System::Drawing::Point(882, 298);
+			this->textBox_m->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->textBox_m->Name = L"textBox_m";
+			this->textBox_m->Size = System::Drawing::Size(69, 21);
+			this->textBox_m->TabIndex = 4;
 			// 
-			// textBox3
+			// textBox_density
 			// 
-			this->textBox3->Location = System::Drawing::Point(882, 329);
-			this->textBox3->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(69, 21);
-			this->textBox3->TabIndex = 5;
+			this->textBox_density->Location = System::Drawing::Point(882, 329);
+			this->textBox_density->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->textBox_density->Name = L"textBox_density";
+			this->textBox_density->Size = System::Drawing::Size(69, 21);
+			this->textBox_density->TabIndex = 5;
 			// 
 			// btn_set
 			// 
@@ -202,8 +211,8 @@ namespace BeepingModel {
 			this->graph_panel->Name = L"graph_panel";
 			this->graph_panel->Size = System::Drawing::Size(817, 729);
 			this->graph_panel->TabIndex = 9;
-			this->graph_panel->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::graph_panel_MouseMove);
 			this->graph_panel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::graph_panel_Paint);
+			this->graph_panel->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::graph_panel_MouseMove);
 			// 
 			// menuStrip1
 			// 
@@ -212,7 +221,7 @@ namespace BeepingModel {
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Padding = System::Windows::Forms::Padding(7, 2, 0, 2);
-			this->menuStrip1->Size = System::Drawing::Size(1006, 24);
+			this->menuStrip1->Size = System::Drawing::Size(1006, 26);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -221,27 +230,27 @@ namespace BeepingModel {
 			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->openToolStripMenuItem, 
 				this->saveToolStripMenuItem, this->exitToolStripMenuItem});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(51, 20);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(57, 22);
 			this->fileToolStripMenuItem->Text = L"File(&F)";
 			// 
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->openToolStripMenuItem->Text = L"Open(&O)...";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Open);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->saveToolStripMenuItem->Text = L"Save(&S)...";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_FileSave);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->exitToolStripMenuItem->Text = L"Exit(&C)";
 			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Exit);
 			// 
@@ -249,13 +258,13 @@ namespace BeepingModel {
 			// 
 			this->toolToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->settingSToolStripMenuItem});
 			this->toolToolStripMenuItem->Name = L"toolToolStripMenuItem";
-			this->toolToolStripMenuItem->Size = System::Drawing::Size(54, 20);
+			this->toolToolStripMenuItem->Size = System::Drawing::Size(62, 22);
 			this->toolToolStripMenuItem->Text = L"Tool(&T)";
 			// 
 			// settingSToolStripMenuItem
 			// 
 			this->settingSToolStripMenuItem->Name = L"settingSToolStripMenuItem";
-			this->settingSToolStripMenuItem->Size = System::Drawing::Size(121, 22);
+			this->settingSToolStripMenuItem->Size = System::Drawing::Size(136, 22);
 			this->settingSToolStripMenuItem->Text = L"Setting(&S)";
 			this->settingSToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::settingSToolStripMenuItem_Click);
 			// 
@@ -277,6 +286,33 @@ namespace BeepingModel {
 			this->saveFileDialog1->RestoreDirectory = true;
 			this->saveFileDialog1->SupportMultiDottedExtensions = true;
 			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(957, 269);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(13, 15);
+			this->label2->TabIndex = 10;
+			this->label2->Text = L"n";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(957, 301);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(16, 15);
+			this->label3->TabIndex = 11;
+			this->label3->Text = L"m";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(957, 329);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(43, 15);
+			this->label4->TabIndex = 12;
+			this->label4->Text = L"density";
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
@@ -284,11 +320,14 @@ namespace BeepingModel {
 			this->AutoSize = true;
 			this->BackColor = System::Drawing::Color::Gainsboro;
 			this->ClientSize = System::Drawing::Size(1006, 770);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->btn_set);
-			this->Controls->Add(this->textBox3);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->textBox_density);
+			this->Controls->Add(this->textBox_m);
+			this->Controls->Add(this->textBox_n);
 			this->Controls->Add(this->btn_stop);
 			this->Controls->Add(this->btn_step);
 			this->Controls->Add(this->btn_auto);

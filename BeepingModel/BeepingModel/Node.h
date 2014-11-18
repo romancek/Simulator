@@ -19,6 +19,7 @@ namespace BeepingModel{
 		void SetNeighbor(int);
 		array<int>^ GetState(void);
 		void SetPosition(array<int>^);
+		array<int>^ GetPosition(void);
 	public:
 		property int Id {
 			int get() { return this->id; }
