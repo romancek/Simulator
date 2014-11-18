@@ -10,6 +10,7 @@
 #define M_SIZE 100
 
 #define NODE_SIZE 5
+#define	_DENSITY 2		//‚‚¢‚Æ”Z“x‚ª’á‚¢
 //action state
 #define beeping 0
 #define listen 1

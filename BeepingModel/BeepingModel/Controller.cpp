@@ -71,6 +71,7 @@ void Controller::CreateRandomGraph(void)
 			if( ((*itr).first == rand_edge[0] && (*itr).second == rand_edge[1] )
 				|| ((*itr).first == rand_edge[1] && (*itr).second == rand_edge[0])){
 					selected = true;
+					break;
 			} else {
 				selected = false;
 			}

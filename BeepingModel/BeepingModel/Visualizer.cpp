@@ -42,9 +42,11 @@ void Visualizer::Draw(void)
 		dx = distX(gen);
 		dy = distY(gen);
 		for(multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr){
-			if( ((*itr).first == dx && (*itr).second == dy )
-				|| ((*itr).first == dy && (*itr).second == dx)){
+			//èdÇ»ÇËîªíË TODO distance(p1,p2) <= NODE_SIZE*2
+			if( ((*itr).first + NODE_SIZE*_DENSITY > dx && (*itr).first - NODE_SIZE*_DENSITY < dx)
+				&& ((*itr).second + NODE_SIZE*_DENSITY > dy && (*itr).second - NODE_SIZE*_DENSITY < dy)){
 					selected = true;
+					break;
 			} else {
 				selected = false;
 			}
