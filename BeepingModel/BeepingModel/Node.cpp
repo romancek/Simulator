@@ -22,6 +22,14 @@ void Node::SetNeighbor(int id)
 	this->ch_num++;
 }
 
-array<int>^ Node::GetState(void){
+array<int>^ Node::GetState(void)
+{
 	return this->states;
+}
+
+void Node::SetPosition(array<int>^ p)
+{
+	this->position = p;
+	String^ a = String::Format("node:[{0}],[x,y]:[{1},{2}]",this->id,p[0],p[1]);
+	System::Diagnostics::Debug::WriteLine(a);
 }

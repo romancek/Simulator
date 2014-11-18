@@ -5,6 +5,7 @@
 #include <boost/random.hpp>
 #include "Controller.h"
 #include "Node.h"
+#include <map>
 
 using namespace BeepingModel;
 using namespace System::Drawing;
@@ -24,17 +25,40 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
 
 void Visualizer::Draw(void)
 {
+	using namespace std;
 	Pen^ p = gcnew Pen(Color::Black,0.5f);
-	this->g->DrawEllipse(p, Rectangle(100,100,5,5));
+	Pen^ dammy = gcnew Pen(Color::Gainsboro,0.1f);
+	this->g->DrawEllipse(dammy, Rectangle(100,100,5,5));
 	int dx=0;
 	int dy=0;
+	int i = 0;
+	bool selected = false;
+	multimap<int,int> exist_area;
 	random::mt19937 gen( 100 );	//TODO seed use devicecontext
 	random::uniform_int_distribution<> distX(0,this->x-1);
 	random::uniform_int_distribution<> distY(0,this->y-1);
-	for each(Node^ n in this->controller->nodes)
+	while(i < N_SIZE)
 	{
 		dx = distX(gen);
 		dy = distY(gen);
-		this->g->DrawEllipse(p,Rectangle(dx,dy,5,5));
+		for(multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr){
+			if( ((*itr).first == dx && (*itr).second == dy )
+				|| ((*itr).first == dy && (*itr).second == dx)){
+					selected = true;
+			} else {
+				selected = false;
+			}
+		}
+		//node already exists
+		if(!selected){
+			this->g->DrawEllipse(p,Rectangle(dx,dy,NODE_SIZE,NODE_SIZE));
+			array<int>^ position = {dx,dy};
+			this->controller->nodes[i]->SetPosition(position);
+			exist_area.insert(pair <int, int> (dx, dy));
+			selected = false;
+			i++;
+		}else{//node not exists
+			continue;
+		}
 	}
 }

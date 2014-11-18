@@ -6,8 +6,10 @@
 #include "Node.h"
 #include "Channel.h"
 
-#define N_SIZE 1000
-#define M_SIZE 1000
+#define N_SIZE 100
+#define M_SIZE 100
+
+#define NODE_SIZE 5
 //action state
 #define beeping 0
 #define listen 1

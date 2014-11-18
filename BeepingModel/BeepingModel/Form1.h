@@ -25,6 +25,7 @@ namespace BeepingModel {
 	private: Visualizer^ visualizer;
 	private: System::Windows::Forms::ToolStripMenuItem^  settingSToolStripMenuItem;
 	private: String^ fileName;      // “Ç‚Ý‘‚«ƒtƒ@ƒCƒ‹–¼
+	private: Node^ node;
 
 	public:
 		Form1(void)
@@ -404,7 +405,7 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		fs->ShowDialog();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		System::Diagnostics::Debug::WriteLine(fs->GetValue());
-		Node^ node = fs->GetNodeInfo();
+		node = fs->GetNodeInfo();
 		System::Diagnostics::Debug::WriteLine(node->Id);
 	}
 };
