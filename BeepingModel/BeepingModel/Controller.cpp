@@ -14,9 +14,10 @@ Controller::Controller(void)
 	this->n = N_SIZE;
 	this->m = M_SIZE;
 	this->density = _DENSITY;
+	this->updated = true;
 	this->graph_topology = "random";
 #ifdef _DEBUG
-	hellekalek1995 gen( 100 );
+	hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
 	bernoulli_distribution<> dst( 0.5 );
 	variate_generator< hellekalek1995&, bernoulli_distribution<> > rand( gen, dst );
 	int count = 0;
@@ -51,7 +52,10 @@ void Controller::InitializeGraph(int n, int m, int density)
 	this->n = n;
 	this->m = m;
 	this->density = density;
+	this->updated = true;
 	//‰Šú‰»ˆ—
+	nodes = nullptr;
+	channels = nullptr;
 	nodes = gcnew array<Node^>(this->n);
 	channels = gcnew array<Channel^>(this->m);
 	for(int i = 0;i < n;i++){
@@ -79,7 +83,7 @@ void Controller::CreateRandomGraph(void)
 	//M_SIZE edges random selected and add
 	array<int>^ rand_edge = gcnew array<int>(2);
 	multimap<int,int> created_edge;
-	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	//TODO seed use devicecontext
+	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	// or nondet_random.hpp->random_device
 	random::uniform_int_distribution<> dist(0,this->m-1);
 
 	while(i < this->m){
@@ -98,7 +102,7 @@ void Controller::CreateRandomGraph(void)
 		}
 		//edges not selected
 		if(!selected){//TODO
-			channels[i]->SetEndPoint(rand_edge[0],rand_edge[1]);//
+			channels[i]->SetEndPoint(rand_edge[0],rand_edge[1]);
 			nodes[rand_edge[0]]->SetNeighbor(rand_edge[1]);
 			nodes[rand_edge[1]]->SetNeighbor(rand_edge[0]);
 			created_edge.insert(pair <int, int> (rand_edge[0], rand_edge[1]));

@@ -12,6 +12,7 @@ namespace BeepingModel{
 		int m;	//channel size
 		int density;
 		String^ graph_topology;
+		bool updated;
 	public:
 		array<Node^>^ nodes;
 		array<Channel^>^ channels;
@@ -32,6 +33,11 @@ namespace BeepingModel{
 		property int Density {
 				int get(){return this->density;}
 				void set(int density){this->density = density;}
+		}
+		//Network‚ª•ÏX‚³‚ê‚½‚çtrue
+		property bool Updated {
+				bool get(){return this->updated;}
+				void set(bool updated){this->updated = updated;}
 		}
 	};
 }

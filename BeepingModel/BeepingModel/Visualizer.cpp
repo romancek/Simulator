@@ -36,7 +36,10 @@ void Visualizer::Draw(void)
 	int i = 0;
 	bool selected = false;
 	multimap<int,int> exist_area;
-	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	//TODO seed use devicecontext
+	//if( this->controller->Updated ) {
+		random::mt19937 gen( static_cast<unsigned long>(time(0)) );
+		this->controller->Updated = false;
+	//}
 	random::uniform_int_distribution<> distX(0,this->x-1);
 	random::uniform_int_distribution<> distY(0,this->y-1);
 	while(i < this->controller->N)
