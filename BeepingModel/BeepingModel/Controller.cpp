@@ -13,6 +13,7 @@ Controller::Controller(void)
 {
 	this->n = N_SIZE;
 	this->m = M_SIZE;
+	this->density = _DENSITY;
 	this->graph_topology = "random";
 #ifdef _DEBUG
 	hellekalek1995 gen( 100 );
@@ -29,8 +30,8 @@ Controller::Controller(void)
 void Controller::InitializeGraph(void)
 {
 	//‰Šú‰»ˆ—
-	nodes = gcnew array<Node^>(n);
-	channels = gcnew array<Channel^>(m);
+	nodes = gcnew array<Node^>(this->n);
+	channels = gcnew array<Channel^>(this->m);
 	for(int i = 0;i < n;i++){
 		nodes[i] = gcnew Node(i);
 	}
@@ -43,6 +44,23 @@ void Controller::InitializeGraph(void)
 	}
 	this->CreateRandomGraph();
 #endif
+}
+
+void Controller::InitializeGraph(int n, int m, int density)
+{
+	this->n = n;
+	this->m = m;
+	this->density = density;
+	//‰Šú‰»ˆ—
+	nodes = gcnew array<Node^>(this->n);
+	channels = gcnew array<Channel^>(this->m);
+	for(int i = 0;i < n;i++){
+		nodes[i] = gcnew Node(i);
+	}
+	for(int i = 0;i < m;i++){
+		channels[i] = gcnew Channel(i);
+	}
+	this->CreateRandomGraph();
 }
 
 void Controller::CreateGraph(String^ topology)
@@ -61,10 +79,10 @@ void Controller::CreateRandomGraph(void)
 	//M_SIZE edges random selected and add
 	array<int>^ rand_edge = gcnew array<int>(2);
 	multimap<int,int> created_edge;
-	random::mt19937 gen( 100 );	//TODO seed use devicecontext
-	random::uniform_int_distribution<> dist(0,M_SIZE-1);
+	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	//TODO seed use devicecontext
+	random::uniform_int_distribution<> dist(0,this->m-1);
 
-	while(i < M_SIZE){
+	while(i < this->m){
 		rand_edge[0] = dist(gen);
 		rand_edge[1] = dist(gen);
 		if(rand_edge[0] == rand_edge[1]) continue;

@@ -194,6 +194,7 @@ namespace BeepingModel {
 			this->btn_set->TabIndex = 6;
 			this->btn_set->Text = L"Set";
 			this->btn_set->UseVisualStyleBackColor = true;
+			this->btn_set->Click += gcnew System::EventHandler(this, &Form1::btn_set_Click);
 			// 
 			// label1
 			// 
@@ -353,6 +354,14 @@ private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e)
 	}
 private: void UpdateDistributedSystem( void ){
 
+	}
+private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
+		int n = Convert::ToInt32(this->textBox_n->Text,10);
+		int m = Convert::ToInt32(this->textBox_m->Text,10);
+		int density = Convert::ToInt32(this->textBox_density->Text,10);
+		this->controller->InitializeGraph( n, m, density );
+		this->visualizer = gcnew Visualizer(this->controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+		this->visualizer->Draw();
 	}
 private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
 		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);

@@ -6,6 +6,7 @@
 #include "Controller.h"
 #include "Node.h"
 #include <map>
+#include <ctime>
 
 using namespace BeepingModel;
 using namespace System::Drawing;
@@ -35,10 +36,10 @@ void Visualizer::Draw(void)
 	int i = 0;
 	bool selected = false;
 	multimap<int,int> exist_area;
-	random::mt19937 gen( 100 );	//TODO seed use devicecontext
+	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	//TODO seed use devicecontext
 	random::uniform_int_distribution<> distX(0,this->x-1);
 	random::uniform_int_distribution<> distY(0,this->y-1);
-	while(i < N_SIZE)
+	while(i < this->controller->N)
 	{
 		dx = distX(gen);
 		dy = distY(gen);
@@ -47,8 +48,8 @@ void Visualizer::Draw(void)
 		
 		for(multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr){
 			//èdÇ»ÇËîªíË TODO distance(p1,p2) <= NODE_SIZE*2
-			if( ((*itr).first + NODE_SIZE*_DENSITY > dx && (*itr).first - NODE_SIZE*_DENSITY < dx)
-				&& ((*itr).second + NODE_SIZE*_DENSITY > dy && (*itr).second - NODE_SIZE*_DENSITY < dy)){
+			if( ((*itr).first + NODE_SIZE* this->controller->Density > dx && (*itr).first - NODE_SIZE*this->controller->Density < dx)
+				&& ((*itr).second + NODE_SIZE*this->controller->Density > dy && (*itr).second - NODE_SIZE*this->controller->Density < dy)){
 					selected = true;
 					break;
 			} else {
@@ -84,5 +85,4 @@ void Visualizer::Draw(void)
 		this->g->FillRectangle( brush, rect );
 		this->g->DrawEllipse( pen_node, rect );
 	}
-
 }
