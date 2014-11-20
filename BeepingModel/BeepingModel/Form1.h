@@ -29,6 +29,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label4;
 	private: Node^ node;
+	private: bool UpdatePanel;
 
 	public:
 		Form1(void)
@@ -40,6 +41,7 @@ namespace BeepingModel {
 			this->controller = gcnew Controller();
 			this->controller->InitializeGraph();
 			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+			this->UpdatePanel = true;
 		}
 
 	protected:
@@ -362,12 +364,16 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 		this->controller->InitializeGraph( n, m, density );
 		this->visualizer = gcnew Visualizer(this->controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
 		this->visualizer->Draw();
+		this->UpdatePanel = false;
 	}
 private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
 		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);
 	}
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
-		this->visualizer->Draw();
+		if(this->UpdatePanel){
+			this->visualizer->Draw();
+			this->UpdatePanel = false;
+		}
 	}
 private: System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();
