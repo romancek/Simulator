@@ -22,7 +22,7 @@ namespace BeepingModel {
 			InitializeComponent();
 			node = gcnew Node();
 		}
-		//Ý’èo—Í
+		//Ý’èo—Í TODO
 		int GetValue()
 		{
 			return 1;
@@ -112,6 +112,7 @@ private: System::Void btn_cancel_Click(System::Object^  sender, System::EventArg
 		this->Close();
 	}
 private: System::Void btn_ok_Click(System::Object^  sender, System::EventArgs^  e) {
+		//TODO
 		node->Id = 54321;
 		this->Close();
 	}

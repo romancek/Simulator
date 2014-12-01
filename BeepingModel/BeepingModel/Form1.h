@@ -370,6 +370,7 @@ private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms:
 		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);
 	}
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
+		//TODO
 		if(this->UpdatePanel){
 			this->visualizer->Draw();
 			this->UpdatePanel = false;
