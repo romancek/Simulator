@@ -17,5 +17,6 @@ namespace BeepingModel{
 		void Draw(void);
 		void Set(void);
 		void Clear(void);
+		void AA(bool);
 	};
 }

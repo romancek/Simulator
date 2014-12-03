@@ -13,7 +13,7 @@ Node::Node(int id)
 {
 	this->id = id;
 	this->ch_num = 0;
-	this->states = gcnew array<int>{listen,inactive,silent};
+	this->states = gcnew array<int>{beeping,inactive,silent};
 }
 
 void Node::SetNeighbor(int id)

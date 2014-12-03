@@ -359,6 +359,7 @@ private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e)
 private: void UpdateDistributedSystem( void ){
 
 	}
+//TODO AA reset problem
 private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->visualizer->Clear();
 		int n = Convert::ToInt32(this->textBox_n->Text,10);
@@ -459,7 +460,11 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		FormSetting^ fs = gcnew FormSetting();
 		fs->ShowDialog();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
-		System::Diagnostics::Debug::WriteLine(fs->GetValue());
+		if( fs->isCheckedAA() ){
+			this->visualizer->AA(true);
+		}else{
+			this->visualizer->AA(false);
+		}
 	}
 };
 }

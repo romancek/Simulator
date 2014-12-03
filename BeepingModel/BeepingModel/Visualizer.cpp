@@ -77,6 +77,7 @@ void Visualizer::Set(void)
 }
 void Visualizer::Draw(void)
 {
+	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
 		array<int>^ p1 = this->controller->nodes[ch->EndPoint[0]]->GetPosition();
@@ -85,7 +86,17 @@ void Visualizer::Draw(void)
 		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1],ch->Id);
 		System::Diagnostics::Debug::WriteLine(a);
 #endif
-		this->g->DrawLine(pen_line[0], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
+
+		if(this->controller->nodes[ch->EndPoint[0]]->ActionState == listen 
+			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == listen){ //silent
+			type = 0;
+		}else if(this->controller->nodes[ch->EndPoint[0]]->ActionState == beeping 
+			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == beeping){ //collision
+			type = 2;
+		}else{ //beep
+			type = 1;
+		}
+		this->g->DrawLine(pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
 	}
 
 	for each(Node^ n in this->controller->nodes)
@@ -100,4 +111,13 @@ void Visualizer::Draw(void)
 void Visualizer::Clear()
 {
 	this->g->Clear( Color::Gainsboro );
+}
+
+void Visualizer::AA(bool aa)
+{
+	if(aa){
+		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
+	}else{
+		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
+	}
 }

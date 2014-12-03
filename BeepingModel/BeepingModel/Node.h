@@ -24,6 +24,10 @@ namespace BeepingModel{
 		property int Id {
 			int get() { return this->id; }
 			void set( int value ) { this->id = value; }
+		}		
+		property int ActionState {
+			int get() { return this->states[0]; }
+			void set( int value ) { this->states[0] = value; }
 		}
 	};
 }

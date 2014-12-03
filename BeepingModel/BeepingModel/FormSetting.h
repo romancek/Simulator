@@ -16,16 +16,22 @@ namespace BeepingModel {
 	public ref class FormSetting : public System::Windows::Forms::Form
 	{
 	private: Node^ node;
+	private: bool aa;
 	public:
 		FormSetting(void)
 		{
 			InitializeComponent();
 			node = gcnew Node();
+			this->aa = false;
 		}
 		//Ý’èo—Í TODO
 		int GetValue()
 		{
 			return 1;
+		}
+		bool isCheckedAA()
+		{
+			return this->aa;
 		}
 		/*Node^ GetNodeInfo()
 		{
@@ -44,6 +50,7 @@ namespace BeepingModel {
 		}
 	private: System::Windows::Forms::Button^  btn_ok;
 	private: System::Windows::Forms::Button^  btn_cancel;
+	private: System::Windows::Forms::CheckBox^  checkBox_AA;
 	protected: 
 
 	protected: 
@@ -65,6 +72,7 @@ namespace BeepingModel {
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(FormSetting::typeid));
 			this->btn_ok = (gcnew System::Windows::Forms::Button());
 			this->btn_cancel = (gcnew System::Windows::Forms::Button());
+			this->checkBox_AA = (gcnew System::Windows::Forms::CheckBox());
 			this->SuspendLayout();
 			// 
 			// btn_ok
@@ -87,11 +95,23 @@ namespace BeepingModel {
 			this->btn_cancel->UseVisualStyleBackColor = true;
 			this->btn_cancel->Click += gcnew System::EventHandler(this, &FormSetting::btn_cancel_Click);
 			// 
+			// checkBox_AA
+			// 
+			this->checkBox_AA->AutoSize = true;
+			this->checkBox_AA->Location = System::Drawing::Point(24, 30);
+			this->checkBox_AA->Name = L"checkBox_AA";
+			this->checkBox_AA->Size = System::Drawing::Size(116, 19);
+			this->checkBox_AA->TabIndex = 2;
+			this->checkBox_AA->Text = L"AntiAlias(On/Off)";
+			this->checkBox_AA->UseVisualStyleBackColor = true;
+			this->checkBox_AA->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_AA_CheckedChanged);
+			// 
 			// FormSetting
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(743, 514);
+			this->Controls->Add(this->checkBox_AA);
 			this->Controls->Add(this->btn_cancel);
 			this->Controls->Add(this->btn_ok);
 			this->Font = (gcnew System::Drawing::Font(L"Times New Roman", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
@@ -99,10 +119,11 @@ namespace BeepingModel {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"FormSetting";
+			this->Opacity = 0.95;
 			this->Text = L"Setting";
 			this->Load += gcnew System::EventHandler(this, &FormSetting::FormSetting_Load);
-			this->Opacity = 0.95;
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -112,9 +133,14 @@ private: System::Void btn_cancel_Click(System::Object^  sender, System::EventArg
 		this->Close();
 	}
 private: System::Void btn_ok_Click(System::Object^  sender, System::EventArgs^  e) {
-		//TODO
-		node->Id = 54321;
 		this->Close();
 	}
+private: System::Void checkBox_AA_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+			 if( this->checkBox_AA->Checked ){
+				this->aa = true;
+			 }else{
+				this->aa = false; 
+			 }
+		 }
 };
 }
