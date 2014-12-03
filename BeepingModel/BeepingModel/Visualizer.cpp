@@ -128,3 +128,9 @@ void Visualizer::AA(bool aa)
 		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
 	}
 }
+
+void Visualizer::Run(void)
+{
+	this->controller->Run();
+	this->Draw();
+}

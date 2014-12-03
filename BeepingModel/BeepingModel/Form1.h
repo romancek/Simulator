@@ -42,7 +42,7 @@ namespace BeepingModel {
 			this->controller = gcnew Controller();
 			this->controller->InitializeGraph();
 			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
-			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->controller, &Controller::Run ) );
+			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
 			this->visualizer->Set();
 			this->visualizer->Draw();
 			this->UpdatePanel = true;
@@ -52,6 +52,11 @@ namespace BeepingModel {
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。
 		/// </summary>
+		virtual void OnPaint( PaintEventArgs^ e ) override
+		{
+			Form::OnPaint( e );
+			
+		}
 		~Form1()
 		{
 			if (components)
@@ -66,39 +71,17 @@ namespace BeepingModel {
 	private: System::Windows::Forms::TextBox^  textBox_n;
 	private: System::Windows::Forms::TextBox^  textBox_m;
 	private: System::Windows::Forms::TextBox^  textBox_density;
-
-
-
 	private: System::Windows::Forms::Button^  btn_set;
-
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Panel^  graph_panel;
-
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  fileToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  openToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  saveToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  exitToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  toolToolStripMenuItem;
-
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
-
-
-	protected: 
-
-	protected: 
-
-
-
-
-
-
-
-
-
-
-
 	private:
 		/// <summary>
 		/// 必要なデザイナー変数です。
@@ -473,11 +456,14 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		this->visualizer->Draw();
 	}
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
-		 }
+		this->Run_Algorithm->Start();
+	}
 private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
-		 }
+		
+	}
 private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
-		 }
+		
+	}
 };
 }
 
