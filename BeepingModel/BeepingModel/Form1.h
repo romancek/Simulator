@@ -16,6 +16,7 @@ namespace BeepingModel {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::IO;
+	using namespace System::Threading;
 	/// <summary>
 	/// Form1 ‚ÌŠT—v
 	/// </summary>
@@ -30,7 +31,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label4;
 	private: Node^ node;
 	private: bool UpdatePanel;
-
+	private: Thread^ Run_Algorithm;
 	public:
 		Form1(void)
 		{
@@ -41,6 +42,7 @@ namespace BeepingModel {
 			this->controller = gcnew Controller();
 			this->controller->InitializeGraph();
 			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->controller, &Controller::Run ) );
 			this->visualizer->Set();
 			this->visualizer->Draw();
 			this->UpdatePanel = true;
@@ -373,7 +375,6 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 		}else{
 			int density = Convert::ToInt32(this->textBox_density->Text,10);
 			this->controller->InitializeGraph( n, m, density );
-			//this->visualizer = gcnew Visualizer(this->controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
 			this->visualizer->Set();
 			this->visualizer->Draw();
 		}

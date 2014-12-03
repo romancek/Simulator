@@ -9,6 +9,7 @@ using namespace BeepingModel;
 using namespace boost;
 using namespace System::Diagnostics;
 
+
 Controller::Controller(void)
 {
 	this->n = N_SIZE;
@@ -106,6 +107,11 @@ void Controller::CreateRandomGraph(void)
 			continue;
 		}
 	}
+}
+
+void Controller::Run(void)
+{
+
 }
 
 void Controller::Run_UpperN(void)

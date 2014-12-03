@@ -4,7 +4,6 @@
 
 namespace BeepingModel{
 	using namespace System;
-	
 	ref class Controller
 	{
 	private:
@@ -23,7 +22,9 @@ namespace BeepingModel{
 		void InitializeGraph(int,int,int);
 		void CreateGraph(String^);
 		void CreateRandomGraph(void);
+		void Run(void);
 		void Run_UpperN(void);
+
 		property int N {
 				int get(){return this->n;}
 				void set(int n){this->n = n;}
