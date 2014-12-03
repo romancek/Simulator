@@ -364,7 +364,6 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 		this->visualizer->Clear();
 		int n = Convert::ToInt32(this->textBox_n->Text,10);
 		int m = Convert::ToInt32(this->textBox_m->Text,10);
-		System::Diagnostics::Debug::WriteLine( String::Format("n = {0}, (n * n - 1)/2 = {1} ",n,(n*(n-1))/2) );//xxx
 		if( ((n*(n-1))/2) < m ){
 			MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}else{
