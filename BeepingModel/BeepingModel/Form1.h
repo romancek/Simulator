@@ -41,6 +41,8 @@ namespace BeepingModel {
 			this->controller = gcnew Controller();
 			this->controller->InitializeGraph();
 			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+			this->visualizer->Set();
+			this->visualizer->Draw();
 			this->UpdatePanel = true;
 		}
 
@@ -358,6 +360,7 @@ private: void UpdateDistributedSystem( void ){
 
 	}
 private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->visualizer->Clear();
 		int n = Convert::ToInt32(this->textBox_n->Text,10);
 		int m = Convert::ToInt32(this->textBox_m->Text,10);
 		int density = Convert::ToInt32(this->textBox_density->Text,10);
@@ -371,10 +374,7 @@ private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms:
 	}
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
 		//TODO
-		//if(this->UpdatePanel){
-			this->visualizer->Draw();
-			//this->UpdatePanel = false;
-		//}
+		this->visualizer->Draw();
 	}
 private: System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();

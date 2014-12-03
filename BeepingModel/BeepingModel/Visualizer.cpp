@@ -18,6 +18,14 @@ Visualizer::Visualizer(void)
 
 Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
 {
+	//•`‰æ—p
+	this->pen_node = gcnew Pen(Color::Black,0.5f);
+	this->pen_line = gcnew array<Pen^>(3) ;
+	this->pen_line[0] = gcnew Pen(Color::Black,0.5f);
+	this->pen_line[1] = gcnew Pen(Color::DarkOrange,0.5f);
+	this->pen_line[2] = gcnew Pen(Color::Red,0.5f);
+	this->brush = gcnew SolidBrush( Color::Gainsboro );
+	
 	this->controller = c;
 	this->g = gr;
 	this->x = x;
@@ -69,9 +77,6 @@ void Visualizer::Set(void)
 }
 void Visualizer::Draw(void)
 {
-	Pen^ pen_node = gcnew Pen(Color::Black,0.5f);
-	Pen^ dammy = gcnew Pen(Color::Gainsboro,0.1f);
-	SolidBrush^ brush = gcnew SolidBrush( Color::Gainsboro );
 	for each(Channel^ ch in this->controller->channels)
 	{
 		array<int>^ p1 = this->controller->nodes[ch->EndPoint[0]]->GetPosition();
@@ -80,14 +85,19 @@ void Visualizer::Draw(void)
 		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1],ch->Id);
 		System::Diagnostics::Debug::WriteLine(a);
 #endif
-		this->g->DrawLine(pen_node, p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
+		this->g->DrawLine(pen_line[0], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
 	}
 
 	for each(Node^ n in this->controller->nodes)
 	{
 		array<int>^ pos = n->GetPosition();
 		Rectangle rect = Rectangle(pos[0],pos[1],NODE_SIZE,NODE_SIZE);
-		this->g->FillRectangle( brush, rect );
-		this->g->DrawEllipse( pen_node, rect );
+		this->g->FillRectangle( this->brush, rect );
+		this->g->DrawEllipse( this->pen_node, rect );
 	}
+}
+
+void Visualizer::Clear()
+{
+	this->g->Clear( Color::Gainsboro );
 }
