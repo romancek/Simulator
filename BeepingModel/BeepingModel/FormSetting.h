@@ -27,10 +27,10 @@ namespace BeepingModel {
 		{
 			return 1;
 		}
-		Node^ GetNodeInfo()
+		/*Node^ GetNodeInfo()
 		{
 			return node;
-		}
+		}*/
 	protected:
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。

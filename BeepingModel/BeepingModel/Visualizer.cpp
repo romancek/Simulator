@@ -24,24 +24,20 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
 	this->y = y;
 }
 
-void Visualizer::Draw(void)
+void Visualizer::Set(void)
 {
 	using namespace std;
-	Pen^ pen_node = gcnew Pen(Color::Black,0.5f);
-	Pen^ dammy = gcnew Pen(Color::Gainsboro,0.1f);
-	SolidBrush^ brush = gcnew SolidBrush( Color::Gainsboro );
-	this->g->DrawEllipse(dammy, Rectangle(100,100,5,5));
 	int dx=0;
 	int dy=0;
 	int i = 0;
 	bool selected = false;
 	multimap<int,int> exist_area;
-	//if( this->controller->Updated ) {
-		random::mt19937 gen( static_cast<unsigned long>(time(0)) );
-		this->controller->Updated = false;
-	//}
+
+	random::mt19937 gen( static_cast<unsigned long>(time(0)) );
+	this->controller->Updated = false;
 	random::uniform_int_distribution<> distX(0,this->x-1);
 	random::uniform_int_distribution<> distY(0,this->y-1);
+	
 	while(i < this->controller->N)
 	{
 		dx = distX(gen);
@@ -70,6 +66,12 @@ void Visualizer::Draw(void)
 			continue;
 		}
 	}
+}
+void Visualizer::Draw(void)
+{
+	Pen^ pen_node = gcnew Pen(Color::Black,0.5f);
+	Pen^ dammy = gcnew Pen(Color::Gainsboro,0.1f);
+	SolidBrush^ brush = gcnew SolidBrush( Color::Gainsboro );
 	for each(Channel^ ch in this->controller->channels)
 	{
 		array<int>^ p1 = this->controller->nodes[ch->EndPoint[0]]->GetPosition();

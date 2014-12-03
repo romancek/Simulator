@@ -12,5 +12,6 @@ namespace BeepingModel{
 		Visualizer(void);
 		Visualizer(Controller^,Graphics^,int,int);
 		void Draw(void);
+		void Set(void);
 	};
 }

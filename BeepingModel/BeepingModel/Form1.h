@@ -363,18 +363,18 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 		int density = Convert::ToInt32(this->textBox_density->Text,10);
 		this->controller->InitializeGraph( n, m, density );
 		this->visualizer = gcnew Visualizer(this->controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+		this->visualizer->Set();
 		this->visualizer->Draw();
-		this->UpdatePanel = false;
 	}
 private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
 		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);
 	}
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
 		//TODO
-		if(this->UpdatePanel){
+		//if(this->UpdatePanel){
 			this->visualizer->Draw();
-			this->UpdatePanel = false;
-		}
+			//this->UpdatePanel = false;
+		//}
 	}
 private: System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();
@@ -460,8 +460,6 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		fs->ShowDialog();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		System::Diagnostics::Debug::WriteLine(fs->GetValue());
-		node = fs->GetNodeInfo();
-		System::Diagnostics::Debug::WriteLine(node->Id);
 	}
 };
 }
