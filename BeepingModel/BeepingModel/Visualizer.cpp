@@ -134,7 +134,7 @@ void Visualizer::Run(void)
 {
 	while(1){
 		this->controller->Run();
-		//this->Draw();
+		this->Draw();
 #ifdef _DEBUG
 		System::Diagnostics::Debug::WriteLine(String::Format("global round:{0}",this->controller->GlobalRound));
 #endif

@@ -13,6 +13,8 @@ namespace BeepingModel{
 		String^ graph_topology;
 		bool updated;
 		int global_round;
+		int UpperN;
+		int c;
 	public:
 		array<Node^>^ nodes;
 		array<Channel^>^ channels;

@@ -18,6 +18,9 @@ Controller::Controller(void)
 	this->density = _DENSITY;
 	this->updated = true;
 	this->graph_topology = "random";
+	this->UpperN = 1000;
+	this->c = 100;
+	this->global_round = 1;
 }
 
 void Controller::InitializeGraph(void)
@@ -45,6 +48,7 @@ void Controller::InitializeGraph(int n, int m, int density)
 	this->m = m;
 	this->density = density;
 	this->updated = true;
+	this->global_round = 1;
 	//‰Šú‰»ˆ—
 	nodes = nullptr;
 	channels = nullptr;
@@ -119,17 +123,59 @@ void Controller::Run(void)
  */
 void Controller::Run_UpperN(void)
 {
-	this->global_round++;
-
 	//First action
 	for each(Node^ n in this->nodes)
 	{
-		n->Round++;
-		
+		if(n->NodeState == inactive){ //Algorithm 1
+			n->ActionState = listen;
+			n->ListenRound++;
+		}else if(n->NodeState == competing){ //Algorithm 3-6
+			hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
+			double bp = Math::Pow(2.0,n->Phase)/(8*UpperN);
+			bernoulli_distribution<> dst( bp );
+			variate_generator< hellekalek1995&, bernoulli_distribution<> > rand( gen, dst );
+			if( rand() == 1 ){
+				n->ActionState = beeping;
+			}else{
+				n->ActionState = listen;
+			}
+			if(c * Math::Log(UpperN,2.0) < n->Step) n->Phase++;
+			n->Step++;
+		}else if(n->NodeState == MIS){ //Algorithm 7-8
+			hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
+			bernoulli_distribution<> dst( 0.5 );
+			variate_generator< hellekalek1995&, bernoulli_distribution<> > rand( gen, dst );
+			if( rand() == 1 || n->ActionState == listen/*‘O‰ñlisten‚µ‚Ä‚½‚ç¡‰ñbeep*/){
+				n->ActionState = beeping;
+			}else {
+				n->ActionState = listen;
+			}
+		}
 	}
 	//Second action
 	for each(Node^ n in this->nodes)
 	{
-
+		bool hearbeep = false;
+		for each(int id in n->neighbors){
+			if(this->nodes[id]->ActionState == beeping){
+				hearbeep = true;
+				break;
+			}
+		}
+		if(hearbeep){
+			n->NodeState = inactive;
+			n->Reset();
+		}
+		if(n->NodeState == inactive){ //Algorithm 1
+			if(c*Math::Pow(Math::Log(UpperN,2.0),2.0) < n->ListenRound){
+				n->NodeState = competing;
+			}
+		}else if(n->NodeState == competing){ //Algorithm 3-6
+			if(Math::Log(UpperN,2.0) < n->Phase && c*Math::Log(UpperN,2.0) < n->Step){
+				n->NodeState = MIS;
+			}
+		}
+		n->Round++;
 	}
+	this->global_round++;
 }

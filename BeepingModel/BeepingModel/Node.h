@@ -10,17 +10,24 @@ namespace BeepingModel{
 	private:
 		int id;
 		int ch_num;
-		cliext::vector<int> neighbors;
 		array<int>^ states;
 		array<int>^ position;
-		int round;
+		int local_round;
+		int listenround;
+		int phase; // i : 1 to clogN
+		int step;   // 1 to logN
 	public:
+		cliext::vector<int> neighbors;
 		Node();
 		Node(int);
 		void SetNeighbor(int);
 		array<int>^ GetState(void);
 		void SetPosition(array<int>^);
 		array<int>^ GetPosition(void);
+		void Reset(void);
+		//void InactiveMode(void);
+		//void CompetingMode(void);
+		//void MISMode(void);
 	public:
 		property int Id {
 			int get() { return this->id; }
@@ -39,8 +46,20 @@ namespace BeepingModel{
 			void set( int value ) { this->states[2] = value; }
 		}
 		property int Round {
-			int get() { return this->round; }
-			void set( int value ) { this->round = value; }
+			int get() { return this->local_round; }
+			void set( int value ) { this->local_round = value; }
+		}
+		property int ListenRound {
+			int get() { return this->listenround; }
+			void set( int value ) { this->listenround = value; }
+		}
+		property int Phase {
+			int get() { return this->phase; }
+			void set( int value ) { this->phase = value; }
+		}
+		property int Step {
+			int get() { return this->step; }
+			void set( int value ) { this->step = value; }
 		}
 	};
 }

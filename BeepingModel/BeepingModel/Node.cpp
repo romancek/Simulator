@@ -6,7 +6,7 @@ Node::Node(void)
 {
 	this->id = -1;
 	this->ch_num = 0;
-	this->round = 0;
+	this->local_round = 1;
 	this->states = gcnew array<int>{listen,inactive,silent};
 }
 
@@ -14,8 +14,11 @@ Node::Node(int id)
 {
 	this->id = id;
 	this->ch_num = 0;
-	this->round = 0;
+	this->local_round = 1;
 	this->states = gcnew array<int>{listen,inactive,silent};
+	this->listenround = 1;
+	this->phase = 1;
+	this->step = 1;
 }
 
 void Node::SetNeighbor(int id)
@@ -45,4 +48,11 @@ array<int>^ Node::GetPosition(void)
 	String^ a = String::Format("GetPosition:[{0}],[x,y]:[{1},{2}]",this->id,this->position[0],this->position[1]);
 	System::Diagnostics::Debug::WriteLine(a);
 #endif
+}
+
+void Node::Reset(void)
+{
+	this->listenround = 1;
+	this->phase = 1;
+	this->step = 1;
 }
