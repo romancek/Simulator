@@ -364,11 +364,16 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 		this->visualizer->Clear();
 		int n = Convert::ToInt32(this->textBox_n->Text,10);
 		int m = Convert::ToInt32(this->textBox_m->Text,10);
-		int density = Convert::ToInt32(this->textBox_density->Text,10);
-		this->controller->InitializeGraph( n, m, density );
-		this->visualizer = gcnew Visualizer(this->controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
-		this->visualizer->Set();
-		this->visualizer->Draw();
+		System::Diagnostics::Debug::WriteLine( String::Format("n = {0}, (n * n - 1)/2 = {1} ",n,(n*(n-1))/2) );//xxx
+		if( ((n*(n-1))/2) < m ){
+			MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}else{
+			int density = Convert::ToInt32(this->textBox_density->Text,10);
+			this->controller->InitializeGraph( n, m, density );
+			this->visualizer = gcnew Visualizer(this->controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+			this->visualizer->Set();
+			this->visualizer->Draw();
+		}
 	}
 private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
 		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);
@@ -462,6 +467,7 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		if( fs->isCheckedAA() ){
 			this->visualizer->AA(true);
+			this->visualizer->Draw();
 		}else{
 			this->visualizer->AA(false);
 		}

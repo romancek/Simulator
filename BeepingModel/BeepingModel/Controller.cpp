@@ -16,16 +16,6 @@ Controller::Controller(void)
 	this->density = _DENSITY;
 	this->updated = true;
 	this->graph_topology = "random";
-#ifdef _DEBUG
-	hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
-	bernoulli_distribution<> dst( 0.5 );
-	variate_generator< hellekalek1995&, bernoulli_distribution<> > rand( gen, dst );
-	int count = 0;
-	for( int i=0; i<100000; ++i ){
-		if( rand() == 1 )count++;
-	}
-	Debug::WriteLine(count);
-#endif
 }
 
 void Controller::InitializeGraph(void)
@@ -84,7 +74,7 @@ void Controller::CreateRandomGraph(void)
 	array<int>^ rand_edge = gcnew array<int>(2);
 	multimap<int,int> created_edge;
 	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	// or nondet_random.hpp->random_device
-	random::uniform_int_distribution<> dist(0,this->m-1);
+	random::uniform_int_distribution<> dist(0,this->n-1);
 
 	while(i < this->m){
 		rand_edge[0] = dist(gen);
