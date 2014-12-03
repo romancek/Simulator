@@ -108,3 +108,7 @@ void Controller::CreateRandomGraph(void)
 	}
 }
 
+void Controller::Run_UpperN(void)
+{
+	
+}

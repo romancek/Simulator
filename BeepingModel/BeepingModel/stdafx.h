@@ -5,6 +5,7 @@
 #include "Controller.h"
 #include "Node.h"
 #include "Channel.h"
+#include <math.h>
 
 #define N_SIZE 3
 #define M_SIZE 3

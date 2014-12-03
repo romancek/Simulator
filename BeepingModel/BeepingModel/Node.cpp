@@ -6,6 +6,7 @@ Node::Node(void)
 {
 	this->id = -1;
 	this->ch_num = 0;
+	this->round = 0;
 	this->states = gcnew array<int>{listen,inactive,silent};
 }
 
@@ -13,6 +14,7 @@ Node::Node(int id)
 {
 	this->id = id;
 	this->ch_num = 0;
+	this->round = 0;
 	this->states = gcnew array<int>{listen,inactive,silent};
 }
 

@@ -8,7 +8,7 @@ namespace BeepingModel{
 		Graphics^ g;
 		int x;
 		int y;
-		Pen^ pen_node;
+		array<Pen^>^ pen_node;
 		array<Pen^>^ pen_line;
 		SolidBrush^ brush;
 	public:

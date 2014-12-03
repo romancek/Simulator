@@ -19,11 +19,13 @@ Visualizer::Visualizer(void)
 Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
 {
 	//•`‰æ—p
-	this->pen_node = gcnew Pen(Color::Black,0.5f);
 	this->pen_line = gcnew array<Pen^>(3) ;
 	this->pen_line[0] = gcnew Pen(Color::Black,0.5f);
 	this->pen_line[1] = gcnew Pen(Color::DarkOrange,0.5f);
 	this->pen_line[2] = gcnew Pen(Color::Red,0.5f);
+	this->pen_node = gcnew array<Pen^>(2);
+	this->pen_node[0] = this->pen_line[0];
+	this->pen_node[1] = this->pen_line[1];
 	this->brush = gcnew SolidBrush( Color::Gainsboro );
 	
 	this->controller = c;
@@ -101,10 +103,15 @@ void Visualizer::Draw(void)
 
 	for each(Node^ n in this->controller->nodes)
 	{
+		if(n->ActionState == listen){
+			type = 0;
+		}else{
+			type = 1;
+		}
 		array<int>^ pos = n->GetPosition();
 		Rectangle rect = Rectangle(pos[0],pos[1],NODE_SIZE,NODE_SIZE);
 		this->g->FillRectangle( this->brush, rect );
-		this->g->DrawEllipse( this->pen_node, rect );
+		this->g->DrawEllipse( this->pen_node[type], rect );
 	}
 }
 

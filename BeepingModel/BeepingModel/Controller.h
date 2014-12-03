@@ -13,6 +13,7 @@ namespace BeepingModel{
 		int density;
 		String^ graph_topology;
 		bool updated;
+		int global_round;
 	public:
 		array<Node^>^ nodes;
 		array<Channel^>^ channels;
@@ -22,6 +23,7 @@ namespace BeepingModel{
 		void InitializeGraph(int,int,int);
 		void CreateGraph(String^);
 		void CreateRandomGraph(void);
+		void Run_UpperN(void);
 		property int N {
 				int get(){return this->n;}
 				void set(int n){this->n = n;}
@@ -38,6 +40,10 @@ namespace BeepingModel{
 		property bool Updated {
 				bool get(){return this->updated;}
 				void set(bool updated){this->updated = updated;}
+		}
+		property int GlobalRound {
+				int get(){return this->global_round;}
+				void set(int value){this->global_round = value;}
 		}
 	};
 }

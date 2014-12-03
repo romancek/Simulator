@@ -144,6 +144,7 @@ namespace BeepingModel {
 			this->btn_auto->TabIndex = 0;
 			this->btn_auto->Text = L"Auto";
 			this->btn_auto->UseVisualStyleBackColor = true;
+			this->btn_auto->Click += gcnew System::EventHandler(this, &Form1::btn_auto_Click);
 			// 
 			// btn_step
 			// 
@@ -154,6 +155,7 @@ namespace BeepingModel {
 			this->btn_step->TabIndex = 1;
 			this->btn_step->Text = L"Step";
 			this->btn_step->UseVisualStyleBackColor = true;
+			this->btn_step->Click += gcnew System::EventHandler(this, &Form1::btn_step_Click);
 			// 
 			// btn_stop
 			// 
@@ -164,6 +166,7 @@ namespace BeepingModel {
 			this->btn_stop->TabIndex = 2;
 			this->btn_stop->Text = L"Stop";
 			this->btn_stop->UseVisualStyleBackColor = true;
+			this->btn_stop->Click += gcnew System::EventHandler(this, &Form1::btn_stop_Click);
 			// 
 			// textBox_n
 			// 
@@ -364,12 +367,13 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 		this->visualizer->Clear();
 		int n = Convert::ToInt32(this->textBox_n->Text,10);
 		int m = Convert::ToInt32(this->textBox_m->Text,10);
+		//restrict number of edges
 		if( ((n*(n-1))/2) < m ){
 			MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}else{
 			int density = Convert::ToInt32(this->textBox_density->Text,10);
 			this->controller->InitializeGraph( n, m, density );
-			this->visualizer = gcnew Visualizer(this->controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+			//this->visualizer = gcnew Visualizer(this->controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
 			this->visualizer->Set();
 			this->visualizer->Draw();
 		}
@@ -464,13 +468,15 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		FormSetting^ fs = gcnew FormSetting();
 		fs->ShowDialog();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
-		if( fs->isCheckedAA() ){
-			this->visualizer->AA(true);
-			this->visualizer->Draw();
-		}else{
-			this->visualizer->AA(false);
-		}
+		this->visualizer->AA(fs->isCheckedAA());
+		this->visualizer->Draw();
 	}
+private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
+		 }
+private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
+		 }
+private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
+		 }
 };
 }
 
