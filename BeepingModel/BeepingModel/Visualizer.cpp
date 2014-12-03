@@ -32,6 +32,7 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
 	this->g = gr;
 	this->x = x;
 	this->y = y;
+	this->stop = false;
 }
 
 void Visualizer::Set(void)
@@ -131,6 +132,13 @@ void Visualizer::AA(bool aa)
 
 void Visualizer::Run(void)
 {
-	this->controller->Run();
-	this->Draw();
+	while(1){
+		this->controller->Run();
+		//this->Draw();
+#ifdef _DEBUG
+		System::Diagnostics::Debug::WriteLine(String::Format("global round:{0}",this->controller->GlobalRound));
+#endif
+		if( this->stop )break;
+		Thread::Sleep(_run_speed_ms);
+	}
 }

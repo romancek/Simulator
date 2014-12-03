@@ -4,6 +4,7 @@
 #include <boost/random.hpp>
 #include <ctime>
 #include <map>
+#include <math.h>
 
 using namespace BeepingModel;
 using namespace boost;
@@ -111,10 +112,24 @@ void Controller::CreateRandomGraph(void)
 
 void Controller::Run(void)
 {
-
+	this->Run_UpperN();
 }
-
+/*
+ * Algorithm 1
+ */
 void Controller::Run_UpperN(void)
 {
-	
+	this->global_round++;
+
+	//First action
+	for each(Node^ n in this->nodes)
+	{
+		n->Round++;
+		
+	}
+	//Second action
+	for each(Node^ n in this->nodes)
+	{
+
+	}
 }

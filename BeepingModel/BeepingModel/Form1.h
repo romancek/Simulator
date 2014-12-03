@@ -456,10 +456,15 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		this->visualizer->Draw();
 	}
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
+		if(this->visualizer->Stop){
+			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
+		}
+		this->visualizer->Stop = false;
 		this->Run_Algorithm->Start();
 	}
 private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
-		
+		this->visualizer->Stop = true;
+		//this->Run_Algorithm->Abort();
 	}
 private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
 		

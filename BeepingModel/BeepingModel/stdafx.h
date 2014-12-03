@@ -5,11 +5,12 @@
 #include "Controller.h"
 #include "Node.h"
 #include "Channel.h"
-#include <math.h>
+
 
 #define N_SIZE 3
 #define M_SIZE 3
 
+#define _run_speed_ms 100 
 #define NODE_SIZE 10
 #define	_DENSITY 2		//‚‚¢‚Æ”Z“x‚ª’á‚¢
 //action state
