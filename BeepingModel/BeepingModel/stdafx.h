@@ -12,7 +12,7 @@
 
 
 #define _run_speed_ms 100 
-#define _MIS_apper_stop_ms 8000
+#define _MIS_apper_stop_ms 1000
 #define NODE_SIZE 10
 #define	_DENSITY 2		//‚‚¢‚Æ”Z“x‚ª’á‚¢
 //action state
