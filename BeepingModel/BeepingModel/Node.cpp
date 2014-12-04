@@ -7,7 +7,7 @@ Node::Node(void)
 	this->id = -1;
 	this->ch_num = 0;
 	this->local_round = 1;
-	this->states = gcnew array<int>{listen,inactive,silent};
+	this->states = gcnew array<int>{sleep,sleep,silent};
 }
 
 Node::Node(int id)
@@ -15,7 +15,7 @@ Node::Node(int id)
 	this->id = id;
 	this->ch_num = 0;
 	this->local_round = 1;
-	this->states = gcnew array<int>{listen,sleep,silent};
+	this->states = gcnew array<int>{sleep,sleep,silent};
 	this->listenround = 1;
 	this->phase = 1;
 	this->step = 1;

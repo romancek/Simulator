@@ -94,13 +94,13 @@ void Visualizer::Draw(void)
 		//System::Diagnostics::Debug::WriteLine(a);
 #endif
 
-		if(this->controller->nodes[ch->EndPoint[0]]->ActionState == listen 
-			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == listen){ //silent
+		if((this->controller->nodes[ch->EndPoint[0]]->ActionState == listen  || this->controller->nodes[ch->EndPoint[0]]->ActionState ==sleep) 
+			&& (this->controller->nodes[ch->EndPoint[1]]->ActionState == listen || this->controller->nodes[ch->EndPoint[1]]->ActionState == sleep)){ //silent or sleep
 			type = 0;
 		}else if(this->controller->nodes[ch->EndPoint[0]]->ActionState == beeping 
 			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == beeping){ //collision
 			type = 2;
-		}else{ //beep
+		}else{//beep
 			type = 1;
 		}
 		this->g->DrawLine(pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);

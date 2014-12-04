@@ -153,10 +153,12 @@ void Controller::Run_UpperN(void)
 	for each(Node^ n in this->nodes)
 	{
 		bool hearbeep = false;
-		for each(int id in n->neighbors){
-			if(this->nodes[id]->ActionState == beeping){
-				hearbeep = true;
-				break;
+		if(n->ActionState == listen){
+			for each(int id in n->neighbors){
+				if(this->nodes[id]->ActionState == beeping){
+					hearbeep = true;
+					break;
+				}
 			}
 		}
 		if(hearbeep){
