@@ -11,7 +11,7 @@
 #define M_SIZE 3
 
 
-#define _run_speed_ms 1000 
+#define _run_speed_ms 10 
 #define NODE_SIZE 10
 #define	_DENSITY 2		//‚‚¢‚Æ”Z“x‚ª’á‚¢
 //action state
@@ -21,6 +21,7 @@
 #define inactive 2
 #define competing 3
 #define MIS 4
+#define sleep 7
 //hearing state
 #define beep 5
 #define silent 6

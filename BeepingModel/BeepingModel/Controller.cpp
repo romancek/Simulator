@@ -19,7 +19,7 @@ Controller::Controller(void)
 	this->updated = true;
 	this->graph_topology = "random";
 	this->UpperN = 1000;
-	this->c = 100;
+	this->c = 3;
 	this->global_round = 1;
 }
 
@@ -128,7 +128,6 @@ void Controller::Run_UpperN(void)
 	{
 		if(n->NodeState == inactive){ //Algorithm 1
 			n->ActionState = listen;
-			n->ListenRound++;
 		}else if(n->NodeState == competing){ //Algorithm 3-6
 			hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
 			double bp = Math::Pow(2.0,n->Phase)/(8*UpperN);
@@ -139,8 +138,6 @@ void Controller::Run_UpperN(void)
 			}else{
 				n->ActionState = listen;
 			}
-			if(c * Math::Log(UpperN,2.0) < n->Step) n->Phase++;
-			n->Step++;
 		}else if(n->NodeState == MIS){ //Algorithm 7-8
 			hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
 			bernoulli_distribution<> dst( 0.5 );
@@ -165,14 +162,21 @@ void Controller::Run_UpperN(void)
 		if(hearbeep){
 			n->NodeState = inactive;
 			n->Reset();
+			continue;
 		}
 		if(n->NodeState == inactive){ //Algorithm 1
+			n->ListenRound++;
 			if(c*Math::Pow(Math::Log(UpperN,2.0),2.0) < n->ListenRound){
 				n->NodeState = competing;
 			}
 		}else if(n->NodeState == competing){ //Algorithm 3-6
+			if(c * Math::Log(UpperN,2.0) < n->Step) n->Phase++;
+			n->Step++;
 			if(Math::Log(UpperN,2.0) < n->Phase && c*Math::Log(UpperN,2.0) < n->Step){
 				n->NodeState = MIS;
+#ifdef _DEBUG
+				Debug::WriteLine(String::Format("*****************\n MIS Node appear, ID[{0}] \n*****************",n->Id));
+#endif
 			}
 		}
 		n->Round++;

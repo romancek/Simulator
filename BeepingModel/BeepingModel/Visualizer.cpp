@@ -19,13 +19,17 @@ Visualizer::Visualizer(void)
 Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
 {
 	//•`‰æ—p
+	//silent,beep,collision
 	this->pen_line = gcnew array<Pen^>(3) ;
 	this->pen_line[0] = gcnew Pen(Color::Black,0.5f);
 	this->pen_line[1] = gcnew Pen(Color::DarkOrange,0.5f);
 	this->pen_line[2] = gcnew Pen(Color::Red,0.5f);
-	this->pen_node = gcnew array<Pen^>(2);
-	this->pen_node[0] = this->pen_line[0];
-	this->pen_node[1] = this->pen_line[1];
+	//sleep,inactive,competing,MIS
+	this->pen_node = gcnew array<Pen^>(4);
+	this->pen_node[0] = gcnew Pen(Color::White,0.5f); 
+	this->pen_node[1] = gcnew Pen(Color::Black,0.5f);
+	this->pen_node[2] = gcnew Pen(Color::HotPink,0.5f);
+	this->pen_node[3] = gcnew Pen(Color::Green,0.5f);
 	this->brush = gcnew SolidBrush( Color::Gainsboro );
 	
 	this->controller = c;
@@ -87,7 +91,7 @@ void Visualizer::Draw(void)
 		array<int>^ p2 = this->controller->nodes[ch->EndPoint[1]]->GetPosition();
 #ifdef _DEBUG
 		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1],ch->Id);
-		System::Diagnostics::Debug::WriteLine(a);
+		//System::Diagnostics::Debug::WriteLine(a);
 #endif
 
 		if(this->controller->nodes[ch->EndPoint[0]]->ActionState == listen 
@@ -104,10 +108,14 @@ void Visualizer::Draw(void)
 
 	for each(Node^ n in this->controller->nodes)
 	{
-		if(n->ActionState == listen){
+		if(n->NodeState == sleep){
 			type = 0;
-		}else{
+		}else if(n->NodeState == inactive){
 			type = 1;
+		}else if(n->NodeState == competing){
+			type = 2;
+		}else if(n->NodeState == MIS){
+			type = 3;
 		}
 		array<int>^ pos = n->GetPosition();
 		Rectangle rect = Rectangle(pos[0],pos[1],NODE_SIZE,NODE_SIZE);
