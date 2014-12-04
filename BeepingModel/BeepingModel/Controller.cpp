@@ -123,6 +123,19 @@ void Controller::Run(void)
  */
 void Controller::Run_UpperN(void)
 {
+	//Adversal Wake-Up
+	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	// or nondet_random.hpp->random_device
+	random::uniform_int_distribution<> dist(0,this->n-1);
+	int i = 0;
+	while(1){
+		if(this->n < i)break;
+		int rand_wake_id = dist(gen);
+		if(this->nodes[rand_wake_id]->NodeState == sleep){
+			this->nodes[rand_wake_id]->NodeState = inactive;
+			break;
+		}
+		i++;
+	}
 	//First action
 	for each(Node^ n in this->nodes)
 	{
@@ -142,10 +155,20 @@ void Controller::Run_UpperN(void)
 			hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
 			bernoulli_distribution<> dst( 0.5 );
 			variate_generator< hellekalek1995&, bernoulli_distribution<> > rand( gen, dst );
-			if( rand() == 1 || n->ActionState == listen/*‘O‰ñlisten‚µ‚Ä‚½‚ç¡‰ñbeep*/){
-				n->ActionState = beeping;
-			}else {
+			if(n->next_MIS_state == 0){
+				if( rand() == 1 ){
+					n->ActionState = beeping;
+					n->next_MIS_state = 1;
+				}else{
+					n->ActionState = listen;
+					n->next_MIS_state = 3;
+				}
+			}else if(n->next_MIS_state == 1){
 				n->ActionState = listen;
+				n->next_MIS_state = 0;
+			}else if(n->next_MIS_state == 3){
+				n->ActionState = beeping;
+				n->next_MIS_state = 0;
 			}
 		}
 	}
@@ -178,10 +201,11 @@ void Controller::Run_UpperN(void)
 				n->NodeState = MIS;
 #ifdef _DEBUG
 				Debug::WriteLine(String::Format("*****************\n MIS Node appear, ID[{0}] \n*****************",n->Id));
+				Thread::Sleep(_MIS_apper_stop_ms);
 #endif
 			}
 		}
-		n->Round++;
+		if(n->NodeState != sleep) n->Round++;
 	}
 	this->global_round++;
 }

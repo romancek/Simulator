@@ -19,6 +19,7 @@ Node::Node(int id)
 	this->listenround = 1;
 	this->phase = 1;
 	this->step = 1;
+	this->MIS_state = 0;
 }
 
 void Node::SetNeighbor(int id)

@@ -16,6 +16,7 @@ namespace BeepingModel{
 		int listenround;
 		int phase; // i : 1 to clogN
 		int step;   // 1 to logN
+		int MIS_state; //0:if,1:listen,2:else,3:beep
 	public:
 		cliext::vector<int> neighbors;
 		Node();
@@ -60,6 +61,10 @@ namespace BeepingModel{
 		property int Step {
 			int get() { return this->step; }
 			void set( int value ) { this->step = value; }
+		}
+		property int next_MIS_state {
+			int get() { return this->MIS_state; }
+			void set( int value ) { this->MIS_state = value; }
 		}
 	};
 }
