@@ -60,7 +60,7 @@ void Controller::InitializeGraph(int n, int m, int density)
 	for(int i = 0;i < m;i++){
 		channels[i] = gcnew Channel(i);
 	}
-	this->CreateRandomGraph();
+	this->CreateGraph("random");
 }
 
 void Controller::CreateGraph(String^ topology)
@@ -68,6 +68,8 @@ void Controller::CreateGraph(String^ topology)
 	this->graph_topology = topology;
 	if(graph_topology == "random"){
 		this->CreateRandomGraph();
+	}else if(graph_topology == "unitdisk"){
+
 	}
 }
 
