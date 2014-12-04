@@ -195,12 +195,15 @@ void Controller::Run_UpperN(void)
 				n->NodeState = competing;
 			}
 		}else if(n->NodeState == competing){ //Algorithm 3-6
-			if(c * Math::Log(UpperN,2.0) < n->Step) n->Phase++;
+			if(c * Math::Log(UpperN,2.0) < n->Step){
+				n->Phase++;
+				n->Step = 0;
+			}
 			n->Step++;
 			if(Math::Log(UpperN,2.0) < n->Phase && c*Math::Log(UpperN,2.0) < n->Step){
 				n->NodeState = MIS;
 #ifdef _DEBUG
-				Debug::WriteLine(String::Format("*****************\n MIS Node appear, ID[{0}] \n*****************",n->Id));
+				Debug::WriteLine(String::Format("*****************\n MIS Node appear, ID[{0}],Phase[{1}],Step[{2}] \n*****************",n->Id,n->Phase,n->Step));
 				Thread::Sleep(_MIS_apper_stop_ms);
 #endif
 			}

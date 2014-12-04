@@ -31,6 +31,10 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label4;
 	private: Node^ node;
 	private: bool UpdatePanel;
+	private: System::Windows::Forms::GroupBox^  groupBox1;
+	private: System::Windows::Forms::Label^  label_ground;
+	private: System::Windows::Forms::Splitter^  splitter1;
+	private: System::Windows::Forms::Panel^  panel1;
 	private: Thread^ Run_Algorithm;
 	public:
 		Form1(void)
@@ -117,12 +121,18 @@ namespace BeepingModel {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label_ground = (gcnew System::Windows::Forms::Label());
+			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->menuStrip1->SuspendLayout();
+			this->groupBox1->SuspendLayout();
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// btn_auto
 			// 
-			this->btn_auto->Location = System::Drawing::Point(882, 116);
+			this->btn_auto->Location = System::Drawing::Point(42, 75);
 			this->btn_auto->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_auto->Name = L"btn_auto";
 			this->btn_auto->Size = System::Drawing::Size(70, 29);
@@ -133,7 +143,7 @@ namespace BeepingModel {
 			// 
 			// btn_step
 			// 
-			this->btn_step->Location = System::Drawing::Point(882, 60);
+			this->btn_step->Location = System::Drawing::Point(42, 19);
 			this->btn_step->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_step->Name = L"btn_step";
 			this->btn_step->Size = System::Drawing::Size(70, 29);
@@ -144,7 +154,7 @@ namespace BeepingModel {
 			// 
 			// btn_stop
 			// 
-			this->btn_stop->Location = System::Drawing::Point(882, 172);
+			this->btn_stop->Location = System::Drawing::Point(42, 131);
 			this->btn_stop->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_stop->Name = L"btn_stop";
 			this->btn_stop->Size = System::Drawing::Size(70, 29);
@@ -155,7 +165,7 @@ namespace BeepingModel {
 			// 
 			// textBox_n
 			// 
-			this->textBox_n->Location = System::Drawing::Point(882, 266);
+			this->textBox_n->Location = System::Drawing::Point(42, 225);
 			this->textBox_n->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_n->Name = L"textBox_n";
 			this->textBox_n->Size = System::Drawing::Size(69, 21);
@@ -163,7 +173,7 @@ namespace BeepingModel {
 			// 
 			// textBox_m
 			// 
-			this->textBox_m->Location = System::Drawing::Point(882, 298);
+			this->textBox_m->Location = System::Drawing::Point(42, 257);
 			this->textBox_m->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_m->Name = L"textBox_m";
 			this->textBox_m->Size = System::Drawing::Size(69, 21);
@@ -171,7 +181,7 @@ namespace BeepingModel {
 			// 
 			// textBox_density
 			// 
-			this->textBox_density->Location = System::Drawing::Point(882, 329);
+			this->textBox_density->Location = System::Drawing::Point(42, 288);
 			this->textBox_density->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_density->Name = L"textBox_density";
 			this->textBox_density->Size = System::Drawing::Size(69, 21);
@@ -191,7 +201,7 @@ namespace BeepingModel {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(884, 579);
+			this->label1->Location = System::Drawing::Point(20, 29);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(35, 15);
 			this->label1->TabIndex = 8;
@@ -282,7 +292,7 @@ namespace BeepingModel {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(957, 269);
+			this->label2->Location = System::Drawing::Point(117, 228);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(13, 15);
 			this->label2->TabIndex = 10;
@@ -291,7 +301,7 @@ namespace BeepingModel {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(957, 301);
+			this->label3->Location = System::Drawing::Point(117, 260);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(16, 15);
 			this->label3->TabIndex = 11;
@@ -300,11 +310,58 @@ namespace BeepingModel {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(957, 329);
+			this->label4->Location = System::Drawing::Point(117, 288);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(43, 15);
 			this->label4->TabIndex = 12;
 			this->label4->Text = L"density";
+			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->label_ground);
+			this->groupBox1->Controls->Add(this->label1);
+			this->groupBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->groupBox1->Location = System::Drawing::Point(5, 400);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(155, 305);
+			this->groupBox1->TabIndex = 13;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Parameter";
+			// 
+			// label_ground
+			// 
+			this->label_ground->AutoSize = true;
+			this->label_ground->Location = System::Drawing::Point(20, 59);
+			this->label_ground->Name = L"label_ground";
+			this->label_ground->Size = System::Drawing::Size(83, 15);
+			this->label_ground->TabIndex = 9;
+			this->label_ground->Text = L"Global Round : ";
+			// 
+			// splitter1
+			// 
+			this->splitter1->Location = System::Drawing::Point(0, 26);
+			this->splitter1->Name = L"splitter1";
+			this->splitter1->Size = System::Drawing::Size(3, 744);
+			this->splitter1->TabIndex = 14;
+			this->splitter1->TabStop = false;
+			// 
+			// panel1
+			// 
+			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->panel1->Controls->Add(this->label4);
+			this->panel1->Controls->Add(this->groupBox1);
+			this->panel1->Controls->Add(this->label3);
+			this->panel1->Controls->Add(this->label2);
+			this->panel1->Controls->Add(this->textBox_density);
+			this->panel1->Controls->Add(this->textBox_m);
+			this->panel1->Controls->Add(this->textBox_n);
+			this->panel1->Controls->Add(this->btn_stop);
+			this->panel1->Controls->Add(this->btn_step);
+			this->panel1->Controls->Add(this->btn_auto);
+			this->panel1->Location = System::Drawing::Point(835, 34);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(170, 729);
+			this->panel1->TabIndex = 15;
 			// 
 			// Form1
 			// 
@@ -313,19 +370,11 @@ namespace BeepingModel {
 			this->AutoSize = true;
 			this->BackColor = System::Drawing::Color::Gainsboro;
 			this->ClientSize = System::Drawing::Size(1006, 770);
-			this->Controls->Add(this->label4);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->label1);
+			this->Controls->Add(this->splitter1);
 			this->Controls->Add(this->btn_set);
-			this->Controls->Add(this->textBox_density);
-			this->Controls->Add(this->textBox_m);
-			this->Controls->Add(this->textBox_n);
-			this->Controls->Add(this->btn_stop);
-			this->Controls->Add(this->btn_step);
-			this->Controls->Add(this->btn_auto);
 			this->Controls->Add(this->menuStrip1);
 			this->Controls->Add(this->graph_panel);
+			this->Controls->Add(this->panel1);
 			this->Font = (gcnew System::Drawing::Font(L"Times New Roman", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
@@ -336,6 +385,10 @@ namespace BeepingModel {
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -349,17 +402,21 @@ private: void UpdateDistributedSystem( void ){
 	}
 //TODO AA reset problem
 private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->visualizer->Clear();
-		int n = Convert::ToInt32(this->textBox_n->Text,10);
-		int m = Convert::ToInt32(this->textBox_m->Text,10);
-		//restrict number of edges
-		if( ((n*(n-1))/2) < m ){
-			MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		if(this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" ){
+			MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}else{
-			int density = Convert::ToInt32(this->textBox_density->Text,10);
-			this->controller->InitializeGraph( n, m, density );
-			this->visualizer->Set();
-			this->visualizer->Draw();
+			this->visualizer->Clear();
+			int n = Convert::ToInt32(this->textBox_n->Text,10);
+			int m = Convert::ToInt32(this->textBox_m->Text,10);
+			//restrict number of edges
+			if( ((n*(n-1))/2) < m ){
+				MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}else{
+				int density = Convert::ToInt32(this->textBox_density->Text,10);
+				this->controller->InitializeGraph( n, m, density );
+				this->visualizer->Set();
+				this->visualizer->Draw();
+			}
 		}
 	}
 private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
@@ -368,6 +425,7 @@ private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms:
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
 		//TODO
 		this->visualizer->Draw();
+		this->label_ground->Text = String::Format("Global Round : {0}",this->controller->GlobalRound);
 	}
 private: System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();

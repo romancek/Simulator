@@ -1,4 +1,5 @@
 #pragma once
+
 namespace BeepingModel{
 	using namespace System::Drawing;
 	ref class Visualizer
@@ -10,7 +11,7 @@ namespace BeepingModel{
 		int y;
 		array<Pen^>^ pen_node;
 		array<Pen^>^ pen_line;
-		SolidBrush^ brush;
+		array<SolidBrush^>^ brush;
 		bool stop;
 	public:
 		Visualizer(void);
