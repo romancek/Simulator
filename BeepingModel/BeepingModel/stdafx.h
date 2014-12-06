@@ -2,10 +2,17 @@
 // 参照回数が多く、かつあまり変更されない、プロジェクト専用のインクルード ファイル
 // を記述します。
 #pragma once
-#include "Controller.h"
-#include "Node.h"
-#include "Channel.h"
-
+#include <map>
+#include <ctime>
+#include <boost/random.hpp>
+#include <iostream>
+#include <ctime>
+#include <map>
+#include <math.h>
+#include <string>
+#include <boost/version.hpp>
+#include <cliext/vector>
+#include "picojson.h"
 
 #define N_SIZE 3
 #define M_SIZE 3
@@ -32,4 +39,5 @@
 typedef struct  {
 	bool AA;
 	unsigned int unitdisk_r;
+	int topology; //0:Random, 1:UnitDisk
 }Settings;

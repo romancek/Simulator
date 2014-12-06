@@ -1,5 +1,6 @@
 #pragma once
-
+#include "Controller.h"
+#include "StdAfx.h"
 namespace BeepingModel{
 	using namespace System::Drawing;
 	ref class Visualizer

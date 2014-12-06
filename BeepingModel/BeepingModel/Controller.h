@@ -1,6 +1,7 @@
 #pragma once
 #include "Node.h"
 #include "Channel.h"
+#include "StdAfx.h"
 
 namespace BeepingModel{
 	using namespace System;
@@ -11,7 +12,7 @@ namespace BeepingModel{
 		int m;	//channel size
 		int density;
 		int x,y;
-		String^ graph_topology;
+		int graph_topology;
 		bool updated;
 		int global_round;
 		int UpperN;
@@ -21,12 +22,13 @@ namespace BeepingModel{
 		array<Channel^>^ channels;
 	public:
 		Controller(int,int);
-		void InitializeGraph(void);
-		void InitializeGraph(int,int,int);
-		void CreateGraph(String^);
+		void InitializeGraph(int);
+		void InitializeGraph(int,int,int,int);
+		void CreateGraph();
 		void CreateRandomGraph(void);
 		void CreateUnitDiskGraph(void);
-		void Set(void);
+		void SetRandomizedPosition(void);		//Random graph only
+		void SetGraphParameter(Settings*);
 		void Run(void);
 		void Run_UpperN(void);
 

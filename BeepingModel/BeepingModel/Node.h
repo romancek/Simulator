@@ -1,7 +1,7 @@
 #pragma once
 #include "StdAfx.h"
 #include "Channel.h"
-#include <cliext/vector>
+
 
 namespace BeepingModel{
 	using namespace System;

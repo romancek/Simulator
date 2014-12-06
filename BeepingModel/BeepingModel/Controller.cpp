@@ -1,10 +1,7 @@
+#include "Node.h"
+#include "Channel.h"
 #include "StdAfx.h"
-#include "Form1.h" //boostg‚¤‚Æ‚«‚É•K—v?
-#include <iostream>
-#include <boost/random.hpp>
-#include <ctime>
-#include <map>
-#include <math.h>
+#include "Controller.h"
 
 using namespace BeepingModel;
 using namespace boost;
@@ -17,7 +14,7 @@ Controller::Controller(int x, int y)
 	this->m = M_SIZE;
 	this->density = _DENSITY;
 	this->updated = true;
-	this->graph_topology = "random";
+	this->graph_topology = 0;
 	this->UpperN = 1000;
 	this->c = 3;
 	this->global_round = 1;
@@ -25,9 +22,10 @@ Controller::Controller(int x, int y)
 	this->y = y;
 }
 
-void Controller::InitializeGraph(void)
+void Controller::InitializeGraph(int topology)
 {
 	//‰Šú‰»ˆ—
+	this->graph_topology = topology;
 	nodes = gcnew array<Node^>(this->n);
 	channels = gcnew array<Channel^>(this->m);
 	for(int i = 0;i < n;i++){
@@ -40,17 +38,18 @@ void Controller::InitializeGraph(void)
 	for each( Node^ n in nodes){
 		Debug::WriteLine(n->Id);
 	}
-	this->CreateRandomGraph();
+	this->CreateGraph();
 #endif
 }
 
-void Controller::InitializeGraph(int n, int m, int density)
+void Controller::InitializeGraph(int n, int m, int density, int topology)
 {
 	this->n = n;
 	this->m = m;
 	this->density = density;
 	this->updated = true;
 	this->global_round = 1;
+	this->graph_topology = topology;
 	//‰Šú‰»ˆ—
 	nodes = nullptr;
 	channels = nullptr;
@@ -62,15 +61,14 @@ void Controller::InitializeGraph(int n, int m, int density)
 	for(int i = 0;i < m;i++){
 		channels[i] = gcnew Channel(i);
 	}
-	this->CreateGraph("random");
+	this->CreateGraph();
 }
 
-void Controller::CreateGraph(String^ topology)
+void Controller::CreateGraph()
 {
-	this->graph_topology = topology;
-	if(graph_topology == "random"){
+	if(graph_topology == 0/*Random*/){
 		this->CreateRandomGraph();
-	}else if(graph_topology == "unitdisk"){
+	}else if(graph_topology == 1/*UnitDisk*/){
 		this->CreateUnitDiskGraph();
 	}
 }
@@ -116,6 +114,7 @@ void Controller::CreateRandomGraph(void)
 			continue;
 		}
 	}
+	this->SetRandomizedPosition();
 }
 
 void Controller::CreateUnitDiskGraph(void)
@@ -123,7 +122,7 @@ void Controller::CreateUnitDiskGraph(void)
 
 }
 
-void Controller::Set(void)
+void Controller::SetRandomizedPosition(void)
 {
 	using namespace std;
 	int dx=0;
@@ -166,6 +165,11 @@ void Controller::Set(void)
 	}
 }
 
+void Controller::SetGraphParameter(Settings* setting)
+{
+	Debug::WriteLine(String::Format("Topology is {0}",setting->topology));
+}
+
 void Controller::Run(void)
 {
 	this->Run_UpperN();
@@ -175,6 +179,7 @@ void Controller::Run(void)
  */
 void Controller::Run_UpperN(void)
 {
+	using namespace System::Threading;
 	//Adversal Wake-Up
 	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	// or nondet_random.hpp->random_device
 	random::uniform_int_distribution<> dist(0,this->n-1);

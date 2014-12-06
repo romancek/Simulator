@@ -1,10 +1,9 @@
 #pragma once
-#include <string>
-#include <boost/version.hpp>
+
 #include "FormSetting.h"
 #include "Controller.h"
 #include "Node.h"
-#include "picojson.h"
+#include "Form1.h"
 #include "Visualizer.h"
 #include "StdAfx.h"
 
@@ -37,6 +36,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Panel^  panel1;
 	private: System::Windows::Forms::Label^  label_radius;
 	private: Thread^ Run_Algorithm;
+	private: System::Windows::Forms::Label^  label_topology;
 	private: Settings* settings;
 	public:
 		Form1(void)
@@ -46,9 +46,9 @@ namespace BeepingModel {
 			//TODO: ここにコンストラクター コードを追加します
 			//
 			this->settings = new Settings;
+			this->settings->topology = 0;//Random
 			this->controller = gcnew Controller(this->graph_panel->Size.Width,this->graph_panel->Size.Height);
-			this->controller->InitializeGraph();
-			this->controller->Set();
+			this->controller->InitializeGraph(this->settings->topology);
 			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics());
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
 			this->visualizer->Draw();
@@ -130,6 +130,7 @@ namespace BeepingModel {
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label_topology = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -323,6 +324,7 @@ namespace BeepingModel {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label_topology);
 			this->groupBox1->Controls->Add(this->label_radius);
 			this->groupBox1->Controls->Add(this->label_ground);
 			this->groupBox1->Controls->Add(this->label_mouse_position);
@@ -378,6 +380,18 @@ namespace BeepingModel {
 			this->panel1->Size = System::Drawing::Size(170, 729);
 			this->panel1->TabIndex = 15;
 			// 
+			// label_topology
+			// 
+			this->label_topology->AutoSize = true;
+			this->label_topology->Font = (gcnew System::Drawing::Font(L"メイリオ", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->label_topology->ForeColor = System::Drawing::Color::Purple;
+			this->label_topology->Location = System::Drawing::Point(21, 281);
+			this->label_topology->Name = L"label_topology";
+			this->label_topology->Size = System::Drawing::Size(73, 18);
+			this->label_topology->TabIndex = 11;
+			this->label_topology->Text = L"Topology : ";
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
@@ -431,8 +445,7 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 				MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}else{
 				int density = Convert::ToInt32(this->textBox_density->Text,10);
-				this->controller->InitializeGraph( n, m, density );
-				this->controller->Set();
+				this->controller->InitializeGraph( n, m, density, this->settings->topology);
 				this->visualizer->Draw();
 			}
 		}
@@ -544,7 +557,9 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		settings = fs->GetSetting();
 		this->visualizer->SetParameter(settings);
+		this->controller->SetGraphParameter(settings);
 		this->label_radius->Text = String::Format("Radius : {0}",settings->unitdisk_r);
+		this->label_topology->Text = String::Format("Topology : {0}",this->TopologyInt2String(settings->topology));
 		this->visualizer->Draw();
 	}
 
@@ -563,7 +578,15 @@ private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^
 private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
 		
 	}
-
+private: System::String^ TopologyInt2String(int topology){
+		if(topology == 0){
+			return "Random";
+		}else if(topology == 1){
+			return "UnitDisk";
+		}else{
+			return "None";
+		}
+	}
 };
 }
 

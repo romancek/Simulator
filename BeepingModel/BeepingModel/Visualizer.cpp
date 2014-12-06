@@ -2,11 +2,10 @@
 #include "Visualizer.h"
 #include "Channel.h"
 #include "Form1.h"
-#include <boost/random.hpp>
+
 #include "Controller.h"
 #include "Node.h"
-#include <map>
-#include <ctime>
+
 
 using namespace BeepingModel;
 using namespace System::Drawing;

@@ -9,7 +9,7 @@ namespace BeepingModel {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
+	using namespace System::Diagnostics;
 	/// <summary>
 	/// FormSetting ‚ÌŠT—v
 	/// </summary>
@@ -19,6 +19,9 @@ namespace BeepingModel {
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_UnitDisk_radius;
 
 	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::ListBox^  listBox_topology;
+
+	private: System::Windows::Forms::Label^  label_topology;
 	private: Settings* settings;
 	public:
 		FormSetting(void)
@@ -70,6 +73,8 @@ namespace BeepingModel {
 			this->checkBox_AA = (gcnew System::Windows::Forms::CheckBox());
 			this->numericUpDown_UnitDisk_radius = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->listBox_topology = (gcnew System::Windows::Forms::ListBox());
+			this->label_topology = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -96,7 +101,7 @@ namespace BeepingModel {
 			// checkBox_AA
 			// 
 			this->checkBox_AA->AutoSize = true;
-			this->checkBox_AA->Location = System::Drawing::Point(58, 29);
+			this->checkBox_AA->Location = System::Drawing::Point(92, 29);
 			this->checkBox_AA->Name = L"checkBox_AA";
 			this->checkBox_AA->Size = System::Drawing::Size(116, 19);
 			this->checkBox_AA->TabIndex = 2;
@@ -106,29 +111,50 @@ namespace BeepingModel {
 			// 
 			// numericUpDown_UnitDisk_radius
 			// 
-			this->numericUpDown_UnitDisk_radius->Location = System::Drawing::Point(24, 72);
+			this->numericUpDown_UnitDisk_radius->Location = System::Drawing::Point(58, 72);
+			this->numericUpDown_UnitDisk_radius->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {255, 0, 0, 0});
 			this->numericUpDown_UnitDisk_radius->Name = L"numericUpDown_UnitDisk_radius";
 			this->numericUpDown_UnitDisk_radius->Size = System::Drawing::Size(47, 21);
-			this->numericUpDown_UnitDisk_radius->Value = UDK_R;
-			this->numericUpDown_UnitDisk_radius->Maximum = 255;
-			this->numericUpDown_UnitDisk_radius->Minimum = 0;
 			this->numericUpDown_UnitDisk_radius->TabIndex = 3;
+			this->numericUpDown_UnitDisk_radius->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {50, 0, 0, 0});
 			this->numericUpDown_UnitDisk_radius->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_UnitDisk_radius_ValueChanged);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(75, 72);
+			this->label1->Location = System::Drawing::Point(111, 72);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(84, 15);
 			this->label1->TabIndex = 4;
 			this->label1->Text = L"UnitDisk radius";
+			// 
+			// listBox_topology
+			// 
+			this->listBox_topology->FormattingEnabled = true;
+			this->listBox_topology->ItemHeight = 15;
+			this->listBox_topology->Items->AddRange(gcnew cli::array< System::Object^  >(2) {L"Random", L"UnitDisk"});
+			this->listBox_topology->Location = System::Drawing::Point(34, 117);
+			this->listBox_topology->Name = L"listBox_topology";
+			this->listBox_topology->Size = System::Drawing::Size(71, 34);
+			this->listBox_topology->TabIndex = 5;
+			this->listBox_topology->SelectedIndexChanged += gcnew System::EventHandler(this, &FormSetting::listBox_topology_SelectedIndexChanged);
+			// 
+			// label_topology
+			// 
+			this->label_topology->AutoSize = true;
+			this->label_topology->Location = System::Drawing::Point(111, 126);
+			this->label_topology->Name = L"label_topology";
+			this->label_topology->Size = System::Drawing::Size(88, 15);
+			this->label_topology->TabIndex = 6;
+			this->label_topology->Text = L"Graph Topology";
 			// 
 			// FormSetting
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(743, 514);
+			this->Controls->Add(this->label_topology);
+			this->Controls->Add(this->listBox_topology);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->numericUpDown_UnitDisk_radius);
 			this->Controls->Add(this->checkBox_AA);
@@ -165,6 +191,15 @@ private: System::Void checkBox_AA_CheckedChanged(System::Object^  sender, System
 	}
 private: System::Void numericUpDown_UnitDisk_radius_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 		this->settings->unitdisk_r = (int)this->numericUpDown_UnitDisk_radius->Value;
+	}
+private: System::Void listBox_topology_SelectedIndexChanged(System::Object^  /*sender*/, System::EventArgs^  /*e*/) {
+		String^ selectedStr = this->listBox_topology->SelectedItem->ToString();
+		Debug::WriteLine(selectedStr);
+		if(selectedStr == "Random"){
+			this->settings->topology = 0;
+		}else if(selectedStr == "UnitDisk"){
+			this->settings->topology = 1;
+		}
 	}
 };
 }
