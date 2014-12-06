@@ -6,7 +6,7 @@
 #include "Node.h"
 #include "picojson.h"
 #include "Visualizer.h"
-
+#include "StdAfx.h"
 
 namespace BeepingModel {
 	using namespace System;
@@ -510,7 +510,8 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		FormSetting^ fs = gcnew FormSetting();
 		fs->ShowDialog();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
-		this->visualizer->AA(fs->isCheckedAA());
+		Settings* settings = fs->GetSetting();
+		this->visualizer->AA(settings->AA);
 		this->visualizer->Draw();
 	}
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {

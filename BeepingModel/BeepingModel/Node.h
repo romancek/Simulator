@@ -17,6 +17,7 @@ namespace BeepingModel{
 		int phase; // i : 1 to clogN
 		int step;   // 1 to logN
 		int MIS_state; //0:if,1:listen,2:else,3:beep
+		int udk_r; //UnitDisk radius
 	public:
 		cliext::vector<int> neighbors;
 		Node();

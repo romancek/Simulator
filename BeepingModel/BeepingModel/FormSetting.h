@@ -1,6 +1,6 @@
 #pragma once
 #include "Node.h"
-
+#include "StdAfx.h"
 namespace BeepingModel {
 
 	using namespace System;
@@ -16,12 +16,15 @@ namespace BeepingModel {
 	public ref class FormSetting : public System::Windows::Forms::Form
 	{
 	private: Node^ node;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown1;
+	private: System::Windows::Forms::Label^  label1;
 	private: bool aa;
+	private: Settings* settings;
 	public:
 		FormSetting(void)
 		{
 			InitializeComponent();
-			node = gcnew Node();
+			settings = new Settings;
 			this->aa = false;
 		}
 		//Ý’èo—Í TODO
@@ -29,9 +32,9 @@ namespace BeepingModel {
 		{
 			return 1;
 		}
-		bool isCheckedAA()
+		Settings* GetSetting()
 		{
-			return this->aa;
+			return this->settings;
 		}
 		/*Node^ GetNodeInfo()
 		{
@@ -73,6 +76,9 @@ namespace BeepingModel {
 			this->btn_ok = (gcnew System::Windows::Forms::Button());
 			this->btn_cancel = (gcnew System::Windows::Forms::Button());
 			this->checkBox_AA = (gcnew System::Windows::Forms::CheckBox());
+			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btn_ok
@@ -98,7 +104,7 @@ namespace BeepingModel {
 			// checkBox_AA
 			// 
 			this->checkBox_AA->AutoSize = true;
-			this->checkBox_AA->Location = System::Drawing::Point(24, 30);
+			this->checkBox_AA->Location = System::Drawing::Point(58, 29);
 			this->checkBox_AA->Name = L"checkBox_AA";
 			this->checkBox_AA->Size = System::Drawing::Size(116, 19);
 			this->checkBox_AA->TabIndex = 2;
@@ -106,11 +112,29 @@ namespace BeepingModel {
 			this->checkBox_AA->UseVisualStyleBackColor = true;
 			this->checkBox_AA->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_AA_CheckedChanged);
 			// 
+			// numericUpDown1
+			// 
+			this->numericUpDown1->Location = System::Drawing::Point(24, 72);
+			this->numericUpDown1->Name = L"numericUpDown1";
+			this->numericUpDown1->Size = System::Drawing::Size(47, 21);
+			this->numericUpDown1->TabIndex = 3;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(75, 72);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(84, 15);
+			this->label1->TabIndex = 4;
+			this->label1->Text = L"UnitDisk radius";
+			// 
 			// FormSetting
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(743, 514);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->checkBox_AA);
 			this->Controls->Add(this->btn_cancel);
 			this->Controls->Add(this->btn_ok);
@@ -122,6 +146,7 @@ namespace BeepingModel {
 			this->Opacity = 0.95;
 			this->Text = L"Setting";
 			this->Load += gcnew System::EventHandler(this, &FormSetting::FormSetting_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -137,9 +162,9 @@ private: System::Void btn_ok_Click(System::Object^  sender, System::EventArgs^  
 	}
 private: System::Void checkBox_AA_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 			 if( this->checkBox_AA->Checked ){
-				this->aa = true;
+				this->settings->AA = true;
 			 }else{
-				this->aa = false; 
+				this->settings->AA = false; 
 			 }
 		 }
 };

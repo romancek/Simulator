@@ -10,6 +10,7 @@
 #define N_SIZE 3
 #define M_SIZE 3
 
+#define UDK_R 50 //UnitDisk radius
 
 #define _run_speed_ms 50 
 #define _MIS_apper_stop_ms 10
@@ -27,3 +28,8 @@
 #define beep 5
 #define silent 6
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください。
+
+typedef struct  {
+	bool AA;
+	int unitdisk_r;
+}Settings;

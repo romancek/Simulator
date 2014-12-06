@@ -20,6 +20,7 @@ Node::Node(int id)
 	this->phase = 1;
 	this->step = 1;
 	this->MIS_state = 0;
+	this->udk_r = UDK_R;
 }
 
 void Node::SetNeighbor(int id)
