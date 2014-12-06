@@ -69,7 +69,7 @@ void Controller::CreateGraph(String^ topology)
 	if(graph_topology == "random"){
 		this->CreateRandomGraph();
 	}else if(graph_topology == "unitdisk"){
-
+		this->CreateUnitDiskGraph();
 	}
 }
 
@@ -114,6 +114,11 @@ void Controller::CreateRandomGraph(void)
 			continue;
 		}
 	}
+}
+
+void Controller::CreateUnitDiskGraph(void)
+{
+
 }
 
 void Controller::Run(void)

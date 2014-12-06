@@ -24,6 +24,7 @@ namespace BeepingModel{
 		void InitializeGraph(int,int,int);
 		void CreateGraph(String^);
 		void CreateRandomGraph(void);
+		void CreateUnitDiskGraph(void);
 		void Run(void);
 		void Run_UpperN(void);
 
