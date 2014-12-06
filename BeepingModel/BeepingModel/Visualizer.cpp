@@ -16,7 +16,7 @@ Visualizer::Visualizer(void)
 
 }
 
-Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
+Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 {
 	//ï`âÊóp
 	//silent,beep,collision
@@ -36,54 +36,9 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr, int x, int y)
 	
 	this->controller = c;
 	this->g = gr;
-	this->x = x;
-	this->y = y;
 	this->stop = false;
 }
 
-void Visualizer::Set(void)
-{
-	using namespace std;
-	int dx=0;
-	int dy=0;
-	int i = 0;
-	bool selected = false;
-	multimap<int,int> exist_area;
-
-	random::mt19937 gen( static_cast<unsigned long>(time(0)) );
-	this->controller->Updated = false;
-	random::uniform_int_distribution<> distX(0,this->x-1);
-	random::uniform_int_distribution<> distY(0,this->y-1);
-	
-	while(i < this->controller->N)
-	{
-		dx = distX(gen);
-		dy = distY(gen);
-		if(dx + NODE_SIZE > this->x || dx - NODE_SIZE < 0 
-			|| dy + NODE_SIZE > this->y || dy - NODE_SIZE < 0) continue;
-		
-		for(multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr){
-			//èdÇ»ÇËîªíË TODO distance(p1,p2) <= NODE_SIZE*2
-			if( ((*itr).first + NODE_SIZE* this->controller->Density > dx && (*itr).first - NODE_SIZE*this->controller->Density < dx)
-				&& ((*itr).second + NODE_SIZE*this->controller->Density > dy && (*itr).second - NODE_SIZE*this->controller->Density < dy)){
-					selected = true;
-					break;
-			} else {
-				selected = false;
-			}
-		}
-		//node not exists
-		if(!selected){
-			array<int>^ position = {dx,dy};
-			this->controller->nodes[i]->SetPosition(position);
-			exist_area.insert(pair <int, int> (dx, dy));
-			selected = false;
-			i++;
-		}else{//node already exists
-			continue;
-		}
-	}
-}
 void Visualizer::Draw(void)
 {
 	int type = 0;	// 0:silent, 1:beep, 2:collision
@@ -131,19 +86,21 @@ void Visualizer::Clear()
 	this->g->Clear( Color::Gainsboro );
 }
 
-void Visualizer::AA(bool aa)
+void Visualizer::SetParameter(Settings* setting)
 {
-	if(aa){
+	if(setting->AA){
 		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
 	}else{
 		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
 	}
+
 }
 
 void Visualizer::Run(void)
 {
 	while(1){
 		this->controller->Run();
+		this->Clear();
 		this->Draw();
 #ifdef _DEBUG
 		System::Diagnostics::Debug::WriteLine(String::Format("global round:{0}",this->controller->GlobalRound));

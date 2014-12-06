@@ -7,20 +7,18 @@ namespace BeepingModel{
 	private:
 		Controller^ controller;
 		Graphics^ g;
-		int x;
-		int y;
 		array<Pen^>^ pen_node;
 		array<Pen^>^ pen_line;
 		array<SolidBrush^>^ brush;
 		bool stop;
+		System::Windows::Forms::GroupBox^  groupBox;
 	public:
 		Visualizer(void);
-		Visualizer(Controller^,Graphics^,int,int);
+		Visualizer(Controller^,Graphics^);
 		void Run(void);
 		void Draw(void);
-		void Set(void);
 		void Clear(void);
-		void AA(bool);
+		void SetParameter(Settings*);
 
 		property bool Stop {
 				bool get(){return this->stop;}

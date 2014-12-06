@@ -24,7 +24,9 @@ namespace BeepingModel {
 		FormSetting(void)
 		{
 			InitializeComponent();
-			settings = new Settings;
+			this->settings = new Settings;
+			this->settings->unitdisk_r = UDK_R;
+			this->settings->AA = false;
 		}
 		Settings* GetSetting()
 		{

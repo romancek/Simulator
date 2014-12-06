@@ -35,7 +35,9 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_ground;
 	private: System::Windows::Forms::Splitter^  splitter1;
 	private: System::Windows::Forms::Panel^  panel1;
+	private: System::Windows::Forms::Label^  label_radius;
 	private: Thread^ Run_Algorithm;
+	private: Settings* settings;
 	public:
 		Form1(void)
 		{
@@ -43,11 +45,12 @@ namespace BeepingModel {
 			//
 			//TODO: ここにコンストラクター コードを追加します
 			//
-			this->controller = gcnew Controller();
+			this->settings = new Settings;
+			this->controller = gcnew Controller(this->graph_panel->Size.Width,this->graph_panel->Size.Height);
 			this->controller->InitializeGraph();
-			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics(),this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+			this->controller->Set();
+			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics());
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
-			this->visualizer->Set();
 			this->visualizer->Draw();
 			this->UpdatePanel = true;
 		}
@@ -76,7 +79,8 @@ namespace BeepingModel {
 	private: System::Windows::Forms::TextBox^  textBox_m;
 	private: System::Windows::Forms::TextBox^  textBox_density;
 	private: System::Windows::Forms::Button^  btn_set;
-	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Label^  label_mouse_position;
+
 	private: System::Windows::Forms::Panel^  graph_panel;
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  fileToolStripMenuItem;
@@ -107,7 +111,7 @@ namespace BeepingModel {
 			this->textBox_m = (gcnew System::Windows::Forms::TextBox());
 			this->textBox_density = (gcnew System::Windows::Forms::TextBox());
 			this->btn_set = (gcnew System::Windows::Forms::Button());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label_mouse_position = (gcnew System::Windows::Forms::Label());
 			this->graph_panel = (gcnew System::Windows::Forms::Panel());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -122,6 +126,7 @@ namespace BeepingModel {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label_radius = (gcnew System::Windows::Forms::Label());
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
@@ -198,14 +203,14 @@ namespace BeepingModel {
 			this->btn_set->UseVisualStyleBackColor = true;
 			this->btn_set->Click += gcnew System::EventHandler(this, &Form1::btn_set_Click);
 			// 
-			// label1
+			// label_mouse_position
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(20, 29);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(35, 15);
-			this->label1->TabIndex = 8;
-			this->label1->Text = L"label1";
+			this->label_mouse_position->AutoSize = true;
+			this->label_mouse_position->Location = System::Drawing::Point(20, 29);
+			this->label_mouse_position->Name = L"label_mouse_position";
+			this->label_mouse_position->Size = System::Drawing::Size(81, 15);
+			this->label_mouse_position->TabIndex = 8;
+			this->label_mouse_position->Text = L"MousePosition";
 			// 
 			// graph_panel
 			// 
@@ -224,7 +229,7 @@ namespace BeepingModel {
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Padding = System::Windows::Forms::Padding(7, 2, 0, 2);
-			this->menuStrip1->Size = System::Drawing::Size(1006, 26);
+			this->menuStrip1->Size = System::Drawing::Size(1006, 24);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -233,27 +238,27 @@ namespace BeepingModel {
 			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->openToolStripMenuItem, 
 				this->saveToolStripMenuItem, this->exitToolStripMenuItem});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(57, 22);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(51, 20);
 			this->fileToolStripMenuItem->Text = L"File(&F)";
 			// 
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(137, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(118, 22);
 			this->openToolStripMenuItem->Text = L"Open(&O)...";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Open);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(137, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(118, 22);
 			this->saveToolStripMenuItem->Text = L"Save(&S)...";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_FileSave);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(137, 22);
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(118, 22);
 			this->exitToolStripMenuItem->Text = L"Exit(&C)";
 			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Exit);
 			// 
@@ -261,13 +266,13 @@ namespace BeepingModel {
 			// 
 			this->toolToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->settingSToolStripMenuItem});
 			this->toolToolStripMenuItem->Name = L"toolToolStripMenuItem";
-			this->toolToolStripMenuItem->Size = System::Drawing::Size(62, 22);
+			this->toolToolStripMenuItem->Size = System::Drawing::Size(54, 20);
 			this->toolToolStripMenuItem->Text = L"Tool(&T)";
 			// 
 			// settingSToolStripMenuItem
 			// 
 			this->settingSToolStripMenuItem->Name = L"settingSToolStripMenuItem";
-			this->settingSToolStripMenuItem->Size = System::Drawing::Size(136, 22);
+			this->settingSToolStripMenuItem->Size = System::Drawing::Size(121, 22);
 			this->settingSToolStripMenuItem->Text = L"Setting(&S)";
 			this->settingSToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::settingSToolStripMenuItem_Click);
 			// 
@@ -318,8 +323,9 @@ namespace BeepingModel {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label_radius);
 			this->groupBox1->Controls->Add(this->label_ground);
-			this->groupBox1->Controls->Add(this->label1);
+			this->groupBox1->Controls->Add(this->label_mouse_position);
 			this->groupBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->groupBox1->Location = System::Drawing::Point(5, 400);
 			this->groupBox1->Name = L"groupBox1";
@@ -327,6 +333,15 @@ namespace BeepingModel {
 			this->groupBox1->TabIndex = 13;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Parameter";
+			// 
+			// label_radius
+			// 
+			this->label_radius->AutoSize = true;
+			this->label_radius->Location = System::Drawing::Point(20, 88);
+			this->label_radius->Name = L"label_radius";
+			this->label_radius->Size = System::Drawing::Size(49, 15);
+			this->label_radius->TabIndex = 10;
+			this->label_radius->Text = L"Radius : ";
 			// 
 			// label_ground
 			// 
@@ -339,9 +354,9 @@ namespace BeepingModel {
 			// 
 			// splitter1
 			// 
-			this->splitter1->Location = System::Drawing::Point(0, 26);
+			this->splitter1->Location = System::Drawing::Point(0, 24);
 			this->splitter1->Name = L"splitter1";
-			this->splitter1->Size = System::Drawing::Size(3, 744);
+			this->splitter1->Size = System::Drawing::Size(3, 746);
 			this->splitter1->TabIndex = 14;
 			this->splitter1->TabStop = false;
 			// 
@@ -394,12 +409,15 @@ namespace BeepingModel {
 
 		}
 #pragma endregion
+
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 
 	}
+
 private: void UpdateDistributedSystem( void ){
 
 	}
+
 //TODO AA reset problem
 private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
 		if(this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" ){
@@ -414,22 +432,26 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 			}else{
 				int density = Convert::ToInt32(this->textBox_density->Text,10);
 				this->controller->InitializeGraph( n, m, density );
-				this->visualizer->Set();
+				this->controller->Set();
 				this->visualizer->Draw();
 			}
 		}
 	}
+
 private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
-		this->label1->Text=String::Format("({0},{1})", e->X, e->Y);
+		this->label_mouse_position->Text=String::Format("({0},{1})", e->X, e->Y);
 	}
+
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
 		//TODO
 		this->visualizer->Draw();
 		this->label_ground->Text = String::Format("Global Round : {0}",this->controller->GlobalRound);
 	}
+
 private: System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();
 	}
+
 private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e) {
 		this->openFileDialog1->Title = L"Open File";
 
@@ -442,6 +464,7 @@ private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e)
 		this->fileName = openFileDialog1->FileName;
 		UpdateDistributedSystem();
 	}
+
 private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
 		this->saveFileDialog1->Title = L"Save File";
 
@@ -450,6 +473,7 @@ private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^
 		SaveFile( saveFileDialog1->FileName );
 		this->fileName = saveFileDialog1->FileName;
 	}
+
 //
 // Save
 //
@@ -467,18 +491,22 @@ private: bool SaveFile( String^ path ) {
 			return SaveCsvFile( path );
 		}
 	}
+
 private: bool SaveCsvFile( String^ path ) {
 		StreamWriter^ writer = gcnew StreamWriter( path, false,System::Text::Encoding::GetEncoding("UTF-8"));
 		writer->WriteLine("THIS,IS,TEST,WRITE,FILE");
 		writer->Close();
 		return true;
 	}
+
 private: bool SaveJsonFile( String^ path ) {
 		return true;
 	}
+
 private: bool SavePngFile( String^ path ) {
 		return true;
 	}
+
 //
 // Open
 //
@@ -497,23 +525,29 @@ private: bool OpenFile( String^ path ) {
 			return LoadCsvFile( path );
 		}
 	}
+
 private: bool LoadCsvFile( String^ path ) {
 		return true;
 	}
+
 private: bool LoadJsonFile( String^ path ) {
 		return true;
 	}
+
 private: bool LoadPngFile( String^ path ) {
 		return true;
 	}
+
 private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		FormSetting^ fs = gcnew FormSetting();
 		fs->ShowDialog();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
-		Settings* settings = fs->GetSetting();
-		this->visualizer->AA(settings->AA);
+		settings = fs->GetSetting();
+		this->visualizer->SetParameter(settings);
+		this->label_radius->Text = String::Format("Radius : {0}",settings->unitdisk_r);
 		this->visualizer->Draw();
 	}
+
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
 		if(this->visualizer->Stop){
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
@@ -521,13 +555,15 @@ private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^
 		this->visualizer->Stop = false;
 		this->Run_Algorithm->Start();
 	}
+
 private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->visualizer->Stop = true;
-		//this->Run_Algorithm->Abort();
 	}
+
 private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
 		
 	}
+
 };
 }
 

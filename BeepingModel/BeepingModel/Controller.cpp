@@ -11,7 +11,7 @@ using namespace boost;
 using namespace System::Diagnostics;
 
 
-Controller::Controller(void)
+Controller::Controller(int x, int y)
 {
 	this->n = N_SIZE;
 	this->m = M_SIZE;
@@ -21,6 +21,8 @@ Controller::Controller(void)
 	this->UpperN = 1000;
 	this->c = 3;
 	this->global_round = 1;
+	this->x = x;
+	this->y = y;
 }
 
 void Controller::InitializeGraph(void)
@@ -119,6 +121,49 @@ void Controller::CreateRandomGraph(void)
 void Controller::CreateUnitDiskGraph(void)
 {
 
+}
+
+void Controller::Set(void)
+{
+	using namespace std;
+	int dx=0;
+	int dy=0;
+	int i = 0;
+	bool selected = false;
+	multimap<int,int> exist_area;
+
+	random::mt19937 gen( static_cast<unsigned long>(time(0)) );
+	random::uniform_int_distribution<> distX(0,this->x-1);
+	random::uniform_int_distribution<> distY(0,this->y-1);
+	
+	while(i < this->n)
+	{
+		dx = distX(gen);
+		dy = distY(gen);
+		if(dx + NODE_SIZE > this->x || dx - NODE_SIZE < 0 
+			|| dy + NODE_SIZE > this->y || dy - NODE_SIZE < 0) continue;
+		
+		for(multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr){
+			//èdÇ»ÇËîªíË TODO distance(p1,p2) <= NODE_SIZE*2
+			if( ((*itr).first + NODE_SIZE* this->density > dx && (*itr).first - NODE_SIZE*this->density < dx)
+				&& ((*itr).second + NODE_SIZE*this->density > dy && (*itr).second - NODE_SIZE*this->density < dy)){
+					selected = true;
+					break;
+			} else {
+				selected = false;
+			}
+		}
+		//node not exists
+		if(!selected){
+			array<int>^ position = {dx,dy};
+			this->nodes[i]->SetPosition(position);
+			exist_area.insert(pair <int, int> (dx, dy));
+			selected = false;
+			i++;
+		}else{//node already exists
+			continue;
+		}
+	}
 }
 
 void Controller::Run(void)
