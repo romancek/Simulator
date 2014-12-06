@@ -31,5 +31,5 @@
 
 typedef struct  {
 	bool AA;
-	int unitdisk_r;
+	unsigned int unitdisk_r;
 }Settings;

@@ -16,30 +16,20 @@ namespace BeepingModel {
 	public ref class FormSetting : public System::Windows::Forms::Form
 	{
 	private: Node^ node;
-	private: System::Windows::Forms::NumericUpDown^  numericUpDown1;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_UnitDisk_radius;
+
 	private: System::Windows::Forms::Label^  label1;
-	private: bool aa;
 	private: Settings* settings;
 	public:
 		FormSetting(void)
 		{
 			InitializeComponent();
 			settings = new Settings;
-			this->aa = false;
-		}
-		//設定出力 TODO
-		int GetValue()
-		{
-			return 1;
 		}
 		Settings* GetSetting()
 		{
 			return this->settings;
 		}
-		/*Node^ GetNodeInfo()
-		{
-			return node;
-		}*/
 	protected:
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。
@@ -76,9 +66,9 @@ namespace BeepingModel {
 			this->btn_ok = (gcnew System::Windows::Forms::Button());
 			this->btn_cancel = (gcnew System::Windows::Forms::Button());
 			this->checkBox_AA = (gcnew System::Windows::Forms::CheckBox());
-			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->numericUpDown_UnitDisk_radius = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btn_ok
@@ -112,12 +102,16 @@ namespace BeepingModel {
 			this->checkBox_AA->UseVisualStyleBackColor = true;
 			this->checkBox_AA->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_AA_CheckedChanged);
 			// 
-			// numericUpDown1
+			// numericUpDown_UnitDisk_radius
 			// 
-			this->numericUpDown1->Location = System::Drawing::Point(24, 72);
-			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(47, 21);
-			this->numericUpDown1->TabIndex = 3;
+			this->numericUpDown_UnitDisk_radius->Location = System::Drawing::Point(24, 72);
+			this->numericUpDown_UnitDisk_radius->Name = L"numericUpDown_UnitDisk_radius";
+			this->numericUpDown_UnitDisk_radius->Size = System::Drawing::Size(47, 21);
+			this->numericUpDown_UnitDisk_radius->Value = UDK_R;
+			this->numericUpDown_UnitDisk_radius->Maximum = 255;
+			this->numericUpDown_UnitDisk_radius->Minimum = 0;
+			this->numericUpDown_UnitDisk_radius->TabIndex = 3;
+			this->numericUpDown_UnitDisk_radius->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_UnitDisk_radius_ValueChanged);
 			// 
 			// label1
 			// 
@@ -134,7 +128,7 @@ namespace BeepingModel {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(743, 514);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->numericUpDown1);
+			this->Controls->Add(this->numericUpDown_UnitDisk_radius);
 			this->Controls->Add(this->checkBox_AA);
 			this->Controls->Add(this->btn_cancel);
 			this->Controls->Add(this->btn_ok);
@@ -146,7 +140,7 @@ namespace BeepingModel {
 			this->Opacity = 0.95;
 			this->Text = L"Setting";
 			this->Load += gcnew System::EventHandler(this, &FormSetting::FormSetting_Load);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -161,11 +155,14 @@ private: System::Void btn_ok_Click(System::Object^  sender, System::EventArgs^  
 		this->Close();
 	}
 private: System::Void checkBox_AA_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-			 if( this->checkBox_AA->Checked ){
-				this->settings->AA = true;
-			 }else{
-				this->settings->AA = false; 
-			 }
-		 }
+		if( this->checkBox_AA->Checked ){
+		this->settings->AA = true;
+		}else{
+		this->settings->AA = false; 
+		}
+	}
+private: System::Void numericUpDown_UnitDisk_radius_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+		this->settings->unitdisk_r = (int)this->numericUpDown_UnitDisk_radius->Value;
+	}
 };
 }
