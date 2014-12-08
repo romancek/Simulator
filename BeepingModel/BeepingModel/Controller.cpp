@@ -1,7 +1,7 @@
-#include "Node.h"
-#include "Channel.h"
 #include "StdAfx.h"
 #include "Controller.h"
+#include "Node.h"
+#include "Channel.h"
 
 using namespace BeepingModel;
 using namespace boost;
