@@ -59,7 +59,7 @@ void Visualizer::Draw(void)
 		}else{//beep
 			type = 1;
 		}
-		this->g->DrawLine(pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
+		this->g->DrawLine(this->pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
 	}
 
 	for each(Node^ n in this->controller->nodes)

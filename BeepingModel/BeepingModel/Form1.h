@@ -51,7 +51,7 @@ namespace BeepingModel {
 			this->controller->InitializeGraph(this->settings->topology);
 			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics());
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
-			this->visualizer->Draw();
+			//this->visualizer->Draw();
 			this->UpdatePanel = true;
 		}
 
