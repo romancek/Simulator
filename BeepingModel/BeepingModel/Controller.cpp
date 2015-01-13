@@ -167,6 +167,7 @@ void Controller::SetRandomizedPosition(void)
 
 void Controller::SetGraphParameter(Settings* setting)
 {
+	this->graph_topology = setting->topology;
 	Debug::WriteLine(String::Format("Topology is {0}",setting->topology));
 }
 

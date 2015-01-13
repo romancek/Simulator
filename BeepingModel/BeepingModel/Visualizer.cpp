@@ -35,7 +35,7 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 	
 	this->controller = c;
 	this->g = gr;
-	this->stop = false;
+	this->stop = true;
 }
 
 void Visualizer::Draw(void)

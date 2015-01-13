@@ -566,9 +566,9 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
 		if(this->visualizer->Stop){
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
+			this->Run_Algorithm->Start();
 		}
 		this->visualizer->Stop = false;
-		this->Run_Algorithm->Start();
 	}
 
 private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
