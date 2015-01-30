@@ -11,13 +11,13 @@ namespace BeepingModel{
 		int n;		//network size
 		int m;	//channel size
 		int density;
-		int x,y;
 		int graph_topology;
 		bool updated;
 		int global_round;
 		int UpperN;
 		int c;
 	public:
+		int x,y;
 		array<Node^>^ nodes;
 		array<Channel^>^ channels;
 	public:

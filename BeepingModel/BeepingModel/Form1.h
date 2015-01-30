@@ -397,7 +397,7 @@ namespace BeepingModel {
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
-			this->BackColor = System::Drawing::Color::Gainsboro;
+			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(1006, 770);
 			this->Controls->Add(this->splitter1);
 			this->Controls->Add(this->btn_set);
@@ -425,12 +425,17 @@ namespace BeepingModel {
 #pragma endregion
 
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
-
-	}
-
+			 this->DoubleBuffered = true;
+			 this->EnableDoubleBuffering();
+		}
+private: void EnableDoubleBuffering()	{
+			// Set the value of the double-buffering style bits to true.
+			this->SetStyle( static_cast<ControlStyles>(ControlStyles::DoubleBuffer | ControlStyles::UserPaint | ControlStyles::AllPaintingInWmPaint), true );
+			this->UpdateStyles();
+		}
 private: void UpdateDistributedSystem( void ){
 
-	}
+		}
 
 //TODO AA reset problem
 private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {

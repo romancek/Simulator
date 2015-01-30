@@ -40,6 +40,9 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 
 void Visualizer::Draw(void)
 {
+	BufferedGraphicsContext^ currentContext = BufferedGraphicsManager::Current;
+	BufferedGraphics^ grafx = currentContext->Allocate(this->g,  Rectangle( 0, 0, this->controller->x, this->controller->y ));
+	grafx->Graphics->Clear( Color::White );
 	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
@@ -59,7 +62,7 @@ void Visualizer::Draw(void)
 		}else{//beep
 			type = 1;
 		}
-		this->g->DrawLine(this->pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
+		grafx->Graphics->DrawLine(this->pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
 	}
 
 	for each(Node^ n in this->controller->nodes)
@@ -75,14 +78,16 @@ void Visualizer::Draw(void)
 		}
 		array<int>^ pos = n->GetPosition();
 		Rectangle rect = Rectangle(pos[0],pos[1],NODE_SIZE,NODE_SIZE);
-		this->g->FillEllipse( this->brush[type/3], rect );
-		this->g->DrawEllipse( this->pen_node[type], rect );
+		grafx->Graphics->FillEllipse( this->brush[type/3], rect );
+		grafx->Graphics->DrawEllipse( this->pen_node[type], rect );
 	}
+	grafx->Render();
+	grafx->~BufferedGraphics();
 }
 
 void Visualizer::Clear()
 {
-	this->g->Clear( Color::Gainsboro );
+	this->g->Clear( Color::White );
 }
 
 void Visualizer::SetParameter(Settings* setting)
@@ -99,7 +104,6 @@ void Visualizer::Run(void)
 {
 	while(1){
 		this->controller->Run();
-		this->Clear();
 		this->Draw();
 #ifdef _DEBUG
 		System::Diagnostics::Debug::WriteLine(String::Format("global round:{0}",this->controller->GlobalRound));
