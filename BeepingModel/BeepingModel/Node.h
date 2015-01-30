@@ -9,7 +9,6 @@ namespace BeepingModel{
 	{
 	private:
 		int id;
-		int ch_num;
 		array<int>^ states;
 		array<int>^ position;
 		int local_round;
@@ -19,6 +18,7 @@ namespace BeepingModel{
 		int MIS_state; //0:if,1:listen,2:else,3:beep
 		int udk_r; //UnitDisk radius
 	public:
+		int ch_num;
 		cliext::vector<int> neighbors;
 		Node();
 		Node(int);

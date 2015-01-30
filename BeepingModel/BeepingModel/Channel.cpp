@@ -11,7 +11,7 @@ Channel::Channel(void)
 Channel::Channel(int id)
 {
 	this->id = id;
-	this->endpoint = gcnew array<int>(2);
+	this->endpoint = gcnew array<int>{-1,-1};
 }
 
 void Channel::SetEndPoint(int v1, int v2)

@@ -21,7 +21,8 @@
 
 #define _run_speed_ms 50 
 #define _MIS_apper_stop_ms 10
-#define NODE_SIZE 10
+#define NODE_SIZE 5
+#define PEN_WIDTH 0.1f
 #define	_DENSITY 2		//‚‚¢‚Æ”Z“x‚ª’á‚¢
 //action state
 #define beeping 0

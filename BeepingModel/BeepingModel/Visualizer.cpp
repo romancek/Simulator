@@ -20,15 +20,15 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 	//•`‰æ—p
 	//silent,beep,collision
 	this->pen_line = gcnew array<Pen^>(3) ;
-	this->pen_line[0] = gcnew Pen(Color::Black,0.5f);
-	this->pen_line[1] = gcnew Pen(Color::DarkOrange,0.5f);
-	this->pen_line[2] = gcnew Pen(Color::Red,0.5f);
+	this->pen_line[0] = gcnew Pen(Color::Black,PEN_WIDTH);
+	this->pen_line[1] = gcnew Pen(Color::DarkOrange,PEN_WIDTH);
+	this->pen_line[2] = gcnew Pen(Color::Red,PEN_WIDTH);
 	//sleep,inactive,competing,MIS
 	this->pen_node = gcnew array<Pen^>(4);
-	this->pen_node[0] = gcnew Pen(Color::White,0.5f); 
-	this->pen_node[1] = gcnew Pen(Color::Black,0.5f);
-	this->pen_node[2] = gcnew Pen(Color::HotPink,0.5f);
-	this->pen_node[3] = gcnew Pen(Color::Red,0.5f);
+	this->pen_node[0] = gcnew Pen(Color::White,PEN_WIDTH); 
+	this->pen_node[1] = gcnew Pen(Color::Black,PEN_WIDTH);
+	this->pen_node[2] = gcnew Pen(Color::HotPink,PEN_WIDTH);
+	this->pen_node[3] = gcnew Pen(Color::Red,PEN_WIDTH);
 	this->brush = gcnew array<SolidBrush^>(2);
 	this->brush[0] = gcnew SolidBrush( Color::Gainsboro );
 	this->brush[1] = gcnew SolidBrush( Color::Red );
@@ -46,6 +46,7 @@ void Visualizer::Draw(void)
 	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
+		if(ch->EndPoint[0] < 0)continue;
 		array<int>^ p1 = this->controller->nodes[ch->EndPoint[0]]->GetPosition();
 		array<int>^ p2 = this->controller->nodes[ch->EndPoint[1]]->GetPosition();
 #ifdef _DEBUG

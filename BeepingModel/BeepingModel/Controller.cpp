@@ -75,6 +75,18 @@ void Controller::CreateGraph()
 
 void Controller::CreateRandomGraph(void)
 {
+	this->CreateRandomEdge();
+	this->SetRandomizedPosition();
+}
+
+void Controller::CreateUnitDiskGraph(void)
+{
+	this->SetRandomizedPosition();
+	this->SetUnitDiskEdge();
+}
+
+void Controller::CreateRandomEdge(void)
+{
 	using namespace std;
 	int i = 0;
 	bool selected = false;
@@ -114,12 +126,6 @@ void Controller::CreateRandomGraph(void)
 			continue;
 		}
 	}
-	this->SetRandomizedPosition();
-}
-
-void Controller::CreateUnitDiskGraph(void)
-{
-
 }
 
 void Controller::SetRandomizedPosition(void)
@@ -132,20 +138,18 @@ void Controller::SetRandomizedPosition(void)
 	multimap<int,int> exist_area;
 
 	random::mt19937 gen( static_cast<unsigned long>(time(0)) );
-	random::uniform_int_distribution<> distX(0,this->x-1);
-	random::uniform_int_distribution<> distY(0,this->y-1);
+	random::uniform_int_distribution<> distX(NODE_SIZE,this->x-1-NODE_SIZE);
+	random::uniform_int_distribution<> distY(NODE_SIZE,this->y-1-NODE_SIZE);
 	
 	while(i < this->n)
 	{
 		dx = distX(gen);
 		dy = distY(gen);
-		if(dx + NODE_SIZE > this->x || dx - NODE_SIZE < 0 
-			|| dy + NODE_SIZE > this->y || dy - NODE_SIZE < 0) continue;
-		
+
 		for(multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr){
 			//重なり判定 TODO distance(p1,p2) <= NODE_SIZE*2
-			if( ((*itr).first + NODE_SIZE* this->density > dx && (*itr).first - NODE_SIZE*this->density < dx)
-				&& ((*itr).second + NODE_SIZE*this->density > dy && (*itr).second - NODE_SIZE*this->density < dy)){
+			if( ((*itr).first + NODE_SIZE * this->density > dx && (*itr).first - NODE_SIZE * this->density < dx)
+				&& ((*itr).second + NODE_SIZE * this->density > dy && (*itr).second - NODE_SIZE * this->density < dy)){
 					selected = true;
 					break;
 			} else {
@@ -165,10 +169,48 @@ void Controller::SetRandomizedPosition(void)
 	}
 }
 
+int Controller::SetUnitDiskEdge(void)
+{
+	using namespace std;
+	int i = 0;
+	int edge_num = 0;
+	bool selected = false;
+	while(i < this->n)
+	{	
+		array<int>^ p1 = this->nodes[i]->GetPosition();
+		for(int j = 0;j < this->n;j++){
+			if(j == i)continue;
+			//チャネルが既に存在しているかチェック
+			for(int nr = 0; nr < this->nodes[i]->ch_num;nr++){
+				if(this->nodes[i]->neighbors[nr] == j)selected = true;
+			}
+			if(selected){
+				selected = false;
+				continue;
+			}
+			array<int>^ p2 = this->nodes[j]->GetPosition();
+			//距離unitdisk_r以内に配置
+			if( GetNodeDistance(p1[0],p1[1],p2[0],p2[1]) < unitdisk_r){
+					this->channels[edge_num++]->SetEndPoint(i,j);
+					this->nodes[i]->SetNeighbor(j);
+					this->nodes[j]->SetNeighbor(i);
+			}
+		}
+		i++;
+	}
+	return edge_num;
+}
+
+double Controller::GetNodeDistance(int p1x, int p1y, int p2x, int p2y)
+{
+	return sqrt(pow(fabs(double(p1x-p2x)),2)+pow(fabs(double(p1y-p2y)),2));
+}
+
 void Controller::SetGraphParameter(Settings* setting)
 {
 	this->graph_topology = setting->topology;
-	Debug::WriteLine(String::Format("Topology is {0}",setting->topology));
+	this->unitdisk_r = setting->unitdisk_r;
+	Debug::WriteLine(String::Format("Topology:{0}",setting->topology));
 }
 
 void Controller::Run(void)

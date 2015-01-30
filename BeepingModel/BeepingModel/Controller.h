@@ -11,6 +11,7 @@ namespace BeepingModel{
 		int n;		//network size
 		int m;	//channel size
 		int density;
+		int unitdisk_r;
 		int graph_topology;
 		bool updated;
 		int global_round;
@@ -25,9 +26,12 @@ namespace BeepingModel{
 		void InitializeGraph(int);
 		void InitializeGraph(int,int,int,int);
 		void CreateGraph();
-		void CreateRandomGraph(void);
-		void CreateUnitDiskGraph(void);
-		void SetRandomizedPosition(void);		//Random graph only
+		void CreateRandomGraph(void);	//Random graph only
+		void CreateUnitDiskGraph(void);	//UnitDisk graph only
+		void CreateRandomEdge(void);
+		void SetRandomizedPosition(void);
+		int SetUnitDiskEdge(void);
+		double GetNodeDistance(int,int,int,int);
 		void SetGraphParameter(Settings*);
 		void Run(void);
 		void Run_UpperN(void);

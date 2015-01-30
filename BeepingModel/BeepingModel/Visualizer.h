@@ -12,7 +12,6 @@ namespace BeepingModel{
 		array<Pen^>^ pen_line;
 		array<SolidBrush^>^ brush;
 		bool stop;
-		System::Windows::Forms::GroupBox^  groupBox;
 	public:
 		Visualizer(void);
 		Visualizer(Controller^,Graphics^);

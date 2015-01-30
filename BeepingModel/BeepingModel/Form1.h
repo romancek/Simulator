@@ -425,13 +425,7 @@ namespace BeepingModel {
 #pragma endregion
 
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
-			 this->DoubleBuffered = true;
-			 this->EnableDoubleBuffering();
-		}
-private: void EnableDoubleBuffering()	{
-			// Set the value of the double-buffering style bits to true.
-			this->SetStyle( static_cast<ControlStyles>(ControlStyles::DoubleBuffer | ControlStyles::UserPaint | ControlStyles::AllPaintingInWmPaint), true );
-			this->UpdateStyles();
+
 		}
 private: void UpdateDistributedSystem( void ){
 
@@ -442,7 +436,6 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 		if(this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" ){
 			MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}else{
-			this->visualizer->Clear();
 			int n = Convert::ToInt32(this->textBox_n->Text,10);
 			int m = Convert::ToInt32(this->textBox_m->Text,10);
 			//restrict number of edges
