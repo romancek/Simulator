@@ -19,6 +19,7 @@ namespace BeepingModel{
 		int c;
 	public:
 		int x,y;
+		int channel_num;
 		array<Node^>^ nodes;
 		array<Channel^>^ channels;
 	public:
@@ -30,7 +31,7 @@ namespace BeepingModel{
 		void CreateUnitDiskGraph(void);	//UnitDisk graph only
 		void CreateRandomEdge(void);
 		void SetRandomizedPosition(void);
-		int SetUnitDiskEdge(void);
+		void SetUnitDiskEdge(void);
 		double GetNodeDistance(int,int,int,int);
 		void SetGraphParameter(Settings*);
 		void Run(void);

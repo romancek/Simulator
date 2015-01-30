@@ -37,6 +37,8 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_radius;
 	private: Thread^ Run_Algorithm;
 	private: System::Windows::Forms::Label^  label_topology;
+	private: System::Windows::Forms::Label^  label_channels;
+
 	private: Settings* settings;
 	public:
 		Form1(void)
@@ -51,7 +53,6 @@ namespace BeepingModel {
 			this->controller->InitializeGraph(this->settings->topology);
 			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics());
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
-			//this->visualizer->Draw();
 			this->UpdatePanel = true;
 		}
 
@@ -126,11 +127,12 @@ namespace BeepingModel {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label_channels = (gcnew System::Windows::Forms::Label());
+			this->label_topology = (gcnew System::Windows::Forms::Label());
 			this->label_radius = (gcnew System::Windows::Forms::Label());
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->label_topology = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -230,7 +232,7 @@ namespace BeepingModel {
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Padding = System::Windows::Forms::Padding(7, 2, 0, 2);
-			this->menuStrip1->Size = System::Drawing::Size(1006, 24);
+			this->menuStrip1->Size = System::Drawing::Size(1006, 26);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -239,27 +241,27 @@ namespace BeepingModel {
 			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->openToolStripMenuItem, 
 				this->saveToolStripMenuItem, this->exitToolStripMenuItem});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(51, 20);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(57, 22);
 			this->fileToolStripMenuItem->Text = L"File(&F)";
 			// 
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->openToolStripMenuItem->Text = L"Open(&O)...";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Open);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->saveToolStripMenuItem->Text = L"Save(&S)...";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_FileSave);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->exitToolStripMenuItem->Text = L"Exit(&C)";
 			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Exit);
 			// 
@@ -267,13 +269,13 @@ namespace BeepingModel {
 			// 
 			this->toolToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->settingSToolStripMenuItem});
 			this->toolToolStripMenuItem->Name = L"toolToolStripMenuItem";
-			this->toolToolStripMenuItem->Size = System::Drawing::Size(54, 20);
+			this->toolToolStripMenuItem->Size = System::Drawing::Size(62, 22);
 			this->toolToolStripMenuItem->Text = L"Tool(&T)";
 			// 
 			// settingSToolStripMenuItem
 			// 
 			this->settingSToolStripMenuItem->Name = L"settingSToolStripMenuItem";
-			this->settingSToolStripMenuItem->Size = System::Drawing::Size(121, 22);
+			this->settingSToolStripMenuItem->Size = System::Drawing::Size(136, 22);
 			this->settingSToolStripMenuItem->Text = L"Setting(&S)";
 			this->settingSToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::settingSToolStripMenuItem_Click);
 			// 
@@ -324,6 +326,7 @@ namespace BeepingModel {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label_channels);
 			this->groupBox1->Controls->Add(this->label_topology);
 			this->groupBox1->Controls->Add(this->label_radius);
 			this->groupBox1->Controls->Add(this->label_ground);
@@ -336,10 +339,31 @@ namespace BeepingModel {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Parameter";
 			// 
+			// label_channels
+			// 
+			this->label_channels->AutoSize = true;
+			this->label_channels->Location = System::Drawing::Point(20, 116);
+			this->label_channels->Name = L"label_channels";
+			this->label_channels->Size = System::Drawing::Size(60, 15);
+			this->label_channels->TabIndex = 12;
+			this->label_channels->Text = L"Channels : ";
+			// 
+			// label_topology
+			// 
+			this->label_topology->AutoSize = true;
+			this->label_topology->Font = (gcnew System::Drawing::Font(L"メイリオ", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->label_topology->ForeColor = System::Drawing::Color::Purple;
+			this->label_topology->Location = System::Drawing::Point(18, 282);
+			this->label_topology->Name = L"label_topology";
+			this->label_topology->Size = System::Drawing::Size(73, 18);
+			this->label_topology->TabIndex = 11;
+			this->label_topology->Text = L"Topology : ";
+			// 
 			// label_radius
 			// 
 			this->label_radius->AutoSize = true;
-			this->label_radius->Location = System::Drawing::Point(20, 88);
+			this->label_radius->Location = System::Drawing::Point(20, 87);
 			this->label_radius->Name = L"label_radius";
 			this->label_radius->Size = System::Drawing::Size(49, 15);
 			this->label_radius->TabIndex = 10;
@@ -348,7 +372,7 @@ namespace BeepingModel {
 			// label_ground
 			// 
 			this->label_ground->AutoSize = true;
-			this->label_ground->Location = System::Drawing::Point(20, 59);
+			this->label_ground->Location = System::Drawing::Point(20, 58);
 			this->label_ground->Name = L"label_ground";
 			this->label_ground->Size = System::Drawing::Size(83, 15);
 			this->label_ground->TabIndex = 9;
@@ -356,9 +380,9 @@ namespace BeepingModel {
 			// 
 			// splitter1
 			// 
-			this->splitter1->Location = System::Drawing::Point(0, 24);
+			this->splitter1->Location = System::Drawing::Point(0, 26);
 			this->splitter1->Name = L"splitter1";
-			this->splitter1->Size = System::Drawing::Size(3, 746);
+			this->splitter1->Size = System::Drawing::Size(3, 744);
 			this->splitter1->TabIndex = 14;
 			this->splitter1->TabStop = false;
 			// 
@@ -379,18 +403,6 @@ namespace BeepingModel {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(170, 729);
 			this->panel1->TabIndex = 15;
-			// 
-			// label_topology
-			// 
-			this->label_topology->AutoSize = true;
-			this->label_topology->Font = (gcnew System::Drawing::Font(L"メイリオ", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
-				static_cast<System::Byte>(0)));
-			this->label_topology->ForeColor = System::Drawing::Color::Purple;
-			this->label_topology->Location = System::Drawing::Point(21, 281);
-			this->label_topology->Name = L"label_topology";
-			this->label_topology->Size = System::Drawing::Size(73, 18);
-			this->label_topology->TabIndex = 11;
-			this->label_topology->Text = L"Topology : ";
 			// 
 			// Form1
 			// 
@@ -437,7 +449,14 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 			MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}else{
 			int n = Convert::ToInt32(this->textBox_n->Text,10);
-			int m = Convert::ToInt32(this->textBox_m->Text,10);
+			int m;
+			if(this->settings->topology == 1){
+				m = n*(n-1)/2;
+				this->textBox_m->Clear();
+				this->textBox_m->Paste(Convert::ToString(m));
+			}else{
+				m = Convert::ToInt32(this->textBox_m->Text,10);
+			}
 			//restrict number of edges
 			if( ((n*(n-1))/2) < m ){
 				MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -445,6 +464,9 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 				int density = Convert::ToInt32(this->textBox_density->Text,10);
 				this->controller->InitializeGraph( n, m, density, this->settings->topology);
 				this->visualizer->Draw();
+				if(this->settings->topology == 1){
+					this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);
+				}
 			}
 		}
 	}

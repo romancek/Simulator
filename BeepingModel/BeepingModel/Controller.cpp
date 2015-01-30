@@ -169,11 +169,11 @@ void Controller::SetRandomizedPosition(void)
 	}
 }
 
-int Controller::SetUnitDiskEdge(void)
+void Controller::SetUnitDiskEdge(void)
 {
 	using namespace std;
 	int i = 0;
-	int edge_num = 0;
+	channel_num = 0;
 	bool selected = false;
 	while(i < this->n)
 	{	
@@ -191,14 +191,13 @@ int Controller::SetUnitDiskEdge(void)
 			array<int>^ p2 = this->nodes[j]->GetPosition();
 			//‹——£unitdisk_rˆÈ“à‚É”z’u
 			if( GetNodeDistance(p1[0],p1[1],p2[0],p2[1]) < unitdisk_r){
-					this->channels[edge_num++]->SetEndPoint(i,j);
+					this->channels[channel_num++]->SetEndPoint(i,j);
 					this->nodes[i]->SetNeighbor(j);
 					this->nodes[j]->SetNeighbor(i);
 			}
 		}
 		i++;
 	}
-	return edge_num;
 }
 
 double Controller::GetNodeDistance(int p1x, int p1y, int p2x, int p2y)
