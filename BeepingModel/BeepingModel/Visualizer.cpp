@@ -47,7 +47,7 @@ void Visualizer::Draw(void)
 	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
-		if ( ch->EndPoint[0] < 0 )continue;
+		if ( ch->EndPoint[0] < 0 ) continue;
 		array<int>^ p1 = this->controller->nodes[ch->EndPoint[0]]->GetPosition();
 		array<int>^ p2 = this->controller->nodes[ch->EndPoint[1]]->GetPosition();
 #ifdef _DEBUG
@@ -56,20 +56,17 @@ void Visualizer::Draw(void)
 #endif
 
 		if ( ( this->controller->nodes[ch->EndPoint[0]]->ActionState == listen  || this->controller->nodes[ch->EndPoint[0]]->ActionState ==sleep ) 
-			&& ( this->controller->nodes[ch->EndPoint[1]]->ActionState == listen || this->controller->nodes[ch->EndPoint[1]]->ActionState == sleep ) )
+			&& ( this->controller->nodes[ch->EndPoint[1]]->ActionState == listen || this->controller->nodes[ch->EndPoint[1]]->ActionState == sleep ) ) //silent or sleep
 		{ 
-			//silent or sleep
 			type = 0;
 		}
 		else if ( this->controller->nodes[ch->EndPoint[0]]->ActionState == beeping 
-			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == beeping )
+			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == beeping ) //collision
 		{ 
-			//collision
 			type = 2;
 		}
-		else
+		else //beep
 		{
-			//beep
 			type = 1;
 		}
 		grafx->Graphics->DrawLine(this->pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
@@ -126,9 +123,6 @@ void Visualizer::Run(void)
 	{
 		this->controller->Run();
 		this->Draw();
-#ifdef _DEBUG
-		System::Diagnostics::Debug::WriteLine(String::Format("global round:{0}",this->controller->GlobalRound));
-#endif
 		if ( this->stop )break;
 		Thread::Sleep(_Run_Speed_ms);
 	}

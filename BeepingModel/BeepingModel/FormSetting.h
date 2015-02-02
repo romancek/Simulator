@@ -30,8 +30,10 @@ namespace BeepingModel {
 		{
 			InitializeComponent();
 			this->settings = new Settings;
-			this->settings->unitdisk_r = UDK_R;
 			this->settings->AA = false;
+			this->settings->unitdisk_r = 50;
+			this->settings->F = 1;
+			this->settings->topology = 0;
 		}
 		Settings* GetSetting()
 		{

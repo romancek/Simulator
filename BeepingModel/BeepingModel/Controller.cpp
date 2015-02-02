@@ -45,15 +45,13 @@ void Controller::InitializeGraph(int topology)
 #endif
 }
 
-void Controller::InitializeGraph(int n, int m, int density, int topology)
+void Controller::InitializeGraph(int n, int m, int density)
 {
 	this->n = n;
 	this->m = m;
 	this->density = density;
 	this->updated = true;
 	this->global_round = 1;
-	this->graph_topology = topology;
-	//初期化処理
 	nodes = nullptr;
 	channels = nullptr;
 	nodes = gcnew array<Node^>(this->n);
@@ -203,7 +201,7 @@ void Controller::SetUnitDiskEdge(void)
 		array<int>^ p1 = this->nodes[i]->GetPosition();
 		for ( int j = 0;j < this->n;j++ )
 		{
-			if(j == i)continue;
+			if( j == i )continue;
 			//チャネルが既に存在しているかチェック
 			for ( int nr = 0; nr < this->nodes[i]->ch_num;nr++ )
 			{
@@ -216,7 +214,7 @@ void Controller::SetUnitDiskEdge(void)
 			}
 			array<int>^ p2 = this->nodes[j]->GetPosition();
 			//距離unitdisk_r以内に配置
-			if ( GetNodeDistance(p1[0],p1[1],p2[0],p2[1]) < unitdisk_r )
+			if ( GetNodeDistance( p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2 ) < unitdisk_r )
 			{
 					this->channels[channel_num++]->SetEndPoint(i,j);
 					this->nodes[i]->SetNeighbor(j);
@@ -236,7 +234,7 @@ void Controller::SetGraphParameter(Settings* setting)
 {
 	this->graph_topology = setting->topology;
 	this->unitdisk_r = setting->unitdisk_r;
-	Debug::WriteLine(String::Format("Topology:{0}",setting->topology));
+	this->F = setting->F;
 }
 
 void Controller::Run(void)

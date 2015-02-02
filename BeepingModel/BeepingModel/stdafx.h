@@ -41,6 +41,7 @@
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください。
 
 typedef struct  {
+public:
 	bool AA;
 	unsigned int unitdisk_r;
 	int topology;	//0:Random, 1:UnitDisk

@@ -19,6 +19,7 @@ namespace BeepingModel{
 		int udk_r; //UnitDisk radius
 	public:
 		int ch_num;
+		int use_freq;		//1~F channels
 		cliext::vector<int> neighbors;
 		Node();
 		Node(int);
@@ -27,9 +28,6 @@ namespace BeepingModel{
 		void SetPosition(array<int>^);
 		array<int>^ GetPosition(void);
 		void Reset(void);
-		//void InactiveMode(void);
-		//void CompetingMode(void);
-		//void MISMode(void);
 	public:
 		property int Id {
 			int get() { return this->id; }
