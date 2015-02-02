@@ -457,8 +457,10 @@ private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e)
 
 		}
 private: System::Void UpdateDistributedSystem( ){
-		while(1){
-			if(this->visualizer->Stop == false){
+		while(1)
+		{
+			if ( this->visualizer->Stop == false )
+			{
 				this->SetText( String::Format("Global Round : {0}",this->controller->GlobalRound) );
 			}
 			Thread::Sleep(_CheckInfo_Speed_ms);
@@ -478,26 +480,36 @@ private: System::Void SetText( String^ text){
 	}
 //TODO AA reset problem
 private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
-		if(this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" ){
+		if ( this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" )
+		{
 			MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}else{
+		}
+		else
+		{
 			int n = Convert::ToInt32(this->textBox_n->Text,10);
 			int m;
-			if(this->settings->topology == 1){
+			if ( this->settings->topology == 1 )
+			{
 				m = n*(n-1)/2;
 				this->textBox_m->Clear();
 				this->textBox_m->Paste(Convert::ToString(m));
-			}else{
+			}
+			else
+			{
 				m = Convert::ToInt32(this->textBox_m->Text,10);
 			}
 			//restrict number of edges
-			if( ((n*(n-1))/2) < m ){
+			if ( ((n*(n-1))/2) < m )
+			{
 				MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}else{
+			}
+			else
+			{
 				int density = Convert::ToInt32(this->textBox_density->Text,10);
 				this->controller->InitializeGraph( n, m, density, this->settings->topology);
 				this->visualizer->Draw();
-				if(this->settings->topology == 1){
+				if ( this->settings->topology == 1 )
+				{
 					this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);
 				}
 			}
@@ -531,9 +543,10 @@ private: System::Void Close(){
 private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e) {
 		this->openFileDialog1->Title = L"Open File";
 
-		if (openFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK) return;
+		if (openFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK ) return;
 
-		if( OpenFile( openFileDialog1->FileName ) == false){
+		if ( OpenFile( openFileDialog1->FileName ) == false )
+		{
 			MessageBox::Show("ファイルの読み込みに失敗しました", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
@@ -544,7 +557,7 @@ private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e)
 private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
 		this->saveFileDialog1->Title = L"Save File";
 
-		if (saveFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK) return;
+		if ( saveFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK ) return;
 
 		SaveFile( saveFileDialog1->FileName );
 		this->fileName = saveFileDialog1->FileName;
@@ -554,15 +567,22 @@ private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^
  ** Save File
  **/
 private: bool SaveFile( String^ path ) {
-		if ( path->EndsWith(".csv")) {
+		if ( path->EndsWith(".csv") )
+		{
 			// CSV形式で保存
 			return SaveCsvFile( path );
-		} else if ( path->EndsWith(".json")) {
+		}
+		else if ( path->EndsWith(".json") )
+		{
 			// JSON形式で保存
 			return SaveJsonFile( path );
-		}else if  ( path->EndsWith(".png")) {
+		}
+		else if ( path->EndsWith(".png") )
+		{
 			return SavePngFile( path );
-		} else {
+		}
+		else
+		{
 			// その他の場合はCSV形式で保存
 			return SaveCsvFile( path );
 		}
@@ -587,16 +607,23 @@ private: bool SavePngFile( String^ path ) {
  ** Open File
  **/
 private: bool OpenFile( String^ path ) {
-		if ( path->EndsWith(".csv")) {
+		if ( path->EndsWith(".csv"))
+		{
 			// CSV形式で開く
 			return LoadCsvFile( path );
-		} else if ( path->EndsWith(".json")) {
+		}
+		else if ( path->EndsWith(".json") )
+		{
 			// JSON形式で開く
 			return LoadJsonFile( path );
-		} else if ( path->EndsWith(".png")) {
+		}
+		else if ( path->EndsWith(".png") )
+		{
 			// PNG形式で開く
 			return LoadPngFile( path );	
-		} else {
+		}
+		else
+		{
 			// その他の場合はCSV形式で開く
 			return LoadCsvFile( path );
 		}
@@ -631,7 +658,8 @@ private: System::Void PrintParam() {
 		this->label_F->Text = String::Format("F : {0}",settings->F);
 	}
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
-		if(this->visualizer->Stop){
+		if ( this->visualizer->Stop )
+		{
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
 			this->Run_Algorithm->Start();
 		}
@@ -646,11 +674,16 @@ private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^
 		
 	}
 private: System::String^ TopologyInt2String(int topology){
-		if(topology == 0){
+		if ( topology == 0 )
+		{
 			return "Random";
-		}else if(topology == 1){
+		}
+		else if ( topology == 1 )
+		{
 			return "UnitDisk";
-		}else{
+		}
+		else
+		{
 			return "None";
 		}
 	}
