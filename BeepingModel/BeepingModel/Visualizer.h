@@ -12,6 +12,7 @@ namespace BeepingModel{
 		array<Pen^>^ pen_line;
 		array<SolidBrush^>^ brush;
 		bool stop;
+		bool AA;
 	public:
 		Visualizer(void);
 		Visualizer(Controller^,Graphics^);

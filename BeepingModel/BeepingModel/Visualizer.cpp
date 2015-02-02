@@ -44,6 +44,16 @@ void Visualizer::Draw(void)
 	BufferedGraphics^ grafx = currentContext->Allocate(this->g,  Rectangle( 0, 0, this->controller->x, this->controller->y ));
 	grafx->Graphics->Clear( Color::White );
 
+	//AA
+	if ( this->AA )
+	{
+		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
+	}
+	else
+	{
+		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
+	}
+
 	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
@@ -104,17 +114,9 @@ void Visualizer::Clear()
 	this->g->Clear( Color::White );
 }
 
-void Visualizer::SetParameter(Settings* setting)
+void Visualizer::SetParameter(Settings* settings)
 {
-	if ( setting->AA )
-	{
-		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
-	}
-	else
-	{
-		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
-	}
-
+	this->AA = settings->AA;
 }
 
 void Visualizer::Run(void)
