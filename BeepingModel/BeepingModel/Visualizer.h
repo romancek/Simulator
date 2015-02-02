@@ -20,7 +20,8 @@ namespace BeepingModel{
 		void Clear(void);
 		void SetParameter(Settings*);
 
-		property bool Stop {
+		property bool Stop
+		{
 				bool get(){return this->stop;}
 				void set(bool value){this->stop = value;}
 		}
