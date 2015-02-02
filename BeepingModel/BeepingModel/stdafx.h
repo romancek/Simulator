@@ -14,13 +14,16 @@
 #include <cliext/vector>
 #include "picojson.h"
 
+
 #define N_SIZE 3
 #define M_SIZE 3
+#define F_SIZE 15
 
 #define UDK_R 50 //UnitDisk radius
 
-#define _run_speed_ms 50 
-#define _MIS_apper_stop_ms 10
+#define _Run_Speed_ms 50 
+#define _MIS_Apper_Stop_ms 500
+#define _CheckInfo_Speed_ms 200
 #define NODE_SIZE 5
 #define PEN_WIDTH 0.1f
 #define	_DENSITY 2		//çÇÇ¢Ç∆îZìxÇ™í·Ç¢
@@ -40,5 +43,6 @@
 typedef struct  {
 	bool AA;
 	unsigned int unitdisk_r;
-	int topology; //0:Random, 1:UnitDisk
+	int topology;	//0:Random, 1:UnitDisk
+	int F;				//[multicast] available number of channels
 }Settings;

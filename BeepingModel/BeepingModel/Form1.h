@@ -6,6 +6,7 @@
 #include "Form1.h"
 #include "Visualizer.h"
 #include "StdAfx.h"
+#include "TimeWatch.h"
 
 namespace BeepingModel {
 	using namespace System;
@@ -36,8 +37,10 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Panel^  panel1;
 	private: System::Windows::Forms::Label^  label_radius;
 	private: Thread^ Run_Algorithm;
+	private: Thread^ UpdateInfo;
 	private: System::Windows::Forms::Label^  label_topology;
 	private: System::Windows::Forms::Label^  label_channels;
+	private: System::Windows::Forms::Label^  label_F;
 
 	private: Settings* settings;
 	public:
@@ -53,6 +56,8 @@ namespace BeepingModel {
 			this->controller->InitializeGraph(this->settings->topology);
 			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics());
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
+			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
+			this->UpdateInfo->Start();
 			this->UpdatePanel = true;
 		}
 
@@ -133,6 +138,7 @@ namespace BeepingModel {
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label_F = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -263,7 +269,7 @@ namespace BeepingModel {
 			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
 			this->exitToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->exitToolStripMenuItem->Text = L"Exit(&C)";
-			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Exit);
+			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Closed);
 			// 
 			// toolToolStripMenuItem
 			// 
@@ -326,6 +332,7 @@ namespace BeepingModel {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label_F);
 			this->groupBox1->Controls->Add(this->label_channels);
 			this->groupBox1->Controls->Add(this->label_topology);
 			this->groupBox1->Controls->Add(this->label_radius);
@@ -404,6 +411,15 @@ namespace BeepingModel {
 			this->panel1->Size = System::Drawing::Size(170, 729);
 			this->panel1->TabIndex = 15;
 			// 
+			// label_F
+			// 
+			this->label_F->AutoSize = true;
+			this->label_F->Location = System::Drawing::Point(20, 145);
+			this->label_F->Name = L"label_F";
+			this->label_F->Size = System::Drawing::Size(23, 15);
+			this->label_F->TabIndex = 13;
+			this->label_F->Text = L"F : ";
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
@@ -424,6 +440,7 @@ namespace BeepingModel {
 			this->Name = L"Form1";
 			this->Text = L"Simulator";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+			this->Closed += gcnew System::EventHandler(this, &Form1::Form1_Closed);
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->groupBox1->ResumeLayout(false);
@@ -439,10 +456,26 @@ namespace BeepingModel {
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 
 		}
-private: void UpdateDistributedSystem( void ){
-
+private: System::Void UpdateDistributedSystem( ){
+		while(1){
+			if(this->visualizer->Stop == false){
+				this->SetText( String::Format("Global Round : {0}",this->controller->GlobalRound) );
+			}
+			Thread::Sleep(_CheckInfo_Speed_ms);
 		}
-
+	}
+private: delegate System::Void SetTextDelegate(String^ text);
+private: System::Void SetText( String^ text){
+		if (this->label_ground->InvokeRequired)
+		{	
+			SetTextDelegate^ d = gcnew SetTextDelegate(this, &Form1::SetText);
+			this->Invoke(d, gcnew array<Object^> { text });
+		}
+		else
+		{
+			this->label_ground->Text = text;
+		}
+	}
 //TODO AA reset problem
 private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
 		if(this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" ){
@@ -478,11 +511,21 @@ private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms:
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
 		//TODO
 		this->visualizer->Draw();
-		this->label_ground->Text = String::Format("Global Round : {0}",this->controller->GlobalRound);
 	}
 
-private: System::Void Form1_Exit(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void Form1_Closed(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();
+	}
+/**
+ ** 終了処理
+ **/
+private: System::Void Close(){
+		this->Run_Algorithm->Abort();
+		this->UpdateInfo->Abort();
+#ifdef _DEBUG
+		String^ a = String::Format("Thread Abort");
+		System::Diagnostics::Debug::WriteLine(a);
+#endif
 	}
 
 private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e) {
@@ -507,9 +550,9 @@ private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^
 		this->fileName = saveFileDialog1->FileName;
 	}
 
-//
-// Save
-//
+/**
+ ** Save File
+ **/
 private: bool SaveFile( String^ path ) {
 		if ( path->EndsWith(".csv")) {
 			// CSV形式で保存
@@ -540,9 +583,9 @@ private: bool SavePngFile( String^ path ) {
 		return true;
 	}
 
-//
-// Open
-//
+/**
+ ** Open File
+ **/
 private: bool OpenFile( String^ path ) {
 		if ( path->EndsWith(".csv")) {
 			// CSV形式で開く
@@ -578,11 +621,15 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		settings = fs->GetSetting();
 		this->visualizer->SetParameter(settings);
 		this->controller->SetGraphParameter(settings);
-		this->label_radius->Text = String::Format("Radius : {0}",settings->unitdisk_r);
-		this->label_topology->Text = String::Format("Topology : {0}",this->TopologyInt2String(settings->topology));
+		this->PrintParam();
 		this->visualizer->Draw();
 	}
 
+private: System::Void PrintParam() {
+		this->label_radius->Text = String::Format("Radius : {0}",settings->unitdisk_r);
+		this->label_topology->Text = String::Format("Topology : {0}",this->TopologyInt2String(settings->topology));
+		this->label_F->Text = String::Format("F : {0}",settings->F);
+	}
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
 		if(this->visualizer->Stop){
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );

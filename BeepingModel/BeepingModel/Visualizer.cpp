@@ -2,7 +2,6 @@
 #include "Visualizer.h"
 #include "Channel.h"
 #include "Form1.h"
-
 #include "Controller.h"
 #include "Node.h"
 
@@ -40,9 +39,11 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 
 void Visualizer::Draw(void)
 {
+	//Double Buffering
 	BufferedGraphicsContext^ currentContext = BufferedGraphicsManager::Current;
 	BufferedGraphics^ grafx = currentContext->Allocate(this->g,  Rectangle( 0, 0, this->controller->x, this->controller->y ));
 	grafx->Graphics->Clear( Color::White );
+
 	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
@@ -82,6 +83,7 @@ void Visualizer::Draw(void)
 		grafx->Graphics->FillEllipse( this->brush[type/3], rect );
 		grafx->Graphics->DrawEllipse( this->pen_node[type], rect );
 	}
+	//Render & Release Double Buffer
 	grafx->Render();
 	grafx->~BufferedGraphics();
 }
@@ -110,6 +112,6 @@ void Visualizer::Run(void)
 		System::Diagnostics::Debug::WriteLine(String::Format("global round:{0}",this->controller->GlobalRound));
 #endif
 		if( this->stop )break;
-		Thread::Sleep(_run_speed_ms);
+		Thread::Sleep(_Run_Speed_ms);
 	}
 }

@@ -99,6 +99,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TimeWatch.cpp" />
     <ClCompile Include="Visualizer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +115,7 @@
     <ClInclude Include="picojson.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TimeWatch.h" />
     <ClInclude Include="Visualizer.h" />
   </ItemGroup>
   <ItemGroup>

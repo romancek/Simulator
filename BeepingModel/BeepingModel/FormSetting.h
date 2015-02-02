@@ -22,6 +22,8 @@ namespace BeepingModel {
 	private: System::Windows::Forms::ListBox^  listBox_topology;
 
 	private: System::Windows::Forms::Label^  label_topology;
+	private: System::Windows::Forms::Label^  label_channels;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_channels;
 	private: Settings* settings;
 	public:
 		FormSetting(void)
@@ -75,7 +77,10 @@ namespace BeepingModel {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->listBox_topology = (gcnew System::Windows::Forms::ListBox());
 			this->label_topology = (gcnew System::Windows::Forms::Label());
+			this->label_channels = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown_channels = (gcnew System::Windows::Forms::NumericUpDown());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_channels))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btn_ok
@@ -112,7 +117,8 @@ namespace BeepingModel {
 			// numericUpDown_UnitDisk_radius
 			// 
 			this->numericUpDown_UnitDisk_radius->Location = System::Drawing::Point(58, 72);
-			this->numericUpDown_UnitDisk_radius->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {255, 0, 0, 0});
+			this->numericUpDown_UnitDisk_radius->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {256, 0, 0, 0});
+			this->numericUpDown_UnitDisk_radius->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
 			this->numericUpDown_UnitDisk_radius->Name = L"numericUpDown_UnitDisk_radius";
 			this->numericUpDown_UnitDisk_radius->Size = System::Drawing::Size(47, 21);
 			this->numericUpDown_UnitDisk_radius->TabIndex = 3;
@@ -148,11 +154,33 @@ namespace BeepingModel {
 			this->label_topology->TabIndex = 6;
 			this->label_topology->Text = L"Graph Topology";
 			// 
+			// label_channels
+			// 
+			this->label_channels->AutoSize = true;
+			this->label_channels->Location = System::Drawing::Point(111, 175);
+			this->label_channels->Name = L"label_channels";
+			this->label_channels->Size = System::Drawing::Size(51, 15);
+			this->label_channels->TabIndex = 7;
+			this->label_channels->Text = L"Channels";
+			// 
+			// numericUpDown_channels
+			// 
+			this->numericUpDown_channels->Location = System::Drawing::Point(58, 173);
+			this->numericUpDown_channels->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {128, 0, 0, 0});
+			this->numericUpDown_channels->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
+			this->numericUpDown_channels->Name = L"numericUpDown_channels";
+			this->numericUpDown_channels->Size = System::Drawing::Size(43, 21);
+			this->numericUpDown_channels->TabIndex = 8;
+			this->numericUpDown_channels->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
+			this->numericUpDown_channels->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_channels_ValueChanged);
+			// 
 			// FormSetting
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(743, 514);
+			this->Controls->Add(this->numericUpDown_channels);
+			this->Controls->Add(this->label_channels);
 			this->Controls->Add(this->label_topology);
 			this->Controls->Add(this->listBox_topology);
 			this->Controls->Add(this->label1);
@@ -169,6 +197,7 @@ namespace BeepingModel {
 			this->Text = L"Setting";
 			this->Load += gcnew System::EventHandler(this, &FormSetting::FormSetting_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_channels))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -191,6 +220,9 @@ private: System::Void checkBox_AA_CheckedChanged(System::Object^  sender, System
 	}
 private: System::Void numericUpDown_UnitDisk_radius_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 		this->settings->unitdisk_r = (int)this->numericUpDown_UnitDisk_radius->Value;
+	}
+private: System::Void numericUpDown_channels_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+		this->settings->F = (int)this->numericUpDown_channels->Value;
 	}
 private: System::Void listBox_topology_SelectedIndexChanged(System::Object^  /*sender*/, System::EventArgs^  /*e*/) {
 		String^ selectedStr = this->listBox_topology->SelectedItem->ToString();

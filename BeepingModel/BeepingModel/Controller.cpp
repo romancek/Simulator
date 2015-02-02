@@ -304,7 +304,7 @@ void Controller::Run_UpperN(void)
 #ifdef _DEBUG
 				Debug::WriteLine(String::Format("*****************\n MIS Node appear, ID[{0}],Phase[{1}],Step[{2}] \n*****************",n->Id,n->Phase,n->Step));
 #endif
-				Thread::Sleep(_MIS_apper_stop_ms);
+				Thread::Sleep(_MIS_Apper_Stop_ms);
 			}
 		}
 		if(n->NodeState != sleep) n->Round++;
