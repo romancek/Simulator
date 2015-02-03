@@ -2,7 +2,6 @@
 #include "Visualizer.h"
 #include "Channel.h"
 #include "Form1.h"
-
 #include "Controller.h"
 #include "Node.h"
 
@@ -40,13 +39,25 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 
 void Visualizer::Draw(void)
 {
+	//Double Buffering
 	BufferedGraphicsContext^ currentContext = BufferedGraphicsManager::Current;
 	BufferedGraphics^ grafx = currentContext->Allocate(this->g,  Rectangle( 0, 0, this->controller->x, this->controller->y ));
 	grafx->Graphics->Clear( Color::White );
+
+	//AA
+	if ( this->AA )
+	{
+		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
+	}
+	else
+	{
+		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
+	}
+
 	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
-		if(ch->EndPoint[0] < 0)continue;
+		if ( ch->EndPoint[0] < 0 ) continue;
 		array<int>^ p1 = this->controller->nodes[ch->EndPoint[0]]->GetPosition();
 		array<int>^ p2 = this->controller->nodes[ch->EndPoint[1]]->GetPosition();
 #ifdef _DEBUG
@@ -54,27 +65,38 @@ void Visualizer::Draw(void)
 		//System::Diagnostics::Debug::WriteLine(a);
 #endif
 
-		if((this->controller->nodes[ch->EndPoint[0]]->ActionState == listen  || this->controller->nodes[ch->EndPoint[0]]->ActionState ==sleep) 
-			&& (this->controller->nodes[ch->EndPoint[1]]->ActionState == listen || this->controller->nodes[ch->EndPoint[1]]->ActionState == sleep)){ //silent or sleep
+		if ( ( this->controller->nodes[ch->EndPoint[0]]->ActionState == listen  || this->controller->nodes[ch->EndPoint[0]]->ActionState ==sleep ) 
+			&& ( this->controller->nodes[ch->EndPoint[1]]->ActionState == listen || this->controller->nodes[ch->EndPoint[1]]->ActionState == sleep ) ) //silent or sleep
+		{ 
 			type = 0;
-		}else if(this->controller->nodes[ch->EndPoint[0]]->ActionState == beeping 
-			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == beeping){ //collision
+		}
+		else if ( this->controller->nodes[ch->EndPoint[0]]->ActionState == beeping 
+			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == beeping ) //collision
+		{ 
 			type = 2;
-		}else{//beep
+		}
+		else //beep
+		{
 			type = 1;
 		}
 		grafx->Graphics->DrawLine(this->pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
 	}
 
-	for each(Node^ n in this->controller->nodes)
+	for each ( Node^ n in this->controller->nodes )
 	{
-		if(n->NodeState == sleep){
+		if ( n->NodeState == sleep ){
 			type = 0;
-		}else if(n->NodeState == inactive){
+		}
+		else if ( n->NodeState == inactive )
+		{
 			type = 1;
-		}else if(n->NodeState == competing){
+		}
+		else if ( n->NodeState == competing )
+		{
 			type = 2;
-		}else if(n->NodeState == MIS){
+		}
+		else if ( n->NodeState == MIS )
+		{
 			type = 3;
 		}
 		array<int>^ pos = n->GetPosition();
@@ -82,6 +104,7 @@ void Visualizer::Draw(void)
 		grafx->Graphics->FillEllipse( this->brush[type/3], rect );
 		grafx->Graphics->DrawEllipse( this->pen_node[type], rect );
 	}
+	//Render & Release Double Buffer
 	grafx->Render();
 	grafx->~BufferedGraphics();
 }
@@ -91,25 +114,18 @@ void Visualizer::Clear()
 	this->g->Clear( Color::White );
 }
 
-void Visualizer::SetParameter(Settings* setting)
+void Visualizer::SetParameter(Settings* settings)
 {
-	if(setting->AA){
-		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
-	}else{
-		this->g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
-	}
-
+	this->AA = settings->AA;
 }
 
 void Visualizer::Run(void)
 {
-	while(1){
+	while(1)
+	{
 		this->controller->Run();
 		this->Draw();
-#ifdef _DEBUG
-		System::Diagnostics::Debug::WriteLine(String::Format("global round:{0}",this->controller->GlobalRound));
-#endif
-		if( this->stop )break;
-		Thread::Sleep(_run_speed_ms);
+		if ( this->stop )break;
+		Thread::Sleep(_Run_Speed_ms);
 	}
 }

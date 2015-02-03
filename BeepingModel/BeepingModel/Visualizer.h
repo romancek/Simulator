@@ -12,6 +12,7 @@ namespace BeepingModel{
 		array<Pen^>^ pen_line;
 		array<SolidBrush^>^ brush;
 		bool stop;
+		bool AA;
 	public:
 		Visualizer(void);
 		Visualizer(Controller^,Graphics^);
@@ -20,7 +21,8 @@ namespace BeepingModel{
 		void Clear(void);
 		void SetParameter(Settings*);
 
-		property bool Stop {
+		property bool Stop
+		{
 				bool get(){return this->stop;}
 				void set(bool value){this->stop = value;}
 		}
