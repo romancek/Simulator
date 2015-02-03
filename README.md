@@ -9,12 +9,9 @@ These processes run a/synchronous.
 
 Output picture for results.
 
-![MIS Algorithm][link_sf]
+![MIS Algorithm](https://github.com/romancek/Simulator/tree/master/Fig/sf.png)
 
-![MIS_Selected][link_se]
+![MIS_Selected](https://github.com/romancek/Simulator/tree/master/Fig/se.png)
 
-![Setting][link_ss]
+![Setting](https://github.com/romancek/Simulator/tree/master/Fig/ss.png)
 
-[link_sf]:https://github.com/romancek/Simulator/tree/master/Fig/sf.png "SimBegin"
-[link_se]:https://github.com/romancek/Simulator/tree/master/Fig/se.png "SimEnd"
-[link_ss]:https://github.com/romancek/Simulator/tree/master/Fig/ss.png "SimSetting"
