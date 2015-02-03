@@ -217,6 +217,7 @@ namespace BeepingModel {
 			this->btn_set->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_set->FlatAppearance->BorderSize = 2;
 			this->btn_set->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_set->ForeColor = System::Drawing::Color::Black;
 			this->btn_set->Location = System::Drawing::Point(65, 312);
 			this->btn_set->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_set->Name = L"btn_set";
@@ -229,6 +230,7 @@ namespace BeepingModel {
 			// label_mouse_position
 			// 
 			this->label_mouse_position->AutoSize = true;
+			this->label_mouse_position->ForeColor = System::Drawing::Color::Black;
 			this->label_mouse_position->Location = System::Drawing::Point(17, 27);
 			this->label_mouse_position->Name = L"label_mouse_position";
 			this->label_mouse_position->Size = System::Drawing::Size(98, 14);
@@ -248,12 +250,16 @@ namespace BeepingModel {
 			// 
 			// menuStrip1
 			// 
+			this->menuStrip1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)), 
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
+			this->menuStrip1->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->fileToolStripMenuItem, 
 				this->toolToolStripMenuItem});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Padding = System::Windows::Forms::Padding(8, 2, 0, 2);
-			this->menuStrip1->Size = System::Drawing::Size(1150, 26);
+			this->menuStrip1->Size = System::Drawing::Size(1150, 24);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -261,42 +267,44 @@ namespace BeepingModel {
 			// 
 			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->openToolStripMenuItem, 
 				this->saveToolStripMenuItem, this->exitToolStripMenuItem});
+			this->fileToolStripMenuItem->ForeColor = System::Drawing::Color::White;
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(57, 22);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(57, 20);
 			this->fileToolStripMenuItem->Text = L"File(&F)";
 			// 
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(137, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->openToolStripMenuItem->Text = L"Open(&O)...";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Open);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(137, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->saveToolStripMenuItem->Text = L"Save(&S)...";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_FileSave);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(137, 22);
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->exitToolStripMenuItem->Text = L"Exit(&C)";
 			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Closed);
 			// 
 			// toolToolStripMenuItem
 			// 
 			this->toolToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->settingSToolStripMenuItem});
+			this->toolToolStripMenuItem->ForeColor = System::Drawing::Color::White;
 			this->toolToolStripMenuItem->Name = L"toolToolStripMenuItem";
-			this->toolToolStripMenuItem->Size = System::Drawing::Size(62, 22);
+			this->toolToolStripMenuItem->Size = System::Drawing::Size(62, 20);
 			this->toolToolStripMenuItem->Text = L"Tool(&T)";
 			// 
 			// settingSToolStripMenuItem
 			// 
 			this->settingSToolStripMenuItem->Name = L"settingSToolStripMenuItem";
-			this->settingSToolStripMenuItem->Size = System::Drawing::Size(136, 22);
+			this->settingSToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->settingSToolStripMenuItem->Text = L"Setting(&S)";
 			this->settingSToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::settingSToolStripMenuItem_Click);
 			// 
@@ -321,6 +329,7 @@ namespace BeepingModel {
 			// label2
 			// 
 			this->label2->AutoSize = true;
+			this->label2->ForeColor = System::Drawing::Color::Black;
 			this->label2->Location = System::Drawing::Point(134, 213);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(15, 14);
@@ -330,6 +339,7 @@ namespace BeepingModel {
 			// label3
 			// 
 			this->label3->AutoSize = true;
+			this->label3->ForeColor = System::Drawing::Color::Black;
 			this->label3->Location = System::Drawing::Point(134, 243);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(18, 14);
@@ -339,6 +349,7 @@ namespace BeepingModel {
 			// label4
 			// 
 			this->label4->AutoSize = true;
+			this->label4->ForeColor = System::Drawing::Color::Black;
 			this->label4->Location = System::Drawing::Point(134, 269);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(53, 14);
@@ -364,6 +375,7 @@ namespace BeepingModel {
 			// label_F
 			// 
 			this->label_F->AutoSize = true;
+			this->label_F->ForeColor = System::Drawing::Color::Black;
 			this->label_F->Location = System::Drawing::Point(17, 135);
 			this->label_F->Name = L"label_F";
 			this->label_F->Size = System::Drawing::Size(27, 14);
@@ -373,6 +385,7 @@ namespace BeepingModel {
 			// label_channels
 			// 
 			this->label_channels->AutoSize = true;
+			this->label_channels->ForeColor = System::Drawing::Color::Black;
 			this->label_channels->Location = System::Drawing::Point(17, 108);
 			this->label_channels->Name = L"label_channels";
 			this->label_channels->Size = System::Drawing::Size(79, 14);
@@ -382,18 +395,19 @@ namespace BeepingModel {
 			// label_topology
 			// 
 			this->label_topology->AutoSize = true;
-			this->label_topology->Font = (gcnew System::Drawing::Font(L"ƒƒCƒŠƒI", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->label_topology->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->label_topology->ForeColor = System::Drawing::Color::Purple;
+			this->label_topology->ForeColor = System::Drawing::Color::DarkSlateBlue;
 			this->label_topology->Location = System::Drawing::Point(15, 318);
 			this->label_topology->Name = L"label_topology";
-			this->label_topology->Size = System::Drawing::Size(73, 18);
+			this->label_topology->Size = System::Drawing::Size(77, 14);
 			this->label_topology->TabIndex = 11;
 			this->label_topology->Text = L"Topology : ";
 			// 
 			// label_radius
 			// 
 			this->label_radius->AutoSize = true;
+			this->label_radius->ForeColor = System::Drawing::Color::Black;
 			this->label_radius->Location = System::Drawing::Point(17, 81);
 			this->label_radius->Name = L"label_radius";
 			this->label_radius->Size = System::Drawing::Size(62, 14);
@@ -403,6 +417,7 @@ namespace BeepingModel {
 			// label_ground
 			// 
 			this->label_ground->AutoSize = true;
+			this->label_ground->ForeColor = System::Drawing::Color::Black;
 			this->label_ground->Location = System::Drawing::Point(17, 54);
 			this->label_ground->Name = L"label_ground";
 			this->label_ground->Size = System::Drawing::Size(103, 14);
@@ -424,6 +439,7 @@ namespace BeepingModel {
 			this->panel1->Controls->Add(this->btn_stop);
 			this->panel1->Controls->Add(this->btn_step);
 			this->panel1->Controls->Add(this->btn_auto);
+			this->panel1->ForeColor = System::Drawing::Color::DimGray;
 			this->panel1->Location = System::Drawing::Point(954, 32);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(194, 739);

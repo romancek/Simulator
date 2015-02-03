@@ -91,22 +91,36 @@ namespace BeepingModel {
 			// 
 			// btn_ok
 			// 
+			this->btn_ok->BackColor = System::Drawing::Color::White;
+			this->btn_ok->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_ok->FlatAppearance->BorderSize = 2;
+			this->btn_ok->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_ok->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->btn_ok->ForeColor = System::Drawing::Color::DarkCyan;
 			this->btn_ok->Location = System::Drawing::Point(536, 468);
 			this->btn_ok->Name = L"btn_ok";
 			this->btn_ok->Size = System::Drawing::Size(92, 34);
 			this->btn_ok->TabIndex = 0;
 			this->btn_ok->Text = L"OK";
-			this->btn_ok->UseVisualStyleBackColor = true;
+			this->btn_ok->UseVisualStyleBackColor = false;
 			this->btn_ok->Click += gcnew System::EventHandler(this, &FormSetting::btn_ok_Click);
 			// 
 			// btn_cancel
 			// 
+			this->btn_cancel->BackColor = System::Drawing::Color::White;
+			this->btn_cancel->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_cancel->FlatAppearance->BorderSize = 2;
+			this->btn_cancel->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_cancel->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->btn_cancel->ForeColor = System::Drawing::Color::IndianRed;
 			this->btn_cancel->Location = System::Drawing::Point(639, 468);
 			this->btn_cancel->Name = L"btn_cancel";
 			this->btn_cancel->Size = System::Drawing::Size(92, 34);
 			this->btn_cancel->TabIndex = 1;
 			this->btn_cancel->Text = L"Cancel";
-			this->btn_cancel->UseVisualStyleBackColor = true;
+			this->btn_cancel->UseVisualStyleBackColor = false;
 			this->btn_cancel->Click += gcnew System::EventHandler(this, &FormSetting::btn_cancel_Click);
 			// 
 			// checkBox_AA
@@ -206,12 +220,14 @@ namespace BeepingModel {
 			// 
 			// groupBox_Parameter
 			// 
+			this->groupBox_Parameter->BackColor = System::Drawing::Color::White;
 			this->groupBox_Parameter->Controls->Add(this->numericUpDown_channels);
 			this->groupBox_Parameter->Controls->Add(this->label_channels);
 			this->groupBox_Parameter->Controls->Add(this->label_topology);
 			this->groupBox_Parameter->Controls->Add(this->listBox_topology);
 			this->groupBox_Parameter->Controls->Add(this->label1);
 			this->groupBox_Parameter->Controls->Add(this->numericUpDown_UnitDisk_radius);
+			this->groupBox_Parameter->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->groupBox_Parameter->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->groupBox_Parameter->Location = System::Drawing::Point(28, 62);
@@ -225,6 +241,7 @@ namespace BeepingModel {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(743, 514);
 			this->Controls->Add(this->groupBox_Parameter);
 			this->Controls->Add(this->groupBox_Drawing);
@@ -235,7 +252,7 @@ namespace BeepingModel {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"FormSetting";
-			this->Opacity = 0.95;
+			this->Opacity = 0.9;
 			this->Text = L"Setting";
 			this->Load += gcnew System::EventHandler(this, &FormSetting::FormSetting_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->EndInit();
