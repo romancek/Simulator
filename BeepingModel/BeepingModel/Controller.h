@@ -25,6 +25,7 @@ namespace BeepingModel{
 		Controller(int,int);
 		void InitializeGraph(int);
 		void InitializeGraph(int,int,int);
+		void ResizeField(int,int);
 		void CreateGraph();
 		void CreateRandomGraph(void);	//Random graph only
 		void CreateUnitDiskGraph(void);	//UnitDisk graph only

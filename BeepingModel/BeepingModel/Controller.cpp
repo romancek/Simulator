@@ -64,6 +64,12 @@ void Controller::InitializeGraph(int n, int m, int density)
 	this->CreateGraph();
 }
 
+void Controller::ResizeField(int x, int y)
+{
+	this->x = x;
+	this->y = y;
+}
+
 void Controller::CreateGraph()
 {
 	if ( graph_topology == 0 /*Random*/ )

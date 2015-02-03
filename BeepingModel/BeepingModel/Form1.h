@@ -221,7 +221,7 @@ namespace BeepingModel {
 			this->btn_set->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_set->FlatAppearance->BorderSize = 2;
 			this->btn_set->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_set->Location = System::Drawing::Point(1024, 347);
+			this->btn_set->Location = System::Drawing::Point(65, 312);
 			this->btn_set->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_set->Name = L"btn_set";
 			this->btn_set->Size = System::Drawing::Size(46, 26);
@@ -417,6 +417,7 @@ namespace BeepingModel {
 			// 
 			this->panel1->AutoSize = true;
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->panel1->Controls->Add(this->btn_set);
 			this->panel1->Controls->Add(this->label4);
 			this->panel1->Controls->Add(this->groupBox1);
 			this->panel1->Controls->Add(this->label3);
@@ -436,12 +437,9 @@ namespace BeepingModel {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 14);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->AutoSize = true;
-			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			this->BackColor = System::Drawing::Color::White;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
 			this->ClientSize = System::Drawing::Size(1150, 812);
-			this->Controls->Add(this->btn_set);
 			this->Controls->Add(this->menuStrip1);
 			this->Controls->Add(this->graph_panel);
 			this->Controls->Add(this->panel1);
@@ -454,6 +452,7 @@ namespace BeepingModel {
 			this->Text = L"Simulator";
 			this->Closed += gcnew System::EventHandler(this, &Form1::Form1_Closed);
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+			this->Resize += gcnew System::EventHandler(this, &Form1::Form1_Resize);
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->groupBox1->ResumeLayout(false);
@@ -701,6 +700,12 @@ private: System::String^ TopologyInt2String(int topology){
 		{
 			return "None";
 		}
+	}
+private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
+		this->graph_panel->Size = System::Drawing::Size( this->Width - 210 - 6, this->Height - 120 );
+		this->panel1->Size = System::Drawing::Size( 194, this->Height - 120 );
+		this->panel1->Location = System::Drawing::Point( this->Width - 210, 32 );
+		this->controller->ResizeField( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
 	}
 };
 }
