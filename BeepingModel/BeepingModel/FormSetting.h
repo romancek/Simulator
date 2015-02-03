@@ -24,6 +24,8 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_channels;
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_channels;
 	private: System::Windows::Forms::CheckBox^  checkBox_can_draw;
+	private: System::Windows::Forms::GroupBox^  groupBox_Drawing;
+	private: System::Windows::Forms::GroupBox^  groupBox_Parameter;
 	private: Settings* settings;
 	public:
 		FormSetting(void)
@@ -83,8 +85,12 @@ namespace BeepingModel {
 			this->label_channels = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown_channels = (gcnew System::Windows::Forms::NumericUpDown());
 			this->checkBox_can_draw = (gcnew System::Windows::Forms::CheckBox());
+			this->groupBox_Drawing = (gcnew System::Windows::Forms::GroupBox());
+			this->groupBox_Parameter = (gcnew System::Windows::Forms::GroupBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_channels))->BeginInit();
+			this->groupBox_Drawing->SuspendLayout();
+			this->groupBox_Parameter->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// btn_ok
@@ -110,9 +116,9 @@ namespace BeepingModel {
 			// checkBox_AA
 			// 
 			this->checkBox_AA->AutoSize = true;
-			this->checkBox_AA->Location = System::Drawing::Point(92, 29);
+			this->checkBox_AA->Location = System::Drawing::Point(65, 17);
 			this->checkBox_AA->Name = L"checkBox_AA";
-			this->checkBox_AA->Size = System::Drawing::Size(116, 19);
+			this->checkBox_AA->Size = System::Drawing::Size(130, 18);
 			this->checkBox_AA->TabIndex = 2;
 			this->checkBox_AA->Text = L"AntiAlias(On/Off)";
 			this->checkBox_AA->UseVisualStyleBackColor = true;
@@ -120,11 +126,11 @@ namespace BeepingModel {
 			// 
 			// numericUpDown_UnitDisk_radius
 			// 
-			this->numericUpDown_UnitDisk_radius->Location = System::Drawing::Point(58, 72);
+			this->numericUpDown_UnitDisk_radius->Location = System::Drawing::Point(30, 22);
 			this->numericUpDown_UnitDisk_radius->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {256, 0, 0, 0});
 			this->numericUpDown_UnitDisk_radius->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
 			this->numericUpDown_UnitDisk_radius->Name = L"numericUpDown_UnitDisk_radius";
-			this->numericUpDown_UnitDisk_radius->Size = System::Drawing::Size(47, 21);
+			this->numericUpDown_UnitDisk_radius->Size = System::Drawing::Size(47, 22);
 			this->numericUpDown_UnitDisk_radius->TabIndex = 3;
 			this->numericUpDown_UnitDisk_radius->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {50, 0, 0, 0});
 			this->numericUpDown_UnitDisk_radius->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_UnitDisk_radius_ValueChanged);
@@ -132,48 +138,48 @@ namespace BeepingModel {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(111, 72);
+			this->label1->Location = System::Drawing::Point(83, 26);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(84, 15);
+			this->label1->Size = System::Drawing::Size(101, 14);
 			this->label1->TabIndex = 4;
 			this->label1->Text = L"UnitDisk radius";
 			// 
 			// listBox_topology
 			// 
 			this->listBox_topology->FormattingEnabled = true;
-			this->listBox_topology->ItemHeight = 15;
+			this->listBox_topology->ItemHeight = 14;
 			this->listBox_topology->Items->AddRange(gcnew cli::array< System::Object^  >(2) {L"Random", L"UnitDisk"});
-			this->listBox_topology->Location = System::Drawing::Point(34, 117);
+			this->listBox_topology->Location = System::Drawing::Point(6, 58);
 			this->listBox_topology->Name = L"listBox_topology";
-			this->listBox_topology->Size = System::Drawing::Size(71, 34);
+			this->listBox_topology->Size = System::Drawing::Size(71, 32);
 			this->listBox_topology->TabIndex = 5;
 			this->listBox_topology->SelectedIndexChanged += gcnew System::EventHandler(this, &FormSetting::listBox_topology_SelectedIndexChanged);
 			// 
 			// label_topology
 			// 
 			this->label_topology->AutoSize = true;
-			this->label_topology->Location = System::Drawing::Point(111, 126);
+			this->label_topology->Location = System::Drawing::Point(83, 67);
 			this->label_topology->Name = L"label_topology";
-			this->label_topology->Size = System::Drawing::Size(88, 15);
+			this->label_topology->Size = System::Drawing::Size(106, 14);
 			this->label_topology->TabIndex = 6;
 			this->label_topology->Text = L"Graph Topology";
 			// 
 			// label_channels
 			// 
 			this->label_channels->AutoSize = true;
-			this->label_channels->Location = System::Drawing::Point(111, 175);
+			this->label_channels->Location = System::Drawing::Point(83, 112);
 			this->label_channels->Name = L"label_channels";
-			this->label_channels->Size = System::Drawing::Size(51, 15);
+			this->label_channels->Size = System::Drawing::Size(66, 14);
 			this->label_channels->TabIndex = 7;
 			this->label_channels->Text = L"Channels";
 			// 
 			// numericUpDown_channels
 			// 
-			this->numericUpDown_channels->Location = System::Drawing::Point(58, 173);
+			this->numericUpDown_channels->Location = System::Drawing::Point(30, 111);
 			this->numericUpDown_channels->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {128, 0, 0, 0});
 			this->numericUpDown_channels->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
 			this->numericUpDown_channels->Name = L"numericUpDown_channels";
-			this->numericUpDown_channels->Size = System::Drawing::Size(43, 21);
+			this->numericUpDown_channels->Size = System::Drawing::Size(43, 22);
 			this->numericUpDown_channels->TabIndex = 8;
 			this->numericUpDown_channels->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
 			this->numericUpDown_channels->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_channels_ValueChanged);
@@ -181,27 +187,51 @@ namespace BeepingModel {
 			// checkBox_can_draw
 			// 
 			this->checkBox_can_draw->AutoSize = true;
-			this->checkBox_can_draw->Location = System::Drawing::Point(254, 29);
+			this->checkBox_can_draw->Location = System::Drawing::Point(227, 17);
 			this->checkBox_can_draw->Name = L"checkBox_can_draw";
-			this->checkBox_can_draw->Size = System::Drawing::Size(110, 19);
+			this->checkBox_can_draw->Size = System::Drawing::Size(129, 18);
 			this->checkBox_can_draw->TabIndex = 9;
 			this->checkBox_can_draw->Text = L"Drawing(On/Off)";
 			this->checkBox_can_draw->UseVisualStyleBackColor = true;
 			this->checkBox_can_draw->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_can_draw_CheckedChanged);
+			// 
+			// groupBox_Drawing
+			// 
+			this->groupBox_Drawing->Controls->Add(this->checkBox_can_draw);
+			this->groupBox_Drawing->Controls->Add(this->checkBox_AA);
+			this->groupBox_Drawing->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->groupBox_Drawing->Location = System::Drawing::Point(27, 12);
+			this->groupBox_Drawing->Name = L"groupBox_Drawing";
+			this->groupBox_Drawing->Size = System::Drawing::Size(681, 49);
+			this->groupBox_Drawing->TabIndex = 10;
+			this->groupBox_Drawing->TabStop = false;
+			this->groupBox_Drawing->Text = L"Rendering";
+			// 
+			// groupBox_Parameter
+			// 
+			this->groupBox_Parameter->Controls->Add(this->numericUpDown_channels);
+			this->groupBox_Parameter->Controls->Add(this->label_channels);
+			this->groupBox_Parameter->Controls->Add(this->label_topology);
+			this->groupBox_Parameter->Controls->Add(this->listBox_topology);
+			this->groupBox_Parameter->Controls->Add(this->label1);
+			this->groupBox_Parameter->Controls->Add(this->numericUpDown_UnitDisk_radius);
+			this->groupBox_Parameter->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(0)));
+			this->groupBox_Parameter->Location = System::Drawing::Point(28, 62);
+			this->groupBox_Parameter->Name = L"groupBox_Parameter";
+			this->groupBox_Parameter->Size = System::Drawing::Size(679, 341);
+			this->groupBox_Parameter->TabIndex = 11;
+			this->groupBox_Parameter->TabStop = false;
+			this->groupBox_Parameter->Text = L"Property";
 			// 
 			// FormSetting
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(743, 514);
-			this->Controls->Add(this->checkBox_can_draw);
-			this->Controls->Add(this->numericUpDown_channels);
-			this->Controls->Add(this->label_channels);
-			this->Controls->Add(this->label_topology);
-			this->Controls->Add(this->listBox_topology);
-			this->Controls->Add(this->label1);
-			this->Controls->Add(this->numericUpDown_UnitDisk_radius);
-			this->Controls->Add(this->checkBox_AA);
+			this->Controls->Add(this->groupBox_Parameter);
+			this->Controls->Add(this->groupBox_Drawing);
 			this->Controls->Add(this->btn_cancel);
 			this->Controls->Add(this->btn_ok);
 			this->Font = (gcnew System::Drawing::Font(L"Times New Roman", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
@@ -214,8 +244,11 @@ namespace BeepingModel {
 			this->Load += gcnew System::EventHandler(this, &FormSetting::FormSetting_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_channels))->EndInit();
+			this->groupBox_Drawing->ResumeLayout(false);
+			this->groupBox_Drawing->PerformLayout();
+			this->groupBox_Parameter->ResumeLayout(false);
+			this->groupBox_Parameter->PerformLayout();
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion

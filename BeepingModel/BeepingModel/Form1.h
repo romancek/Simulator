@@ -128,13 +128,13 @@ namespace BeepingModel {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label_F = (gcnew System::Windows::Forms::Label());
 			this->label_channels = (gcnew System::Windows::Forms::Label());
 			this->label_topology = (gcnew System::Windows::Forms::Label());
 			this->label_radius = (gcnew System::Windows::Forms::Label());
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->label_F = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -142,87 +142,111 @@ namespace BeepingModel {
 			// 
 			// btn_auto
 			// 
-			this->btn_auto->Location = System::Drawing::Point(42, 75);
+			this->btn_auto->BackColor = System::Drawing::Color::Transparent;
+			this->btn_auto->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_auto->FlatAppearance->BorderSize = 2;
+			this->btn_auto->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_auto->ForeColor = System::Drawing::Color::Olive;
+			this->btn_auto->Location = System::Drawing::Point(48, 70);
 			this->btn_auto->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_auto->Name = L"btn_auto";
-			this->btn_auto->Size = System::Drawing::Size(70, 29);
+			this->btn_auto->Size = System::Drawing::Size(80, 27);
 			this->btn_auto->TabIndex = 0;
 			this->btn_auto->Text = L"Auto";
-			this->btn_auto->UseVisualStyleBackColor = true;
+			this->btn_auto->UseVisualStyleBackColor = false;
 			this->btn_auto->Click += gcnew System::EventHandler(this, &Form1::btn_auto_Click);
 			// 
 			// btn_step
 			// 
-			this->btn_step->Location = System::Drawing::Point(42, 19);
+			this->btn_step->BackColor = System::Drawing::Color::Transparent;
+			this->btn_step->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_step->FlatAppearance->BorderSize = 2;
+			this->btn_step->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_step->ForeColor = System::Drawing::Color::Olive;
+			this->btn_step->Location = System::Drawing::Point(48, 18);
 			this->btn_step->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_step->Name = L"btn_step";
-			this->btn_step->Size = System::Drawing::Size(70, 29);
+			this->btn_step->Size = System::Drawing::Size(80, 27);
 			this->btn_step->TabIndex = 1;
 			this->btn_step->Text = L"Step";
-			this->btn_step->UseVisualStyleBackColor = true;
+			this->btn_step->UseVisualStyleBackColor = false;
 			this->btn_step->Click += gcnew System::EventHandler(this, &Form1::btn_step_Click);
 			// 
 			// btn_stop
 			// 
-			this->btn_stop->Location = System::Drawing::Point(42, 131);
+			this->btn_stop->BackColor = System::Drawing::Color::Transparent;
+			this->btn_stop->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_stop->FlatAppearance->BorderSize = 2;
+			this->btn_stop->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_stop->ForeColor = System::Drawing::Color::Olive;
+			this->btn_stop->Location = System::Drawing::Point(48, 122);
 			this->btn_stop->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_stop->Name = L"btn_stop";
-			this->btn_stop->Size = System::Drawing::Size(70, 29);
+			this->btn_stop->Size = System::Drawing::Size(80, 27);
 			this->btn_stop->TabIndex = 2;
 			this->btn_stop->Text = L"Stop";
-			this->btn_stop->UseVisualStyleBackColor = true;
+			this->btn_stop->UseVisualStyleBackColor = false;
 			this->btn_stop->Click += gcnew System::EventHandler(this, &Form1::btn_stop_Click);
 			// 
 			// textBox_n
 			// 
-			this->textBox_n->Location = System::Drawing::Point(42, 225);
+			this->textBox_n->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->textBox_n->Location = System::Drawing::Point(48, 210);
 			this->textBox_n->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_n->Name = L"textBox_n";
-			this->textBox_n->Size = System::Drawing::Size(69, 21);
+			this->textBox_n->Size = System::Drawing::Size(78, 22);
 			this->textBox_n->TabIndex = 3;
 			// 
 			// textBox_m
 			// 
-			this->textBox_m->Location = System::Drawing::Point(42, 257);
+			this->textBox_m->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->textBox_m->Location = System::Drawing::Point(48, 240);
 			this->textBox_m->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_m->Name = L"textBox_m";
-			this->textBox_m->Size = System::Drawing::Size(69, 21);
+			this->textBox_m->Size = System::Drawing::Size(78, 22);
 			this->textBox_m->TabIndex = 4;
 			// 
 			// textBox_density
 			// 
-			this->textBox_density->Location = System::Drawing::Point(42, 288);
+			this->textBox_density->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->textBox_density->Location = System::Drawing::Point(48, 269);
 			this->textBox_density->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_density->Name = L"textBox_density";
-			this->textBox_density->Size = System::Drawing::Size(69, 21);
+			this->textBox_density->Size = System::Drawing::Size(78, 22);
 			this->textBox_density->TabIndex = 5;
 			// 
 			// btn_set
 			// 
-			this->btn_set->Location = System::Drawing::Point(896, 372);
+			this->btn_set->BackColor = System::Drawing::Color::Transparent;
+			this->btn_set->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->btn_set->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_set->FlatAppearance->BorderSize = 2;
+			this->btn_set->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_set->Location = System::Drawing::Point(1024, 347);
 			this->btn_set->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_set->Name = L"btn_set";
-			this->btn_set->Size = System::Drawing::Size(40, 28);
+			this->btn_set->Size = System::Drawing::Size(46, 26);
 			this->btn_set->TabIndex = 6;
 			this->btn_set->Text = L"Set";
-			this->btn_set->UseVisualStyleBackColor = true;
+			this->btn_set->UseVisualStyleBackColor = false;
 			this->btn_set->Click += gcnew System::EventHandler(this, &Form1::btn_set_Click);
 			// 
 			// label_mouse_position
 			// 
 			this->label_mouse_position->AutoSize = true;
-			this->label_mouse_position->Location = System::Drawing::Point(20, 29);
+			this->label_mouse_position->Location = System::Drawing::Point(17, 27);
 			this->label_mouse_position->Name = L"label_mouse_position";
-			this->label_mouse_position->Size = System::Drawing::Size(81, 15);
+			this->label_mouse_position->Size = System::Drawing::Size(98, 14);
 			this->label_mouse_position->TabIndex = 8;
 			this->label_mouse_position->Text = L"MousePosition";
 			// 
 			// graph_panel
 			// 
-			this->graph_panel->Location = System::Drawing::Point(12, 34);
+			this->graph_panel->AutoSize = true;
+			this->graph_panel->Location = System::Drawing::Point(14, 32);
 			this->graph_panel->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->graph_panel->Name = L"graph_panel";
-			this->graph_panel->Size = System::Drawing::Size(817, 729);
+			this->graph_panel->Size = System::Drawing::Size(934, 739);
 			this->graph_panel->TabIndex = 9;
 			this->graph_panel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::graph_panel_Paint);
 			this->graph_panel->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::graph_panel_MouseMove);
@@ -233,8 +257,8 @@ namespace BeepingModel {
 				this->toolToolStripMenuItem});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Padding = System::Windows::Forms::Padding(7, 2, 0, 2);
-			this->menuStrip1->Size = System::Drawing::Size(1006, 26);
+			this->menuStrip1->Padding = System::Windows::Forms::Padding(8, 2, 0, 2);
+			this->menuStrip1->Size = System::Drawing::Size(1150, 26);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -302,27 +326,27 @@ namespace BeepingModel {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(117, 228);
+			this->label2->Location = System::Drawing::Point(134, 213);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(13, 15);
+			this->label2->Size = System::Drawing::Size(15, 14);
 			this->label2->TabIndex = 10;
 			this->label2->Text = L"n";
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(117, 260);
+			this->label3->Location = System::Drawing::Point(134, 243);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(16, 15);
+			this->label3->Size = System::Drawing::Size(18, 14);
 			this->label3->TabIndex = 11;
 			this->label3->Text = L"m";
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(117, 288);
+			this->label4->Location = System::Drawing::Point(134, 269);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(43, 15);
+			this->label4->Size = System::Drawing::Size(53, 14);
 			this->label4->TabIndex = 12;
 			this->label4->Text = L"density";
 			// 
@@ -335,19 +359,28 @@ namespace BeepingModel {
 			this->groupBox1->Controls->Add(this->label_ground);
 			this->groupBox1->Controls->Add(this->label_mouse_position);
 			this->groupBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->groupBox1->Location = System::Drawing::Point(5, 400);
+			this->groupBox1->Location = System::Drawing::Point(6, 373);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(155, 305);
+			this->groupBox1->Size = System::Drawing::Size(177, 351);
 			this->groupBox1->TabIndex = 13;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Parameter";
 			// 
+			// label_F
+			// 
+			this->label_F->AutoSize = true;
+			this->label_F->Location = System::Drawing::Point(17, 135);
+			this->label_F->Name = L"label_F";
+			this->label_F->Size = System::Drawing::Size(27, 14);
+			this->label_F->TabIndex = 13;
+			this->label_F->Text = L"F : ";
+			// 
 			// label_channels
 			// 
 			this->label_channels->AutoSize = true;
-			this->label_channels->Location = System::Drawing::Point(20, 116);
+			this->label_channels->Location = System::Drawing::Point(17, 108);
 			this->label_channels->Name = L"label_channels";
-			this->label_channels->Size = System::Drawing::Size(60, 15);
+			this->label_channels->Size = System::Drawing::Size(79, 14);
 			this->label_channels->TabIndex = 12;
 			this->label_channels->Text = L"Channels : ";
 			// 
@@ -357,7 +390,7 @@ namespace BeepingModel {
 			this->label_topology->Font = (gcnew System::Drawing::Font(L"ƒƒCƒŠƒI", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->label_topology->ForeColor = System::Drawing::Color::Purple;
-			this->label_topology->Location = System::Drawing::Point(18, 282);
+			this->label_topology->Location = System::Drawing::Point(15, 318);
 			this->label_topology->Name = L"label_topology";
 			this->label_topology->Size = System::Drawing::Size(73, 18);
 			this->label_topology->TabIndex = 11;
@@ -366,18 +399,18 @@ namespace BeepingModel {
 			// label_radius
 			// 
 			this->label_radius->AutoSize = true;
-			this->label_radius->Location = System::Drawing::Point(20, 87);
+			this->label_radius->Location = System::Drawing::Point(17, 81);
 			this->label_radius->Name = L"label_radius";
-			this->label_radius->Size = System::Drawing::Size(49, 15);
+			this->label_radius->Size = System::Drawing::Size(62, 14);
 			this->label_radius->TabIndex = 10;
 			this->label_radius->Text = L"Radius : ";
 			// 
 			// label_ground
 			// 
 			this->label_ground->AutoSize = true;
-			this->label_ground->Location = System::Drawing::Point(20, 58);
+			this->label_ground->Location = System::Drawing::Point(17, 54);
 			this->label_ground->Name = L"label_ground";
-			this->label_ground->Size = System::Drawing::Size(83, 15);
+			this->label_ground->Size = System::Drawing::Size(103, 14);
 			this->label_ground->TabIndex = 9;
 			this->label_ground->Text = L"Global Round : ";
 			// 
@@ -385,12 +418,13 @@ namespace BeepingModel {
 			// 
 			this->splitter1->Location = System::Drawing::Point(0, 26);
 			this->splitter1->Name = L"splitter1";
-			this->splitter1->Size = System::Drawing::Size(3, 744);
+			this->splitter1->Size = System::Drawing::Size(3, 786);
 			this->splitter1->TabIndex = 14;
 			this->splitter1->TabStop = false;
 			// 
 			// panel1
 			// 
+			this->panel1->AutoSize = true;
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->panel1->Controls->Add(this->label4);
 			this->panel1->Controls->Add(this->groupBox1);
@@ -402,41 +436,34 @@ namespace BeepingModel {
 			this->panel1->Controls->Add(this->btn_stop);
 			this->panel1->Controls->Add(this->btn_step);
 			this->panel1->Controls->Add(this->btn_auto);
-			this->panel1->Location = System::Drawing::Point(835, 34);
+			this->panel1->Location = System::Drawing::Point(954, 32);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(170, 729);
+			this->panel1->Size = System::Drawing::Size(194, 739);
 			this->panel1->TabIndex = 15;
-			// 
-			// label_F
-			// 
-			this->label_F->AutoSize = true;
-			this->label_F->Location = System::Drawing::Point(20, 145);
-			this->label_F->Name = L"label_F";
-			this->label_F->Size = System::Drawing::Size(23, 15);
-			this->label_F->TabIndex = 13;
-			this->label_F->Text = L"F : ";
 			// 
 			// Form1
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 14);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
+			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			this->BackColor = System::Drawing::Color::White;
-			this->ClientSize = System::Drawing::Size(1006, 770);
+			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->ClientSize = System::Drawing::Size(1150, 812);
 			this->Controls->Add(this->splitter1);
 			this->Controls->Add(this->btn_set);
 			this->Controls->Add(this->menuStrip1);
 			this->Controls->Add(this->graph_panel);
 			this->Controls->Add(this->panel1);
-			this->Font = (gcnew System::Drawing::Font(L"Times New Roman", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"Form1";
 			this->Text = L"Simulator";
-			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->Closed += gcnew System::EventHandler(this, &Form1::Form1_Closed);
+			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->groupBox1->ResumeLayout(false);
@@ -523,6 +550,7 @@ private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEv
 
 private: System::Void Form1_Closed(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();
+		exit(0);
 	}
 /**
  ** I—¹ˆ—
