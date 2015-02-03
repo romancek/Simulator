@@ -9,11 +9,11 @@ These processes run a/synchronous.
 
 Output picture for results.
 
-[MIS Algorithm][link_sf]
+![MIS Algorithm][link_sf]
 
-[MIS_Selected][link_se]
+![MIS_Selected][link_se]
 
-[Setting][link_ss]
+![Setting][link_ss]
 
 [link_sf]:https://github.com/romancek/Simulator/tree/master/Fig/sf.png "SimBegin"
 [link_se]:https://github.com/romancek/Simulator/tree/master/Fig/se.png "SimEnd"
