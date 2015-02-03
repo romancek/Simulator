@@ -30,7 +30,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::Label^  label_ground;
-	private: System::Windows::Forms::Splitter^  splitter1;
+
 	private: System::Windows::Forms::Panel^  panel1;
 	private: System::Windows::Forms::Label^  label_radius;
 	private: System::Windows::Forms::Label^  label_topology;
@@ -133,7 +133,6 @@ namespace BeepingModel {
 			this->label_topology = (gcnew System::Windows::Forms::Label());
 			this->label_radius = (gcnew System::Windows::Forms::Label());
 			this->label_ground = (gcnew System::Windows::Forms::Label());
-			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
@@ -243,10 +242,10 @@ namespace BeepingModel {
 			// graph_panel
 			// 
 			this->graph_panel->AutoSize = true;
-			this->graph_panel->Location = System::Drawing::Point(14, 32);
+			this->graph_panel->Location = System::Drawing::Point(0, 30);
 			this->graph_panel->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->graph_panel->Name = L"graph_panel";
-			this->graph_panel->Size = System::Drawing::Size(934, 739);
+			this->graph_panel->Size = System::Drawing::Size(948, 741);
 			this->graph_panel->TabIndex = 9;
 			this->graph_panel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::graph_panel_Paint);
 			this->graph_panel->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::graph_panel_MouseMove);
@@ -414,14 +413,6 @@ namespace BeepingModel {
 			this->label_ground->TabIndex = 9;
 			this->label_ground->Text = L"Global Round : ";
 			// 
-			// splitter1
-			// 
-			this->splitter1->Location = System::Drawing::Point(0, 26);
-			this->splitter1->Name = L"splitter1";
-			this->splitter1->Size = System::Drawing::Size(3, 786);
-			this->splitter1->TabIndex = 14;
-			this->splitter1->TabStop = false;
-			// 
 			// panel1
 			// 
 			this->panel1->AutoSize = true;
@@ -450,7 +441,6 @@ namespace BeepingModel {
 			this->BackColor = System::Drawing::Color::White;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
 			this->ClientSize = System::Drawing::Size(1150, 812);
-			this->Controls->Add(this->splitter1);
 			this->Controls->Add(this->btn_set);
 			this->Controls->Add(this->menuStrip1);
 			this->Controls->Add(this->graph_panel);
