@@ -28,15 +28,11 @@ namespace BeepingModel {
 	private: System::Windows::Forms::GroupBox^  groupBox_Parameter;
 	private: Settings* settings;
 	public:
-		FormSetting(void)
+		FormSetting(Settings* settings)
 		{
 			InitializeComponent();
-			this->settings = new Settings;
-			this->settings->AA = false;
-			this->settings->Can_Draw = true;
-			this->settings->unitdisk_r = 50;
-			this->settings->F = 1;
-			this->settings->topology = 0;
+			this->settings = settings;
+			ReflectDisplay();
 		}
 		Settings* GetSetting()
 		{
@@ -253,6 +249,29 @@ namespace BeepingModel {
 		}
 #pragma endregion
 private: System::Void FormSetting_Load(System::Object^  sender, System::EventArgs^  e) {
+	}
+private: void ReflectDisplay ( ) {
+		this->numericUpDown_UnitDisk_radius->Value = this->settings->unitdisk_r;
+		this->numericUpDown_channels->Value = this->settings->F;
+		if ( this->settings->AA)
+		{
+			this->checkBox_AA->Checked = true;
+		}
+		if ( this->settings->Can_Draw )
+		{
+			this->checkBox_can_draw->Checked = true;
+		}
+		switch ( this->settings->topology )
+		{
+		case 0:
+			this->listBox_topology->SelectedItem = L"Random";
+			break;
+		case 1:
+			this->listBox_topology->SelectedItem = L"UnitDisk";
+			break;
+		default:
+			break;
+		}
 	}
 private: System::Void btn_cancel_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();

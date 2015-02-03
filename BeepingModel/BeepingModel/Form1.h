@@ -42,11 +42,7 @@ namespace BeepingModel {
 		Form1(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: ここにコンストラクター コードを追加します
-			//
-			this->settings = new Settings;
-			this->settings->topology = 0;//Random
+			InitSetting();
 			this->controller = gcnew Controller( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
 			this->controller->InitializeGraph(this->settings->topology);
 			this->visualizer = gcnew Visualizer( controller, graph_panel->CreateGraphics() );
@@ -653,9 +649,16 @@ private: bool LoadJsonFile( String^ path ) {
 private: bool LoadPngFile( String^ path ) {
 		return true;
 	}
-
+private: void InitSetting () {
+			this->settings = new Settings;
+			this->settings->AA = false;
+			this->settings->Can_Draw = true;
+			this->settings->unitdisk_r = 50;
+			this->settings->F = 1;
+			this->settings->topology = 1;
+		 }
 private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-		FormSetting^ fs = gcnew FormSetting();
+		FormSetting^ fs = gcnew FormSetting(this->settings);
 		fs->ShowDialog();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		settings = fs->GetSetting();
@@ -701,6 +704,9 @@ private: System::String^ TopologyInt2String(int topology){
 			return "None";
 		}
 	}
+/*
+ * Dynamic Layout
+ */
 private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
 		this->graph_panel->Size = System::Drawing::Size( this->Width - 210 - 6, this->Height - 120 );
 		this->panel1->Size = System::Drawing::Size( 194, this->Height - 120 );

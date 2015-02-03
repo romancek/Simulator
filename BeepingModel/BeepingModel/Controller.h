@@ -36,6 +36,7 @@ namespace BeepingModel{
 		void SetGraphParameter(Settings*);
 		void Run(void);
 		void Run_UpperN(void);
+		void Run_MM(void);
 
 		property int N {
 				int get(){return this->n;}

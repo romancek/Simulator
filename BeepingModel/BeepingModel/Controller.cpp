@@ -367,3 +367,22 @@ void Controller::Run_UpperN(void)
 	}
 	this->global_round++;
 }
+
+void Controller::Run_MM()
+{
+	/*
+	 * Send Action
+	 */
+	for each ( Node^ n in this->nodes )
+	{
+		
+	}
+	/*
+	 * Receive Action
+	 */
+	for each ( Node^ n in this->nodes )
+	{
+		
+	}
+	this->global_round++;
+}
