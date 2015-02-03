@@ -1,5 +1,6 @@
 #pragma once
 #include "StdAfx.h"
+
 namespace BeepingModel{
 	ref class TimeWatch
 	{

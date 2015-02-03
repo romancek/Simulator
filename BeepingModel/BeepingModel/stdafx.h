@@ -2,18 +2,6 @@
 // 参照回数が多く、かつあまり変更されない、プロジェクト専用のインクルード ファイル
 // を記述します。
 #pragma once
-#include <map>
-#include <ctime>
-#include <boost/random.hpp>
-#include <iostream>
-#include <ctime>
-#include <map>
-#include <math.h>
-#include <string>
-#include <boost/version.hpp>
-#include <cliext/vector>
-#include "picojson.h"
-
 
 #define N_SIZE 3
 #define M_SIZE 3
@@ -43,7 +31,31 @@
 typedef struct  {
 public:
 	bool AA;
+	bool Can_Draw;	//graph draw
 	unsigned int unitdisk_r;
 	int topology;	//0:Random, 1:UnitDisk
 	int F;				//[multicast] available number of channels
 }Settings;
+
+#include <map>
+#include <ctime>
+#include <boost/random.hpp>
+#include <iostream>
+#include <ctime>
+#include <map>
+#include <math.h>
+#include <string>
+#include <boost/version.hpp>
+#include <cliext/vector>
+#include "picojson.h"
+
+#include "Node.h"
+#include "Channel.h"
+#include "Controller.h"
+#include "Visualizer.h"
+#include "Observer.h"
+#include "FormSetting.h"
+#include "Form1.h"
+
+
+#include "TimeWatch.h"

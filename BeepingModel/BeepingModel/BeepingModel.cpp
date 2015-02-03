@@ -1,7 +1,6 @@
 // BeepingModel.cpp : メイン プロジェクト ファイルです。
 
 #include "stdafx.h"
-#include "Form1.h"
 
 using namespace BeepingModel;
 

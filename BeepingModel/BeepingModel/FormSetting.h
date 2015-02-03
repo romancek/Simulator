@@ -1,6 +1,5 @@
 #pragma once
-#include "Node.h"
-#include "StdAfx.h"
+#include "stdafx.h"
 namespace BeepingModel {
 
 	using namespace System;
@@ -24,6 +23,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_topology;
 	private: System::Windows::Forms::Label^  label_channels;
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_channels;
+	private: System::Windows::Forms::CheckBox^  checkBox_can_draw;
 	private: Settings* settings;
 	public:
 		FormSetting(void)
@@ -31,6 +31,7 @@ namespace BeepingModel {
 			InitializeComponent();
 			this->settings = new Settings;
 			this->settings->AA = false;
+			this->settings->Can_Draw = true;
 			this->settings->unitdisk_r = 50;
 			this->settings->F = 1;
 			this->settings->topology = 0;
@@ -81,6 +82,7 @@ namespace BeepingModel {
 			this->label_topology = (gcnew System::Windows::Forms::Label());
 			this->label_channels = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown_channels = (gcnew System::Windows::Forms::NumericUpDown());
+			this->checkBox_can_draw = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_channels))->BeginInit();
 			this->SuspendLayout();
@@ -176,11 +178,23 @@ namespace BeepingModel {
 			this->numericUpDown_channels->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
 			this->numericUpDown_channels->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_channels_ValueChanged);
 			// 
+			// checkBox_can_draw
+			// 
+			this->checkBox_can_draw->AutoSize = true;
+			this->checkBox_can_draw->Location = System::Drawing::Point(254, 29);
+			this->checkBox_can_draw->Name = L"checkBox_can_draw";
+			this->checkBox_can_draw->Size = System::Drawing::Size(110, 19);
+			this->checkBox_can_draw->TabIndex = 9;
+			this->checkBox_can_draw->Text = L"Drawing(On/Off)";
+			this->checkBox_can_draw->UseVisualStyleBackColor = true;
+			this->checkBox_can_draw->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_can_draw_CheckedChanged);
+			// 
 			// FormSetting
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(743, 514);
+			this->Controls->Add(this->checkBox_can_draw);
 			this->Controls->Add(this->numericUpDown_channels);
 			this->Controls->Add(this->label_channels);
 			this->Controls->Add(this->label_topology);
@@ -214,10 +228,23 @@ private: System::Void btn_ok_Click(System::Object^  sender, System::EventArgs^  
 		this->Close();
 	}
 private: System::Void checkBox_AA_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-		if( this->checkBox_AA->Checked ){
-		this->settings->AA = true;
-		}else{
-		this->settings->AA = false; 
+		if( this->checkBox_AA->Checked )
+		{
+			this->settings->AA = true;
+		}
+		else
+		{
+			this->settings->AA = false; 
+		}
+	}
+private: System::Void checkBox_can_draw_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+		if( this->checkBox_can_draw->Checked )
+		{
+			this->settings->Can_Draw = true;
+		}
+		else
+		{
+			this->settings->Can_Draw = false; 
 		}
 	}
 private: System::Void numericUpDown_UnitDisk_radius_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -229,9 +256,12 @@ private: System::Void numericUpDown_channels_ValueChanged(System::Object^  sende
 private: System::Void listBox_topology_SelectedIndexChanged(System::Object^  /*sender*/, System::EventArgs^  /*e*/) {
 		String^ selectedStr = this->listBox_topology->SelectedItem->ToString();
 		Debug::WriteLine(selectedStr);
-		if(selectedStr == "Random"){
+		if ( selectedStr == "Random" )
+		{
 			this->settings->topology = 0;
-		}else if(selectedStr == "UnitDisk"){
+		}
+		else if ( selectedStr == "UnitDisk" )
+		{
 			this->settings->topology = 1;
 		}
 	}

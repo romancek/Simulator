@@ -1,10 +1,4 @@
 #include "StdAfx.h"
-#include "Visualizer.h"
-#include "Channel.h"
-#include "Form1.h"
-#include "Controller.h"
-#include "Node.h"
-
 
 using namespace BeepingModel;
 using namespace System::Drawing;
@@ -34,7 +28,6 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 	
 	this->controller = c;
 	this->g = gr;
-	this->stop = true;
 }
 
 void Visualizer::Draw(void)
@@ -119,13 +112,3 @@ void Visualizer::SetParameter(Settings* settings)
 	this->AA = settings->AA;
 }
 
-void Visualizer::Run(void)
-{
-	while(1)
-	{
-		this->controller->Run();
-		this->Draw();
-		if ( this->stop )break;
-		Thread::Sleep(_Run_Speed_ms);
-	}
-}

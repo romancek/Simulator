@@ -1,7 +1,5 @@
 #pragma once
 #include "StdAfx.h"
-#include "Channel.h"
-
 
 namespace BeepingModel{
 	using namespace System;

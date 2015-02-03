@@ -1,12 +1,6 @@
 #pragma once
 
-#include "FormSetting.h"
-#include "Controller.h"
-#include "Node.h"
-#include "Form1.h"
-#include "Visualizer.h"
 #include "StdAfx.h"
-#include "TimeWatch.h"
 
 namespace BeepingModel {
 	using namespace System;
@@ -24,20 +18,21 @@ namespace BeepingModel {
 	{
 	private: Controller^ controller;
 	private: Visualizer^ visualizer;
-	private: System::Windows::Forms::ToolStripMenuItem^  settingSToolStripMenuItem;
+	private: Observer^ observer;
+	private: Thread^ Run_Algorithm;
+	private: Thread^ UpdateInfo;
+	private: bool UpdatePanel;
 	private: String^ fileName;      // “Ç‚Ý‘‚«ƒtƒ@ƒCƒ‹–¼
+
+	private: System::Windows::Forms::ToolStripMenuItem^  settingSToolStripMenuItem;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label4;
-	private: Node^ node;
-	private: bool UpdatePanel;
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::Label^  label_ground;
 	private: System::Windows::Forms::Splitter^  splitter1;
 	private: System::Windows::Forms::Panel^  panel1;
 	private: System::Windows::Forms::Label^  label_radius;
-	private: Thread^ Run_Algorithm;
-	private: Thread^ UpdateInfo;
 	private: System::Windows::Forms::Label^  label_topology;
 	private: System::Windows::Forms::Label^  label_channels;
 	private: System::Windows::Forms::Label^  label_F;
@@ -52,10 +47,11 @@ namespace BeepingModel {
 			//
 			this->settings = new Settings;
 			this->settings->topology = 0;//Random
-			this->controller = gcnew Controller(this->graph_panel->Size.Width,this->graph_panel->Size.Height);
+			this->controller = gcnew Controller( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
 			this->controller->InitializeGraph(this->settings->topology);
-			this->visualizer = gcnew Visualizer(controller,graph_panel->CreateGraphics());
-			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
+			this->visualizer = gcnew Visualizer( controller, graph_panel->CreateGraphics() );
+			this->observer = gcnew Observer( this->controller, this->visualizer );
+			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
 			this->UpdatePanel = true;
@@ -459,7 +455,7 @@ private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e)
 private: System::Void UpdateDistributedSystem( ){
 		while(1)
 		{
-			if ( this->visualizer->Stop == false )
+			if ( this->observer->Stop == false )
 			{
 				this->SetText( String::Format("Global Round : {0}",this->controller->GlobalRound) );
 			}
@@ -648,6 +644,7 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		settings = fs->GetSetting();
 		this->visualizer->SetParameter(settings);
 		this->controller->SetGraphParameter(settings);
+		this->observer->CanDraw = settings->Can_Draw;
 		this->PrintParam();
 		this->visualizer->Draw();
 	}
@@ -658,16 +655,16 @@ private: System::Void PrintParam() {
 		this->label_F->Text = String::Format("F : {0}",settings->F);
 	}
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
-		if ( this->visualizer->Stop )
+		if ( this->observer->Stop )
 		{
-			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->visualizer, &Visualizer::Run ) );
+			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run ) );
 			this->Run_Algorithm->Start();
 		}
-		this->visualizer->Stop = false;
+		this->observer->Stop = false;
 	}
 
 private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->visualizer->Stop = true;
+		this->observer->Stop = true;
 	}
 
 private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
