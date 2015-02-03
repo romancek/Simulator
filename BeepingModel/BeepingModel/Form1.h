@@ -243,7 +243,7 @@ namespace BeepingModel {
 			this->graph_panel->Location = System::Drawing::Point(0, 30);
 			this->graph_panel->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->graph_panel->Name = L"graph_panel";
-			this->graph_panel->Size = System::Drawing::Size(948, 741);
+			this->graph_panel->Size = System::Drawing::Size(948, 776);
 			this->graph_panel->TabIndex = 9;
 			this->graph_panel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::graph_panel_Paint);
 			this->graph_panel->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &Form1::graph_panel_MouseMove);
@@ -259,6 +259,7 @@ namespace BeepingModel {
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Padding = System::Windows::Forms::Padding(8, 2, 0, 2);
+			this->menuStrip1->RenderMode = System::Windows::Forms::ToolStripRenderMode::Professional;
 			this->menuStrip1->Size = System::Drawing::Size(1150, 24);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
@@ -440,9 +441,9 @@ namespace BeepingModel {
 			this->panel1->Controls->Add(this->btn_step);
 			this->panel1->Controls->Add(this->btn_auto);
 			this->panel1->ForeColor = System::Drawing::Color::DimGray;
-			this->panel1->Location = System::Drawing::Point(954, 32);
+			this->panel1->Location = System::Drawing::Point(954, 30);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(194, 739);
+			this->panel1->Size = System::Drawing::Size(194, 777);
 			this->panel1->TabIndex = 15;
 			// 
 			// Form1
