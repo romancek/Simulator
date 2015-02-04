@@ -34,6 +34,7 @@ namespace BeepingModel{
 		void SetUnitDiskEdge(void);
 		double GetNodeDistance(int,int,int,int);
 		void SetGraphParameter(Settings*);
+		int Random_Device(void);
 		void Run(void);
 		void Run_UpperN(void);
 		void Run_MM(void);

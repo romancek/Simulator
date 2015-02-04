@@ -101,17 +101,7 @@ void Controller::CreateRandomEdge(void)
 	array<int>^ rand_edge = gcnew array<int>(2);
 	multimap<int,int> created_edge;
 
-	/*
-	 * Random Value Create with Boost
-	 */
-	ProcessStartInfo^ psi = gcnew ProcessStartInfo( "random_device.exe" );
-	psi->WindowStyle = ProcessWindowStyle::Hidden;
-	Process^ p = Process::Start(psi);
-	p->WaitForExit();
-	int rd = p->ExitCode;
-	p->Close();
-	Debug::WriteLine(String::Format("random_device = {0}",rd));
-	boost::random::mt19937 gen(rd);
+	boost::random::mt19937 gen( this->Random_Device() );
 	boost::random::uniform_int_distribution<> dist(0,this->n-1);
 	boost::variate_generator< boost::mt19937&, boost::random::uniform_int_distribution<> > random(gen, dist);
 
@@ -164,7 +154,7 @@ void Controller::SetRandomizedPosition(void)
 	bool selected = false;
 	multimap<int,int> exist_area;
 
-	boost::random::mt19937 gen( static_cast<unsigned long>(time(0)) );
+	boost::random::mt19937 gen( this->Random_Device() );
 	boost::random::uniform_int_distribution<> distX(NODE_SIZE,this->x-1-NODE_SIZE);
 	boost::random::uniform_int_distribution<> distY(NODE_SIZE,this->y-1-NODE_SIZE);
 	
@@ -250,6 +240,20 @@ void Controller::SetGraphParameter(Settings* setting)
 	this->F = setting->F;
 }
 
+/*
+ * Random Value Create with random_device.exe using boost
+ */
+int Controller::Random_Device()
+{
+	ProcessStartInfo^ psi = gcnew ProcessStartInfo( "random_device.exe" );
+	psi->WindowStyle = ProcessWindowStyle::Hidden;
+	Process^ p = Process::Start(psi);
+	p->WaitForExit();
+	int rd = p->ExitCode;
+	p->Close();
+	return rd;
+}
+
 void Controller::Run(void)
 {
 	this->Run_UpperN();
@@ -261,7 +265,7 @@ void Controller::Run_UpperN(void)
 {
 	using namespace System::Threading;
 	//Adversal Wake-Up
-	boost::random::mt19937 gen( static_cast<unsigned long>(time(0)) );	// or nondet_random.hpp->random_device
+	boost::random::mt19937 gen( this->Random_Device() );
 	boost::random::uniform_int_distribution<> dist(0,this->n-1);
 	int i = 0;
 	while(1)
@@ -284,7 +288,7 @@ void Controller::Run_UpperN(void)
 		}
 		else if ( n->NodeState == competing ) //Algorithm 3-6
 		{ 
-			boost::hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
+			boost::hellekalek1995 gen( this->Random_Device() );
 			double bp = Math::Pow(2.0,n->Phase)/(8*UpperN);
 			boost::bernoulli_distribution<> dst( bp );
 			boost::variate_generator< boost::hellekalek1995&, boost::bernoulli_distribution<> > rand( gen, dst );
@@ -299,7 +303,7 @@ void Controller::Run_UpperN(void)
 		}
 		else if ( n->NodeState == MIS ) //Algorithm 7-8
 		{
-			boost::hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
+			boost::hellekalek1995 gen( this->Random_Device() );
 			boost::bernoulli_distribution<> dst( 0.5 );
 			boost::variate_generator< boost::hellekalek1995&, boost::bernoulli_distribution<> > rand( gen, dst );
 			if ( n->next_MIS_state == 0 )

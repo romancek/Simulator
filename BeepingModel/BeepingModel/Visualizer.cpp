@@ -2,7 +2,7 @@
 
 using namespace BeepingModel;
 using namespace System::Drawing;
-using namespace boost;
+
 Visualizer::Visualizer(void)
 {
 
