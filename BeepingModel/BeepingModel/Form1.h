@@ -276,21 +276,21 @@ namespace BeepingModel {
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(140, 22);
 			this->openToolStripMenuItem->Text = L"Open(&O)...";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Open);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(140, 22);
 			this->saveToolStripMenuItem->Text = L"Save(&S)...";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_FileSave);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(140, 22);
 			this->exitToolStripMenuItem->Text = L"Exit(&C)";
 			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::Form1_Closed);
 			// 
@@ -305,7 +305,7 @@ namespace BeepingModel {
 			// settingSToolStripMenuItem
 			// 
 			this->settingSToolStripMenuItem->Name = L"settingSToolStripMenuItem";
-			this->settingSToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->settingSToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->settingSToolStripMenuItem->Text = L"Setting(&S)";
 			this->settingSToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::settingSToolStripMenuItem_Click);
 			// 
