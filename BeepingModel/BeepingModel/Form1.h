@@ -57,11 +57,6 @@ namespace BeepingModel {
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。
 		/// </summary>
-		virtual void OnPaint( PaintEventArgs^ e ) override
-		{
-			Form::OnPaint( e );
-			
-		}
 		~Form1()
 		{
 			if (components)
@@ -546,8 +541,6 @@ private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms:
 	}
 
 private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
-		//TODO
-		this->visualizer->Draw();
 	}
 
 private: System::Void Form1_Closed(System::Object^  sender, System::EventArgs^  e) {
