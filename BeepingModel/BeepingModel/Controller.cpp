@@ -1,7 +1,6 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 using namespace BeepingModel;
-using namespace boost;
 using namespace System::Diagnostics;
 
 
@@ -102,13 +101,19 @@ void Controller::CreateRandomEdge(void)
 	//M_SIZE edges random selected and add
 	array<int>^ rand_edge = gcnew array<int>(2);
 	multimap<int,int> created_edge;
-	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	// or nondet_random.hpp->random_device
-	random::uniform_int_distribution<> dist(0,this->n-1);
+
+	/*
+	 * Random Value Create with Boost
+	 */
+	boost::random::random_device rd;
+	boost::random::mt19937 gen(rd());
+	boost::random::uniform_int_distribution<> dist(0,this->n-1);
+	boost::variate_generator< boost::mt19937&, boost::random::uniform_int_distribution<> > random(gen, dist);
 
 	while ( i < this->m )
 	{
-		rand_edge[0] = dist(gen);
-		rand_edge[1] = dist(gen);
+		rand_edge[0] = random();
+		rand_edge[1] = random();
 		if ( rand_edge[0] == rand_edge[1] ) continue;
 		//exists channel same endpoint node
 		for ( multimap<int,int>::iterator itr = created_edge.begin(); itr != created_edge.end(); ++itr )
@@ -154,9 +159,9 @@ void Controller::SetRandomizedPosition(void)
 	bool selected = false;
 	multimap<int,int> exist_area;
 
-	random::mt19937 gen( static_cast<unsigned long>(time(0)) );
-	random::uniform_int_distribution<> distX(NODE_SIZE,this->x-1-NODE_SIZE);
-	random::uniform_int_distribution<> distY(NODE_SIZE,this->y-1-NODE_SIZE);
+	boost::random::mt19937 gen( static_cast<unsigned long>(time(0)) );
+	boost::random::uniform_int_distribution<> distX(NODE_SIZE,this->x-1-NODE_SIZE);
+	boost::random::uniform_int_distribution<> distY(NODE_SIZE,this->y-1-NODE_SIZE);
 	
 	while ( i < this->n )
 	{
@@ -251,8 +256,8 @@ void Controller::Run_UpperN(void)
 {
 	using namespace System::Threading;
 	//Adversal Wake-Up
-	random::mt19937 gen( static_cast<unsigned long>(time(0)) );	// or nondet_random.hpp->random_device
-	random::uniform_int_distribution<> dist(0,this->n-1);
+	boost::random::mt19937 gen( static_cast<unsigned long>(time(0)) );	// or nondet_random.hpp->random_device
+	boost::random::uniform_int_distribution<> dist(0,this->n-1);
 	int i = 0;
 	while(1)
 	{
@@ -274,10 +279,10 @@ void Controller::Run_UpperN(void)
 		}
 		else if ( n->NodeState == competing ) //Algorithm 3-6
 		{ 
-			hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
+			boost::hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
 			double bp = Math::Pow(2.0,n->Phase)/(8*UpperN);
-			bernoulli_distribution<> dst( bp );
-			variate_generator< hellekalek1995&, bernoulli_distribution<> > rand( gen, dst );
+			boost::bernoulli_distribution<> dst( bp );
+			boost::variate_generator< boost::hellekalek1995&, boost::bernoulli_distribution<> > rand( gen, dst );
 			if ( rand() == 1 )
 			{
 				n->ActionState = beeping;
@@ -289,9 +294,9 @@ void Controller::Run_UpperN(void)
 		}
 		else if ( n->NodeState == MIS ) //Algorithm 7-8
 		{
-			hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
-			bernoulli_distribution<> dst( 0.5 );
-			variate_generator< hellekalek1995&, bernoulli_distribution<> > rand( gen, dst );
+			boost::hellekalek1995 gen( static_cast<unsigned long>(time(0)) );
+			boost::bernoulli_distribution<> dst( 0.5 );
+			boost::variate_generator< boost::hellekalek1995&, boost::bernoulli_distribution<> > rand( gen, dst );
 			if ( n->next_MIS_state == 0 )
 			{
 				if ( rand() == 1 )

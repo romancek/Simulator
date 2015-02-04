@@ -37,17 +37,16 @@ public:
 	int F;				//[multicast] available number of channels
 }Settings;
 
-#include <map>
-#include <ctime>
-#include <boost/random.hpp>
 #include <iostream>
 #include <ctime>
 #include <map>
 #include <math.h>
 #include <string>
-#include <boost/version.hpp>
 #include <cliext/vector>
 #include "picojson.h"
+
+#include <boost/random.hpp>
+#include <boost/random/random_device.hpp>
 
 #include "Node.h"
 #include "Channel.h"
@@ -56,6 +55,4 @@ public:
 #include "Observer.h"
 #include "FormSetting.h"
 #include "Form1.h"
-
-
 #include "TimeWatch.h"
