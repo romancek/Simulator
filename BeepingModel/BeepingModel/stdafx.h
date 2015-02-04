@@ -2,7 +2,7 @@
 // 参照回数が多く、かつあまり変更されない、プロジェクト専用のインクルード ファイル
 // を記述します。
 #pragma once
-
+#pragma warning (default : 4412)
 #define N_SIZE 3
 #define M_SIZE 3
 #define F_SIZE 15
@@ -37,6 +37,9 @@ public:
 	int F;				//[multicast] available number of channels
 }Settings;
 
+#include <boost/random.hpp>
+#include <boost/random/random_device.hpp>
+
 #include <iostream>
 #include <ctime>
 #include <map>
@@ -45,8 +48,7 @@ public:
 #include <cliext/vector>
 #include "picojson.h"
 
-#include <boost/random.hpp>
-#include <boost/random/random_device.hpp>
+
 
 #include "Node.h"
 #include "Channel.h"

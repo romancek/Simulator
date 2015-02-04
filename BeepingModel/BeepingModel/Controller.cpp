@@ -3,7 +3,6 @@
 using namespace BeepingModel;
 using namespace System::Diagnostics;
 
-
 Controller::Controller(int x, int y)
 {
 	this->n = N_SIZE;
@@ -105,8 +104,14 @@ void Controller::CreateRandomEdge(void)
 	/*
 	 * Random Value Create with Boost
 	 */
-	boost::random::random_device rd;
-	boost::random::mt19937 gen(rd());
+	ProcessStartInfo^ psi = gcnew ProcessStartInfo( "random_device.exe" );
+	psi->WindowStyle = ProcessWindowStyle::Hidden;
+	Process^ p = Process::Start(psi);
+	p->WaitForExit();
+	int rd = p->ExitCode;
+	p->Close();
+	Debug::WriteLine(String::Format("random_device = {0}",rd));
+	boost::random::mt19937 gen(rd);
 	boost::random::uniform_int_distribution<> dist(0,this->n-1);
 	boost::variate_generator< boost::mt19937&, boost::random::uniform_int_distribution<> > random(gen, dist);
 
