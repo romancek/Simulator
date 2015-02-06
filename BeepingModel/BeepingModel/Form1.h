@@ -245,12 +245,14 @@ namespace BeepingModel {
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)), 
+			this->menuStrip1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
 				static_cast<System::Int32>(static_cast<System::Byte>(64)));
-			this->menuStrip1->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->menuStrip1->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->fileToolStripMenuItem, 
-				this->toolToolStripMenuItem});
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->fileToolStripMenuItem,
+					this->toolToolStripMenuItem
+			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Padding = System::Windows::Forms::Padding(8, 2, 0, 2);
@@ -261,8 +263,10 @@ namespace BeepingModel {
 			// 
 			// fileToolStripMenuItem
 			// 
-			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->openToolStripMenuItem, 
-				this->saveToolStripMenuItem, this->exitToolStripMenuItem});
+			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->openToolStripMenuItem,
+					this->saveToolStripMenuItem, this->exitToolStripMenuItem
+			});
 			this->fileToolStripMenuItem->ForeColor = System::Drawing::Color::White;
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
 			this->fileToolStripMenuItem->Size = System::Drawing::Size(57, 20);
@@ -291,7 +295,7 @@ namespace BeepingModel {
 			// 
 			// toolToolStripMenuItem
 			// 
-			this->toolToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->settingSToolStripMenuItem});
+			this->toolToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->settingSToolStripMenuItem });
 			this->toolToolStripMenuItem->ForeColor = System::Drawing::Color::White;
 			this->toolToolStripMenuItem->Name = L"toolToolStripMenuItem";
 			this->toolToolStripMenuItem->Size = System::Drawing::Size(62, 20);
@@ -308,7 +312,7 @@ namespace BeepingModel {
 			// 
 			this->openFileDialog1->DefaultExt = L"fileopen";
 			this->openFileDialog1->FileName = L"Let open file";
-			this->openFileDialog1->Filter = L"JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|Dataファイル(*.dat)|*.dat|すべてのファイル(*.*)|" 
+			this->openFileDialog1->Filter = L"JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|Dataファイル(*.dat)|*.dat|すべてのファイル(*.*)|"
 				L"*.*";
 			this->openFileDialog1->RestoreDirectory = true;
 			this->openFileDialog1->SupportMultiDottedExtensions = true;
@@ -317,7 +321,7 @@ namespace BeepingModel {
 			// 
 			this->saveFileDialog1->DefaultExt = L"Save";
 			this->saveFileDialog1->FileName = L"Save file";
-			this->saveFileDialog1->Filter = L"PNGファイル(*.png)|*.png|JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*" 
+			this->saveFileDialog1->Filter = L"PNGファイル(*.png)|*.png|JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*"
 				L".*";
 			this->saveFileDialog1->RestoreDirectory = true;
 			this->saveFileDialog1->SupportMultiDottedExtensions = true;
@@ -391,7 +395,7 @@ namespace BeepingModel {
 			// label_topology
 			// 
 			this->label_topology->AutoSize = true;
-			this->label_topology->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->label_topology->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label_topology->ForeColor = System::Drawing::Color::DarkSlateBlue;
 			this->label_topology->Location = System::Drawing::Point(15, 318);
@@ -451,9 +455,9 @@ namespace BeepingModel {
 			this->Controls->Add(this->menuStrip1);
 			this->Controls->Add(this->graph_panel);
 			this->Controls->Add(this->panel1);
-			this->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"Form1";

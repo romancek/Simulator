@@ -130,7 +130,7 @@ void Controller::CreateRandomEdge(void)
 			channels[i]->SetEndPoint(rand_edge[0],rand_edge[1]);
 			nodes[rand_edge[0]]->SetNeighbor(rand_edge[1]);
 			nodes[rand_edge[1]]->SetNeighbor(rand_edge[0]);
-			created_edge.insert(pair <int, int> (rand_edge[0], rand_edge[1]));
+			created_edge.insert(pair<int, int>(rand_edge[0], rand_edge[1]));//rand_edge[0], rand_edge[1]));
 #ifdef _DEBUG
 			String^ a = String::Format("channel[{0}]:({1},{2})",i,rand_edge[0],rand_edge[1]);
 			Debug::WriteLine(a);
