@@ -130,7 +130,9 @@ void Controller::CreateRandomEdge(void)
 			channels[i]->SetEndPoint(rand_edge[0],rand_edge[1]);
 			nodes[rand_edge[0]]->SetNeighbor(rand_edge[1]);
 			nodes[rand_edge[1]]->SetNeighbor(rand_edge[0]);
-			created_edge.insert(pair<int, int>(rand_edge[0], rand_edge[1]));//rand_edge[0], rand_edge[1]));
+			int n1 = rand_edge[0];
+			int n2 = rand_edge[1];
+			created_edge.insert(pair<int, int>(n1, n2));//rand_edge[0], rand_edge[1]));
 #ifdef _DEBUG
 			String^ a = String::Format("channel[{0}]:({1},{2})",i,rand_edge[0],rand_edge[1]);
 			Debug::WriteLine(a);
@@ -208,7 +210,7 @@ void Controller::SetUnitDiskEdge(void)
 			//チャネルが既に存在しているかチェック
 			for ( int nr = 0; nr < this->nodes[i]->ch_num;nr++ )
 			{
-				if ( this->nodes[i]->neighbors[nr] == j ) selected = true;
+				if ( this->nodes[i]->neighbors.at(nr) == j ) selected = true;
 			}
 			if ( selected )
 			{

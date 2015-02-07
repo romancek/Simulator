@@ -14,6 +14,7 @@ Node::Node(int id)
 {
 	this->id = id;
 	this->ch_num = 0;
+	this->neighbors.clear();
 	this->local_round = 1;
 	this->states = gcnew array<int>{sleep,sleep,silent};
 	this->listenround = 1;
