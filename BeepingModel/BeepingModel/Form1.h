@@ -664,13 +664,13 @@ private: bool LoadPngFile( String^ path ) {
 		return true;
 	}
 private: void InitSetting () {
-			this->settings = new Settings;
-			this->settings->AA = false;
-			this->settings->Can_Draw = true;
-			this->settings->unitdisk_r = 50;
-			this->settings->F = 1;
-			this->settings->topology = 1;
-		 }
+		this->settings = new Settings;
+		this->settings->AA = false;
+		this->settings->Can_Draw = true;
+		this->settings->unitdisk_r = 50;
+		this->settings->F = 1;
+		this->settings->topology = 1;
+	}
 private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		FormSetting^ fs = gcnew FormSetting(this->settings);
 		fs->ShowDialog();
