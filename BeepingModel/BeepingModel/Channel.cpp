@@ -10,7 +10,7 @@ Channel::Channel(void)
 Channel::Channel(int id)
 {
 	this->id = id;
-	this->endpoint = gcnew array<int>{-1,-1};
+	this->endpoint = gcnew array<int>{CH_EMPTY, CH_EMPTY};
 }
 
 void Channel::SetEndPoint(int v1, int v2)

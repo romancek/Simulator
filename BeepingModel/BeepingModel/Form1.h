@@ -680,7 +680,6 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		this->controller->SetGraphParameter(settings);
 		this->observer->CanDraw = settings->Can_Draw;
 		this->PrintParam();
-		this->visualizer->Draw();
 	}
 
 private: System::Void PrintParam() {

@@ -228,6 +228,11 @@ void Controller::SetUnitDiskEdge(void)
 		}
 		i++;
 	}
+	//Init Balanced Channels
+	for (int balanced_ch = channel_num; balanced_ch < this->m; balanced_ch++)
+	{
+		this->channels[balanced_ch]->SetEndPoint(-1, -1);
+	}
 }
 
 double Controller::GetNodeDistance(int p1x, int p1y, int p2x, int p2y)

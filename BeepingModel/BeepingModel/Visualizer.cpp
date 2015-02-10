@@ -51,8 +51,15 @@ void Visualizer::Draw(void)
 	for each(Channel^ ch in this->controller->channels)
 	{
 		array<int>^ ep = ch->EndPoint;
-		if (ep[0] < 0) {
-			throw std::logic_error("Channel has node id of invalid number");
+		if (ep[0] == CH_EMPTY) 
+		{
+#ifdef _DEBUG
+			System::Diagnostics::Debug::Fail("Channel has not endpoints node");
+#endif
+		}
+		else if (ep[0] < 0)
+		{
+			continue;
 		}
 		array<int>^ p1 = this->controller->nodes[ep[0]]->GetPosition();
 		array<int>^ p2 = this->controller->nodes[ep[1]]->GetPosition();
