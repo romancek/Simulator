@@ -18,3 +18,4 @@ void Channel::SetEndPoint(int v1, int v2)
 	array<int>^ ep = gcnew array<int>{v1,v2};
 	this->endpoint = ep;
 }
+
