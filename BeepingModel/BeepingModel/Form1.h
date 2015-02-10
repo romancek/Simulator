@@ -21,7 +21,6 @@ namespace BeepingModel {
 	private: Observer^ observer;
 	private: Thread^ Run_Algorithm;
 	private: Thread^ UpdateInfo;
-	private: bool UpdatePanel;
 	private: String^ fileName;      // “Ç‚Ý‘‚«ƒtƒ@ƒCƒ‹–¼
 
 	private: System::Windows::Forms::ToolStripMenuItem^  settingSToolStripMenuItem;
@@ -50,7 +49,6 @@ namespace BeepingModel {
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
-			this->UpdatePanel = true;
 		}
 
 	protected:

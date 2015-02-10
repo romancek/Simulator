@@ -11,20 +11,23 @@ namespace BeepingModel{
 		array<int>^ position;
 		int local_round;
 		int listenround;
-		int phase; // i : 1 to clogN
-		int step;   // 1 to logN
-		int MIS_state; //0:if,1:listen,2:else,3:beep
-		int udk_r; //UnitDisk radius
+		int phase;						// i : 1 to clogN
+		int step;						// 1 to logN
+		int MIS_state;					//0:if,1:listen,2:else,3:beep
+		int udk_r;						//UnitDisk radius
 	public:
 		int ch_num;
-		int use_freq;		//1~F channels
+		int global_freq;				//1~F channels
+		array<int>^ available_freq;		//1:available, 0:not available	
 		cliext::vector<int> neighbors;
+	public:
 		Node();
-		Node(int);
+		Node(int,int);
 		void SetNeighbor(int);
 		array<int>^ GetState(void);
 		void SetPosition(array<int>^);
 		array<int>^ GetPosition(void);
+
 		void Reset(void);
 	public:
 		property int Id {

@@ -2,7 +2,6 @@
 // 参照回数が多く、かつあまり変更されない、プロジェクト専用のインクルード ファイル
 // を記述します。
 #pragma once
-#pragma warning (default : 4412)
 
 //Default Graph Property
 #define N_SIZE 3

@@ -15,6 +15,7 @@ Controller::Controller(int x, int y)
 	this->global_round = 1;
 	this->x = x;
 	this->y = y;
+	this->F = 1;
 }
 
 void Controller::InitializeGraph(int topology)
@@ -25,7 +26,7 @@ void Controller::InitializeGraph(int topology)
 	channels = gcnew array<Channel^>(this->m);
 	for ( int i = 0;i < n;i++ )
 	{
-		nodes[i] = gcnew Node(i);
+		nodes[i] = gcnew Node(i,this->F);
 	}
 	for ( int i = 0;i < m;i++ )
 	{
@@ -53,7 +54,7 @@ void Controller::InitializeGraph(int n, int m, int density)
 	channels = gcnew array<Channel^>(this->m);
 	for ( int i = 0;i < n;i++ )
 	{
-		nodes[i] = gcnew Node(i);
+		nodes[i] = gcnew Node(i,this->F);
 	}
 	for ( int i = 0;i < m;i++ )
 	{
