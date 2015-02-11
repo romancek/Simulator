@@ -18,5 +18,5 @@ void TimeWatch::restart()
 double TimeWatch::elapsed()
 {
 	double end = timeGetTime();
-	return (double)(end - m_start) / 1000;	//ms->s
+	return (double)(end - m_start);//ms
 }

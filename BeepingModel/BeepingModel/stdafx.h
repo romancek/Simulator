@@ -11,9 +11,13 @@
 #define UDK_R 50		//UnitDisk radius
 
 //Thread Speed Property
-#define _Run_Speed_ms 50 
-#define _MIS_Apper_Stop_ms 500
-#define _CheckInfo_Speed_ms 200
+//#define _run_speed_ms 50 
+//#define _mis_apper_stop_ms 500
+//#define _checkinfo_speed_ms 200
+
+#define _Run_Speed_ms 5 
+#define _MIS_Apper_Stop_ms 5
+#define _CheckInfo_Speed_ms 5
 
 //Rendering Property
 #define NODE_SIZE 5

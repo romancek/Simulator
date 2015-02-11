@@ -134,7 +134,7 @@ namespace BeepingModel {
 			this->btn_auto->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_auto->FlatAppearance->BorderSize = 2;
 			this->btn_auto->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_auto->ForeColor = System::Drawing::Color::Olive;
+			this->btn_auto->ForeColor = System::Drawing::Color::Gold;
 			this->btn_auto->Location = System::Drawing::Point(48, 70);
 			this->btn_auto->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_auto->Name = L"btn_auto";
@@ -150,7 +150,7 @@ namespace BeepingModel {
 			this->btn_step->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_step->FlatAppearance->BorderSize = 2;
 			this->btn_step->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_step->ForeColor = System::Drawing::Color::Olive;
+			this->btn_step->ForeColor = System::Drawing::Color::Gold;
 			this->btn_step->Location = System::Drawing::Point(48, 18);
 			this->btn_step->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_step->Name = L"btn_step";
@@ -166,7 +166,7 @@ namespace BeepingModel {
 			this->btn_stop->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_stop->FlatAppearance->BorderSize = 2;
 			this->btn_stop->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_stop->ForeColor = System::Drawing::Color::Olive;
+			this->btn_stop->ForeColor = System::Drawing::Color::Gold;
 			this->btn_stop->Location = System::Drawing::Point(48, 122);
 			this->btn_stop->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_stop->Name = L"btn_stop";
@@ -210,7 +210,7 @@ namespace BeepingModel {
 			this->btn_set->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_set->FlatAppearance->BorderSize = 2;
 			this->btn_set->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_set->ForeColor = System::Drawing::Color::Black;
+			this->btn_set->ForeColor = System::Drawing::Color::White;
 			this->btn_set->Location = System::Drawing::Point(65, 312);
 			this->btn_set->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_set->Name = L"btn_set";
@@ -223,7 +223,7 @@ namespace BeepingModel {
 			// label_mouse_position
 			// 
 			this->label_mouse_position->AutoSize = true;
-			this->label_mouse_position->ForeColor = System::Drawing::Color::Black;
+			this->label_mouse_position->ForeColor = System::Drawing::Color::White;
 			this->label_mouse_position->Location = System::Drawing::Point(17, 27);
 			this->label_mouse_position->Name = L"label_mouse_position";
 			this->label_mouse_position->Size = System::Drawing::Size(98, 14);
@@ -327,7 +327,7 @@ namespace BeepingModel {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->ForeColor = System::Drawing::Color::Black;
+			this->label2->ForeColor = System::Drawing::Color::White;
 			this->label2->Location = System::Drawing::Point(134, 213);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(15, 14);
@@ -337,7 +337,7 @@ namespace BeepingModel {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->ForeColor = System::Drawing::Color::Black;
+			this->label3->ForeColor = System::Drawing::Color::White;
 			this->label3->Location = System::Drawing::Point(134, 243);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(18, 14);
@@ -347,7 +347,7 @@ namespace BeepingModel {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->ForeColor = System::Drawing::Color::Black;
+			this->label4->ForeColor = System::Drawing::Color::White;
 			this->label4->Location = System::Drawing::Point(134, 269);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(53, 14);
@@ -363,6 +363,7 @@ namespace BeepingModel {
 			this->groupBox1->Controls->Add(this->label_ground);
 			this->groupBox1->Controls->Add(this->label_mouse_position);
 			this->groupBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->groupBox1->ForeColor = System::Drawing::Color::White;
 			this->groupBox1->Location = System::Drawing::Point(6, 373);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(177, 351);
@@ -373,7 +374,7 @@ namespace BeepingModel {
 			// label_F
 			// 
 			this->label_F->AutoSize = true;
-			this->label_F->ForeColor = System::Drawing::Color::Black;
+			this->label_F->ForeColor = System::Drawing::Color::White;
 			this->label_F->Location = System::Drawing::Point(17, 135);
 			this->label_F->Name = L"label_F";
 			this->label_F->Size = System::Drawing::Size(27, 14);
@@ -383,7 +384,7 @@ namespace BeepingModel {
 			// label_channels
 			// 
 			this->label_channels->AutoSize = true;
-			this->label_channels->ForeColor = System::Drawing::Color::Black;
+			this->label_channels->ForeColor = System::Drawing::Color::White;
 			this->label_channels->Location = System::Drawing::Point(17, 108);
 			this->label_channels->Name = L"label_channels";
 			this->label_channels->Size = System::Drawing::Size(79, 14);
@@ -395,7 +396,7 @@ namespace BeepingModel {
 			this->label_topology->AutoSize = true;
 			this->label_topology->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label_topology->ForeColor = System::Drawing::Color::DarkSlateBlue;
+			this->label_topology->ForeColor = System::Drawing::Color::Violet;
 			this->label_topology->Location = System::Drawing::Point(15, 318);
 			this->label_topology->Name = L"label_topology";
 			this->label_topology->Size = System::Drawing::Size(77, 14);
@@ -405,7 +406,7 @@ namespace BeepingModel {
 			// label_radius
 			// 
 			this->label_radius->AutoSize = true;
-			this->label_radius->ForeColor = System::Drawing::Color::Black;
+			this->label_radius->ForeColor = System::Drawing::Color::White;
 			this->label_radius->Location = System::Drawing::Point(17, 81);
 			this->label_radius->Name = L"label_radius";
 			this->label_radius->Size = System::Drawing::Size(62, 14);
@@ -415,7 +416,7 @@ namespace BeepingModel {
 			// label_ground
 			// 
 			this->label_ground->AutoSize = true;
-			this->label_ground->ForeColor = System::Drawing::Color::Black;
+			this->label_ground->ForeColor = System::Drawing::Color::White;
 			this->label_ground->Location = System::Drawing::Point(17, 54);
 			this->label_ground->Name = L"label_ground";
 			this->label_ground->Size = System::Drawing::Size(103, 14);
@@ -425,6 +426,8 @@ namespace BeepingModel {
 			// panel1
 			// 
 			this->panel1->AutoSize = true;
+			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->panel1->Controls->Add(this->btn_set);
 			this->panel1->Controls->Add(this->label4);
@@ -484,10 +487,6 @@ private: System::Void UpdateDistributedSystem( ){
 			if ( this->observer->Stop == false )
 			{
 				this->SetText( String::Format("Global Round : {0}",this->controller->GlobalRound) );
-#ifdef _DEBUG
-				boost::random_device rd;
-				System::Diagnostics::Debug::WriteLine(String::Format("Random_Device in Boost = {0}", rd()));
-#endif
 			}
 			Thread::Sleep(_CheckInfo_Speed_ms);
 		}
@@ -556,7 +555,7 @@ private: System::Void Form1_Closed(System::Object^  sender, System::EventArgs^  
 /**
  ** I—¹ˆ—
  **/
-private: System::Void Close(){
+private: void Close(){
 		this->Run_Algorithm->Abort();
 		this->UpdateInfo->Abort();
 #ifdef _DEBUG
@@ -703,7 +702,12 @@ private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^
 	}
 
 private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
-		
+		if ( this->observer->Stop )
+		{
+			this->controller->Run();
+			this->visualizer->Draw();
+			this->SetText(String::Format("Global Round : {0}", this->controller->GlobalRound));
+		}
 	}
 private: System::String^ TopologyInt2String(int topology){
 		if ( topology == 0 )
