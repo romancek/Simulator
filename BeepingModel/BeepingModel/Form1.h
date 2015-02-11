@@ -484,6 +484,9 @@ private: System::Void UpdateDistributedSystem( ){
 			if ( this->observer->Stop == false )
 			{
 				this->SetText( String::Format("Global Round : {0}",this->controller->GlobalRound) );
+#ifdef _DEBUG
+				System::Diagnostics::Debug::WriteLine(String::Format("Random_Device() = {0}", this->controller->Random_Device()));
+#endif
 			}
 			Thread::Sleep(_CheckInfo_Speed_ms);
 		}

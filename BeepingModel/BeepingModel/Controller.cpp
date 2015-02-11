@@ -166,12 +166,9 @@ void Controller::SetRandomizedPosition(void)
 		dx = distX(gen);
 		dy = distY(gen);
 
-		//for ( multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr )
 		for (auto exa : exist_area)
 		{
-			//d‚È‚è”»’è TODO distance(p1,p2) <= NODE_SIZE*2
-			if ( (exa.first + NODE_SIZE * this->density > dx && exa.first - NODE_SIZE * this->density < dx )
-				&& (exa.second + NODE_SIZE * this->density > dy && exa.second - NODE_SIZE * this->density < dy) )
+			if ( GetNodeDistance( dx, dy, exa.first, exa.second ) < this->density )
 			{
 				selected = true;
 				break;
