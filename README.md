@@ -6,8 +6,8 @@ Process has any algorithms and channels.
 These processes run a/synchronous.
 
 # Environment
-* Build `Visual C++ 2010 Express v10.0.40219.1 SP1Rel` on `Windows 7 x64`
-* `.NET Framework v4.5.50938 SP1Rel`
+* Build `Visual Studio 2013 Pro v12.0.31101.00 Update 4` on `Windows 7 x64`
+* `.NET Framework v4.5.51209`
 * `boost 1.56.0`
 
 # Demo 
