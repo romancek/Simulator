@@ -249,13 +249,13 @@ void Controller::SetGraphParameter(Settings* setting)
 /*
  * Random Value Create with random_device.exe using boost
  */
-int Controller::Random_Device()
+unsigned int Controller::Random_Device()
 {
 	ProcessStartInfo^ psi = gcnew ProcessStartInfo( "random_device.exe" );
 	psi->WindowStyle = ProcessWindowStyle::Hidden;
 	Process^ p = Process::Start(psi);
 	p->WaitForExit();
-	int rd = p->ExitCode;
+	unsigned int rd = p->ExitCode;
 	p->Close();
 	return rd;
 }
