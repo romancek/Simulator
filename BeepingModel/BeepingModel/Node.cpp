@@ -10,17 +10,19 @@ Node::Node(void)
 	this->states = gcnew array<int>{sleep,sleep,silent};
 }
 
-Node::Node(int id)
+Node::Node(int id, int F)
 {
+	Reset();
 	this->id = id;
 	this->ch_num = 0;
+	this->neighbors.clear();
 	this->local_round = 1;
 	this->states = gcnew array<int>{sleep,sleep,silent};
-	this->listenround = 1;
-	this->phase = 1;
-	this->step = 1;
 	this->MIS_state = 0;
 	this->udk_r = UDK_R;
+	//Multi-Channel Mode
+	this->global_freq = F;
+	this->available_freq = gcnew array<int>(F){ 1 };
 }
 
 void Node::SetNeighbor(int id)

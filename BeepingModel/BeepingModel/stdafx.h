@@ -2,19 +2,26 @@
 // 参照回数が多く、かつあまり変更されない、プロジェクト専用のインクルード ファイル
 // を記述します。
 #pragma once
-#pragma warning (default : 4412)
+
+//Default Graph Property
 #define N_SIZE 3
 #define M_SIZE 3
 #define F_SIZE 15
 #define	_DENSITY 2		//高いと濃度が低い
-#define UDK_R 50 //UnitDisk radius
+#define UDK_R 50		//UnitDisk radius
 
+//Thread Speed Property
 #define _Run_Speed_ms 50 
 #define _MIS_Apper_Stop_ms 500
 #define _CheckInfo_Speed_ms 200
+
+//Rendering Property
 #define NODE_SIZE 5
 #define PEN_WIDTH 0.1f
 
+/*
+ * Algorithm Property
+ */
 //action state
 #define beeping 0
 #define listen 1
@@ -26,6 +33,10 @@
 //hearing state
 #define beep 5
 #define silent 6
+
+//Channel Property
+#define CH_EMPTY -1000
+
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください。
 
 typedef struct  {

@@ -50,21 +50,31 @@ void Visualizer::Draw(void)
 	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
-		if ( ch->EndPoint[0] < 0 ) continue;
-		array<int>^ p1 = this->controller->nodes[ch->EndPoint[0]]->GetPosition();
-		array<int>^ p2 = this->controller->nodes[ch->EndPoint[1]]->GetPosition();
+		array<int>^ ep = ch->EndPoint;
+		if (ep[0] == CH_EMPTY) 
+		{
+#ifdef _DEBUG
+			System::Diagnostics::Debug::Fail("Channel has not endpoints node");
+#endif
+		}
+		else if (ep[0] < 0)
+		{
+			continue;
+		}
+		array<int>^ p1 = this->controller->nodes[ep[0]]->GetPosition();
+		array<int>^ p2 = this->controller->nodes[ep[1]]->GetPosition();
 #ifdef _DEBUG
 		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1],ch->Id);
 		//System::Diagnostics::Debug::WriteLine(a);
 #endif
 
-		if ( ( this->controller->nodes[ch->EndPoint[0]]->ActionState == listen  || this->controller->nodes[ch->EndPoint[0]]->ActionState ==sleep ) 
-			&& ( this->controller->nodes[ch->EndPoint[1]]->ActionState == listen || this->controller->nodes[ch->EndPoint[1]]->ActionState == sleep ) ) //silent or sleep
+		if ( ( this->controller->nodes[ep[0]]->ActionState == listen  || this->controller->nodes[ep[0]]->ActionState ==sleep ) 
+			&& ( this->controller->nodes[ep[1]]->ActionState == listen || this->controller->nodes[ep[1]]->ActionState == sleep ) ) //silent or sleep
 		{ 
 			type = 0;
 		}
-		else if ( this->controller->nodes[ch->EndPoint[0]]->ActionState == beeping 
-			&& this->controller->nodes[ch->EndPoint[1]]->ActionState == beeping ) //collision
+		else if ( this->controller->nodes[ep[0]]->ActionState == beeping 
+			&& this->controller->nodes[ep[1]]->ActionState == beeping ) //collision
 		{ 
 			type = 2;
 		}

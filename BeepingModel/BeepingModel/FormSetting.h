@@ -83,8 +83,8 @@ namespace BeepingModel {
 			this->checkBox_can_draw = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox_Drawing = (gcnew System::Windows::Forms::GroupBox());
 			this->groupBox_Parameter = (gcnew System::Windows::Forms::GroupBox());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_channels))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_UnitDisk_radius))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->BeginInit();
 			this->groupBox_Drawing->SuspendLayout();
 			this->groupBox_Parameter->SuspendLayout();
 			this->SuspendLayout();
@@ -95,7 +95,7 @@ namespace BeepingModel {
 			this->btn_ok->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_ok->FlatAppearance->BorderSize = 2;
 			this->btn_ok->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_ok->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->btn_ok->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btn_ok->ForeColor = System::Drawing::Color::DarkCyan;
 			this->btn_ok->Location = System::Drawing::Point(536, 468);
@@ -112,7 +112,7 @@ namespace BeepingModel {
 			this->btn_cancel->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_cancel->FlatAppearance->BorderSize = 2;
 			this->btn_cancel->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_cancel->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->btn_cancel->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btn_cancel->ForeColor = System::Drawing::Color::IndianRed;
 			this->btn_cancel->Location = System::Drawing::Point(639, 468);
@@ -137,12 +137,12 @@ namespace BeepingModel {
 			// numericUpDown_UnitDisk_radius
 			// 
 			this->numericUpDown_UnitDisk_radius->Location = System::Drawing::Point(30, 22);
-			this->numericUpDown_UnitDisk_radius->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {256, 0, 0, 0});
-			this->numericUpDown_UnitDisk_radius->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
+			this->numericUpDown_UnitDisk_radius->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 256, 0, 0, 0 });
+			this->numericUpDown_UnitDisk_radius->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown_UnitDisk_radius->Name = L"numericUpDown_UnitDisk_radius";
 			this->numericUpDown_UnitDisk_radius->Size = System::Drawing::Size(47, 22);
 			this->numericUpDown_UnitDisk_radius->TabIndex = 3;
-			this->numericUpDown_UnitDisk_radius->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {50, 0, 0, 0});
+			this->numericUpDown_UnitDisk_radius->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 50, 0, 0, 0 });
 			this->numericUpDown_UnitDisk_radius->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_UnitDisk_radius_ValueChanged);
 			// 
 			// label1
@@ -158,7 +158,7 @@ namespace BeepingModel {
 			// 
 			this->listBox_topology->FormattingEnabled = true;
 			this->listBox_topology->ItemHeight = 14;
-			this->listBox_topology->Items->AddRange(gcnew cli::array< System::Object^  >(2) {L"Random", L"UnitDisk"});
+			this->listBox_topology->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Random", L"UnitDisk" });
 			this->listBox_topology->Location = System::Drawing::Point(6, 58);
 			this->listBox_topology->Name = L"listBox_topology";
 			this->listBox_topology->Size = System::Drawing::Size(71, 32);
@@ -186,12 +186,12 @@ namespace BeepingModel {
 			// numericUpDown_channels
 			// 
 			this->numericUpDown_channels->Location = System::Drawing::Point(30, 111);
-			this->numericUpDown_channels->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {128, 0, 0, 0});
-			this->numericUpDown_channels->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
+			this->numericUpDown_channels->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 128, 0, 0, 0 });
+			this->numericUpDown_channels->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown_channels->Name = L"numericUpDown_channels";
 			this->numericUpDown_channels->Size = System::Drawing::Size(43, 22);
 			this->numericUpDown_channels->TabIndex = 8;
-			this->numericUpDown_channels->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
+			this->numericUpDown_channels->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown_channels->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_channels_ValueChanged);
 			// 
 			// checkBox_can_draw
@@ -209,7 +209,7 @@ namespace BeepingModel {
 			// 
 			this->groupBox_Drawing->Controls->Add(this->checkBox_can_draw);
 			this->groupBox_Drawing->Controls->Add(this->checkBox_AA);
-			this->groupBox_Drawing->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->groupBox_Drawing->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->groupBox_Drawing->Location = System::Drawing::Point(27, 12);
 			this->groupBox_Drawing->Name = L"groupBox_Drawing";
@@ -228,14 +228,14 @@ namespace BeepingModel {
 			this->groupBox_Parameter->Controls->Add(this->label1);
 			this->groupBox_Parameter->Controls->Add(this->numericUpDown_UnitDisk_radius);
 			this->groupBox_Parameter->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->groupBox_Parameter->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->groupBox_Parameter->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->groupBox_Parameter->Location = System::Drawing::Point(28, 62);
 			this->groupBox_Parameter->Name = L"groupBox_Parameter";
 			this->groupBox_Parameter->Size = System::Drawing::Size(679, 341);
 			this->groupBox_Parameter->TabIndex = 11;
 			this->groupBox_Parameter->TabStop = false;
-			this->groupBox_Parameter->Text = L"Property";
+			this->groupBox_Parameter->Text = L"Graph Property";
 			// 
 			// FormSetting
 			// 
@@ -247,17 +247,17 @@ namespace BeepingModel {
 			this->Controls->Add(this->groupBox_Drawing);
 			this->Controls->Add(this->btn_cancel);
 			this->Controls->Add(this->btn_ok);
-			this->Font = (gcnew System::Drawing::Font(L"Times New Roman", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->Font = (gcnew System::Drawing::Font(L"Times New Roman", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::SizableToolWindow;
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->Name = L"FormSetting";
 			this->Opacity = 0.9;
 			this->Text = L"Setting";
 			this->Load += gcnew System::EventHandler(this, &FormSetting::FormSetting_Load);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_UnitDisk_radius))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_channels))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_UnitDisk_radius))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->EndInit();
 			this->groupBox_Drawing->ResumeLayout(false);
 			this->groupBox_Drawing->PerformLayout();
 			this->groupBox_Parameter->ResumeLayout(false);

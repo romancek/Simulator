@@ -15,6 +15,7 @@ Controller::Controller(int x, int y)
 	this->global_round = 1;
 	this->x = x;
 	this->y = y;
+	this->F = 1;
 }
 
 void Controller::InitializeGraph(int topology)
@@ -25,7 +26,7 @@ void Controller::InitializeGraph(int topology)
 	channels = gcnew array<Channel^>(this->m);
 	for ( int i = 0;i < n;i++ )
 	{
-		nodes[i] = gcnew Node(i);
+		nodes[i] = gcnew Node(i,this->F);
 	}
 	for ( int i = 0;i < m;i++ )
 	{
@@ -53,7 +54,7 @@ void Controller::InitializeGraph(int n, int m, int density)
 	channels = gcnew array<Channel^>(this->m);
 	for ( int i = 0;i < n;i++ )
 	{
-		nodes[i] = gcnew Node(i);
+		nodes[i] = gcnew Node(i,this->F);
 	}
 	for ( int i = 0;i < m;i++ )
 	{
@@ -111,10 +112,10 @@ void Controller::CreateRandomEdge(void)
 		rand_edge[1] = random();
 		if ( rand_edge[0] == rand_edge[1] ) continue;
 		//exists channel same endpoint node
-		for ( multimap<int,int>::iterator itr = created_edge.begin(); itr != created_edge.end(); ++itr )
+		for ( auto cre : created_edge )
 		{
-			if ( ((*itr).first == rand_edge[0] && (*itr).second == rand_edge[1] )
-				|| ((*itr).first == rand_edge[1] && (*itr).second == rand_edge[0]) )
+			if ( (cre.first == rand_edge[0] && cre.second == rand_edge[1] )
+				|| (cre.first == rand_edge[1] && cre.second == rand_edge[0]) )
 			{
 				selected = true;
 				break;
@@ -130,7 +131,9 @@ void Controller::CreateRandomEdge(void)
 			channels[i]->SetEndPoint(rand_edge[0],rand_edge[1]);
 			nodes[rand_edge[0]]->SetNeighbor(rand_edge[1]);
 			nodes[rand_edge[1]]->SetNeighbor(rand_edge[0]);
-			created_edge.insert(pair <int, int> (rand_edge[0], rand_edge[1]));
+			int n1 = rand_edge[0];
+			int n2 = rand_edge[1];
+			created_edge.insert(pair<int, int>(n1, n2));//rand_edge[0], rand_edge[1]));
 #ifdef _DEBUG
 			String^ a = String::Format("channel[{0}]:({1},{2})",i,rand_edge[0],rand_edge[1]);
 			Debug::WriteLine(a);
@@ -163,11 +166,12 @@ void Controller::SetRandomizedPosition(void)
 		dx = distX(gen);
 		dy = distY(gen);
 
-		for ( multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr )
+		//for ( multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr )
+		for (auto exa : exist_area)
 		{
 			//重なり判定 TODO distance(p1,p2) <= NODE_SIZE*2
-			if ( ((*itr).first + NODE_SIZE * this->density > dx && (*itr).first - NODE_SIZE * this->density < dx )
-				&& ((*itr).second + NODE_SIZE * this->density > dy && (*itr).second - NODE_SIZE * this->density < dy) )
+			if ( (exa.first + NODE_SIZE * this->density > dx && exa.first - NODE_SIZE * this->density < dx )
+				&& (exa.second + NODE_SIZE * this->density > dy && exa.second - NODE_SIZE * this->density < dy) )
 			{
 				selected = true;
 				break;
@@ -208,7 +212,7 @@ void Controller::SetUnitDiskEdge(void)
 			//チャネルが既に存在しているかチェック
 			for ( int nr = 0; nr < this->nodes[i]->ch_num;nr++ )
 			{
-				if ( this->nodes[i]->neighbors[nr] == j ) selected = true;
+				if ( this->nodes[i]->neighbors.at(nr) == j ) selected = true;
 			}
 			if ( selected )
 			{
@@ -225,6 +229,11 @@ void Controller::SetUnitDiskEdge(void)
 			}
 		}
 		i++;
+	}
+	//Init Balanced Channels
+	for (int balanced_ch = channel_num; balanced_ch < this->m; balanced_ch++)
+	{
+		this->channels[balanced_ch]->SetEndPoint(-1, -1);
 	}
 }
 
