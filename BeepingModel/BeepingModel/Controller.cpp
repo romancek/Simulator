@@ -112,10 +112,10 @@ void Controller::CreateRandomEdge(void)
 		rand_edge[1] = random();
 		if ( rand_edge[0] == rand_edge[1] ) continue;
 		//exists channel same endpoint node
-		for ( multimap<int,int>::iterator itr = created_edge.begin(); itr != created_edge.end(); ++itr )
+		for ( auto cre : created_edge )
 		{
-			if ( ((*itr).first == rand_edge[0] && (*itr).second == rand_edge[1] )
-				|| ((*itr).first == rand_edge[1] && (*itr).second == rand_edge[0]) )
+			if ( (cre.first == rand_edge[0] && cre.second == rand_edge[1] )
+				|| (cre.first == rand_edge[1] && cre.second == rand_edge[0]) )
 			{
 				selected = true;
 				break;
@@ -166,11 +166,12 @@ void Controller::SetRandomizedPosition(void)
 		dx = distX(gen);
 		dy = distY(gen);
 
-		for ( multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr )
+		//for ( multimap<int,int>::iterator itr = exist_area.begin(); itr != exist_area.end(); ++itr )
+		for (auto exa : exist_area)
 		{
 			//d‚È‚è”»’è TODO distance(p1,p2) <= NODE_SIZE*2
-			if ( ((*itr).first + NODE_SIZE * this->density > dx && (*itr).first - NODE_SIZE * this->density < dx )
-				&& ((*itr).second + NODE_SIZE * this->density > dy && (*itr).second - NODE_SIZE * this->density < dy) )
+			if ( (exa.first + NODE_SIZE * this->density > dx && exa.first - NODE_SIZE * this->density < dx )
+				&& (exa.second + NODE_SIZE * this->density > dy && exa.second - NODE_SIZE * this->density < dy) )
 			{
 				selected = true;
 				break;
