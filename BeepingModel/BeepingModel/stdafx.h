@@ -52,6 +52,15 @@ public:
 	int F;				//[multicast] available number of channels
 }Settings;
 
+typedef struct {
+public:
+	unsigned int n;
+	unsigned int m;
+	unsigned int Diameter;
+	unsigned int Delta;
+}GraphInfo;
+
+
 #include <boost/random.hpp>
 #include <boost/random/random_device.hpp>
 
