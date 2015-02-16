@@ -641,11 +641,6 @@ private: bool OpenFile( String^ path ) {
 			// JSON形式で開く
 			return LoadJsonFile( path );
 		}
-		else if ( path->EndsWith(".png") )
-		{
-			// PNG形式で開く
-			return LoadPngFile( path );	
-		}
 		else
 		{
 			// その他の場合はCSV形式で開く
@@ -661,9 +656,6 @@ private: bool LoadJsonFile( String^ path ) {
 		return true;
 	}
 
-private: bool LoadPngFile( String^ path ) {
-		return true;
-	}
 private: void InitSetting () {
 		this->settings = new Settings;
 		this->settings->AA = false;
@@ -688,6 +680,7 @@ private: System::Void PrintParam() {
 		this->label_topology->Text = String::Format("Topology : {0}",this->TopologyInt2String(settings->topology));
 		this->label_F->Text = String::Format("F : {0}",settings->F);
 	}
+
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
 		if ( this->observer->Stop )
 		{
@@ -709,6 +702,7 @@ private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^
 			this->SetText(String::Format("Global Round : {0}", this->controller->GlobalRound));
 		}
 	}
+
 private: System::String^ TopologyInt2String(int topology){
 		if ( topology == 0 )
 		{
