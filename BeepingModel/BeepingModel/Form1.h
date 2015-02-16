@@ -530,7 +530,7 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 			}
 			else
 			{
-				int density = Convert::ToInt32(this->textBox_density->Text,10);
+				double density = Convert::ToDouble(this->textBox_density->Text);
 				this->controller->InitializeGraph( n, m, density);
 				this->visualizer->Draw();
 				if ( this->settings->topology == 1 )

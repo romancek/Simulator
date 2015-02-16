@@ -7,7 +7,7 @@
 #define N_SIZE 3
 #define M_SIZE 3
 #define F_SIZE 15
-#define	_DENSITY 2		//高いと濃度が低い
+#define	_DENSITY 1.0	//高いと濃度が低い
 #define UDK_R 50		//UnitDisk radius
 
 //Thread Speed Property
@@ -41,23 +41,25 @@
 //Channel Property
 #define CH_EMPTY -1000
 
-// TODO: プログラムに必要な追加ヘッダーをここで参照してください。
-
 typedef struct  {
 public:
 	bool AA;
 	bool Can_Draw;	//graph draw
 	unsigned int unitdisk_r;
 	int topology;	//0:Random, 1:UnitDisk
-	int F;				//[multicast] available number of channels
+	unsigned int F;				//[multicast] available number of channels
 }Settings;
 
 typedef struct {
 public:
-	unsigned int n;
-	unsigned int m;
+	unsigned int N;
+	unsigned int M;
 	unsigned int Diameter;
 	unsigned int Delta;
+	unsigned int Global_Round;
+	unsigned int F;
+	unsigned int Radius;
+	unsigned int Field_Size[2]; //0:Width,1:Height
 }GraphInfo;
 
 
@@ -72,8 +74,7 @@ public:
 #include <cliext/vector>
 #include "picojson.h"
 
-
-
+//My Header
 #include "Node.h"
 #include "Channel.h"
 #include "Controller.h"
@@ -81,4 +82,5 @@ public:
 #include "Observer.h"
 #include "FormSetting.h"
 #include "Form1.h"
+#include "Algorithm.h"
 #include "TimeWatch.h"

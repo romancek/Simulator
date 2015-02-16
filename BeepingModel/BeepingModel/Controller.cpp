@@ -41,7 +41,7 @@ void Controller::InitializeGraph(int topology)
 #endif
 }
 
-void Controller::InitializeGraph(int n, int m, int density)
+void Controller::InitializeGraph(int n, int m, double density)
 {
 	this->n = n;
 	this->m = m;
@@ -131,7 +131,9 @@ void Controller::CreateRandomEdge(void)
 		{
 			channels[i]->SetEndPoint(rand_edge[0],rand_edge[1]);
 			nodes[rand_edge[0]]->SetNeighbor(rand_edge[1]);
+			nodes[rand_edge[0]]->SetChannel(i);
 			nodes[rand_edge[1]]->SetNeighbor(rand_edge[0]);
+			nodes[rand_edge[1]]->SetChannel(i);
 			int n1 = rand_edge[0];
 			int n2 = rand_edge[1];
 			created_edge.insert(pair<int, int>(n1, n2));//rand_edge[0], rand_edge[1]));
@@ -170,7 +172,7 @@ void Controller::SetRandomizedPosition(void)
 
 		for (auto exa : exist_area)
 		{
-			if ( GetNodeDistance( dx, dy, exa.first, exa.second ) < this->density )
+			if ( GetNodeDistance( dx, dy, exa.first, exa.second ) < NODE_SIZE/2 )
 			{
 				selected = true;
 				break;
@@ -222,9 +224,12 @@ void Controller::SetUnitDiskEdge(void)
 			//‹——£unitdisk_rˆÈ“à‚É”z’u
 			if ( GetNodeDistance( p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2 ) < unitdisk_r )
 			{
-					this->channels[channel_num++]->SetEndPoint(i,j);
+					this->channels[channel_num]->SetEndPoint(i,j);
 					this->nodes[i]->SetNeighbor(j);
+					this->nodes[i]->SetChannel(channel_num);
 					this->nodes[j]->SetNeighbor(i);
+					this->nodes[j]->SetChannel(channel_num);
+					channel_num++;
 			}
 		}
 		i++;

@@ -91,6 +91,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="BeepingModel.cpp" />
     <ClCompile Include="Channel.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="Visualizer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithm.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Form1.h">

@@ -6,7 +6,7 @@ namespace BeepingModel{
 	{
 	private:
 		int id;
-		int state;	//0:silent,1:beep,<2:collision
+		int state;	//0:silent,1:beep,2:collision
 		array<int>^ endpoint;
 	public:
 		Channel(void);

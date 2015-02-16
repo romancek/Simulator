@@ -8,7 +8,7 @@ namespace BeepingModel{
 	private:
 		int n;		//network size
 		int m;	//channel size
-		int density;
+		double density;
 		int unitdisk_r;
 		int graph_topology;
 		bool updated;
@@ -24,7 +24,7 @@ namespace BeepingModel{
 	public:
 		Controller(int,int);
 		void InitializeGraph(int);
-		void InitializeGraph(int,int,int);
+		void InitializeGraph(int,int,double);
 		void ResizeField(int,int);
 		void CreateGraph();
 		void CreateRandomGraph(void);	//Random graph only
@@ -47,9 +47,9 @@ namespace BeepingModel{
 				int get(){return this->m;}
 				void set(int m){this->m = m;}
 		}
-		property int Density {
-				int get(){return this->density;}
-				void set(int density){this->density = density;}
+		property double Density {
+				double get(){return this->density;}
+				void set(double density){this->density = density;}
 		}
 		property int GlobalRound {
 				int get(){return this->global_round;}
