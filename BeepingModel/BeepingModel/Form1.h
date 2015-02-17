@@ -49,6 +49,9 @@ namespace BeepingModel {
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
+			picojson::object obj;
+			obj.insert(std::make_pair("N", picojson::value(Convert::ToDouble(100))));
+			System::Diagnostics::Debug::WriteLine(gcnew String(picojson::value(obj).serialize().c_str()));
 		}
 
 	protected:

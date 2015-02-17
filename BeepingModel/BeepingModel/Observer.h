@@ -1,6 +1,5 @@
 #pragma once
 #include "stdafx.h"
-
 namespace BeepingModel{
 	ref class Observer
 	{
@@ -13,7 +12,7 @@ namespace BeepingModel{
 	public:
 		Observer(void);
 		Observer(Controller^, Visualizer^);
-		void Run(); 
+		void Run();
 		void Record(void);
 
 	public:

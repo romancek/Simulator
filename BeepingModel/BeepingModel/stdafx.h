@@ -73,6 +73,7 @@ public:
 #include <string>
 #include <cliext/vector>
 #include "picojson.h"
+#include <gcroot.h>
 
 //My Header
 #include "Node.h"
