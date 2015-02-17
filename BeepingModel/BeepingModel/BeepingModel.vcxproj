@@ -96,6 +96,7 @@
     <ClCompile Include="BeepingModel.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -109,6 +110,7 @@
     <ClInclude Include="Algorithm.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="DataManager.h" />
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
       <DeploymentContent>false</DeploymentContent>

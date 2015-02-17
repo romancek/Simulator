@@ -19,6 +19,7 @@ namespace BeepingModel {
 	private: Controller^ controller;
 	private: Visualizer^ visualizer;
 	private: Observer^ observer;
+	private: DataManager *data_manager;
 	private: Thread^ Run_Algorithm;
 	private: Thread^ UpdateInfo;
 	private: String^ fileName;      // “Ç‚Ý‘‚«ƒtƒ@ƒCƒ‹–¼
@@ -49,9 +50,8 @@ namespace BeepingModel {
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
-			picojson::object obj;
-			obj.insert(std::make_pair("N", picojson::value(Convert::ToDouble(100))));
-			System::Diagnostics::Debug::WriteLine(gcnew String(picojson::value(obj).serialize().c_str()));
+			data_manager = new DataManager();
+			data_manager->OutPutJSON();
 		}
 
 	protected:
@@ -63,6 +63,7 @@ namespace BeepingModel {
 			if (components)
 			{
 				delete components;
+				delete data_manager;
 			}
 		}
 	private: System::Windows::Forms::Button^  btn_auto;
