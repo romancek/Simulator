@@ -13,7 +13,6 @@ namespace BeepingModel{
 		Observer(void);
 		Observer(Controller^, Visualizer^);
 		void Run();
-		void Record(void);
 
 	public:
 		property bool Stop

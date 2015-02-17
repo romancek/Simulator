@@ -17,7 +17,7 @@ namespace BeepingModel{
 			int get() { return this->id; }
 			void set( int value ) { this->id = value; }
 		}
-		property array<int>^ EndPoint {
+		property cli::array<int>^ EndPoint {
 			array<int>^ get(){return this->endpoint;}
 			void set(array<int>^ ep){this->endpoint = ep;}
 		}

@@ -26,8 +26,3 @@ void Observer::Run()
 		Thread::Sleep(_Run_Speed_ms);
 	}
 }
-
-void Observer::Record()
-{
-
-}

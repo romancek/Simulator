@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 
 using namespace BeepingModel;
+
 Channel::Channel(void)
 {
 	this->id = -1;

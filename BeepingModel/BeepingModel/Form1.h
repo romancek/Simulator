@@ -19,7 +19,7 @@ namespace BeepingModel {
 	private: Controller^ controller;
 	private: Visualizer^ visualizer;
 	private: Observer^ observer;
-	private: DataManager *data_manager;
+	private: DataManager^ data_manager;
 	private: Thread^ Run_Algorithm;
 	private: Thread^ UpdateInfo;
 	private: String^ fileName;      // 読み書きファイル名
@@ -50,8 +50,7 @@ namespace BeepingModel {
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
-			data_manager = new DataManager();
-			data_manager->OutPutJSON();
+			this->data_manager = gcnew DataManager();
 		}
 
 	protected:
@@ -63,7 +62,7 @@ namespace BeepingModel {
 			if (components)
 			{
 				delete components;
-				delete data_manager;
+				//delete data_manager;
 			}
 		}
 	private: System::Windows::Forms::Button^  btn_auto;
@@ -500,7 +499,7 @@ private: System::Void SetText( String^ text){
 		if (this->label_ground->InvokeRequired)
 		{	
 			SetTextDelegate^ d = gcnew SetTextDelegate(this, &Form1::SetText);
-			this->Invoke(d, gcnew array<Object^> { text });
+			this->Invoke(d, gcnew cli::array<System::Object^> { text });
 		}
 		else
 		{
@@ -579,13 +578,18 @@ private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e)
 			return;
 		}
 		this->fileName = openFileDialog1->FileName;
-		UpdateDistributedSystem();
 	}
 
 private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
 		this->saveFileDialog1->Title = L"Save File";
 
 		if ( saveFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK ) return;
+
+		if (SaveFile(saveFileDialog1->FileName) == false)
+		{
+			MessageBox::Show("ファイル名を入力してください", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
 
 		SaveFile( saveFileDialog1->FileName );
 		this->fileName = saveFileDialog1->FileName;
@@ -624,6 +628,9 @@ private: bool SaveCsvFile( String^ path ) {
 	}
 
 private: bool SaveJsonFile( String^ path ) {
+		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
+		writer->WriteLine(this->data_manager->OutPutJSON());
+		writer->Close();
 		return true;
 	}
 

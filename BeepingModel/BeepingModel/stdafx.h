@@ -17,7 +17,7 @@
 
 #define _Run_Speed_ms 5 
 #define _MIS_Apper_Stop_ms 5
-#define _CheckInfo_Speed_ms 5
+#define _CheckInfo_Speed_ms 50
 
 //Rendering Property
 #define NODE_SIZE 5
@@ -75,13 +75,14 @@ public:
 #include "picojson.h"
 
 //My Header
-#include "DataManager.h"
 #include "Node.h"
 #include "Channel.h"
 #include "Controller.h"
+#include "DataManager.h"
 #include "Visualizer.h"
 #include "Observer.h"
 #include "FormSetting.h"
+
 #include "Form1.h"
 #include "Algorithm.h"
 #include "TimeWatch.h"
