@@ -7,8 +7,9 @@ namespace BeepingModel{
 	{
 	private:
 		int id;
-		array<int>^ states;
-		array<int>^ position;
+	public:
+		cli::array<int>^ states;
+		cli::array<int>^ position;
 		int local_round;
 		int listenround;
 		int phase;						// i : 1 to clogN
@@ -17,8 +18,8 @@ namespace BeepingModel{
 		int udk_r;						//UnitDisk radius
 	public:
 		int ch_num;
-		int global_freq;				//1~F channels
-		array<int>^ available_freq;		//1:available, 0:not available	
+		int global_freq;						//1~F channels
+		cli::array<int>^ available_freq;		//1:available, 0:not available	
 		cliext::vector<int> neighbors;
 		cliext::vector<int> channels;
 	public:
@@ -26,9 +27,9 @@ namespace BeepingModel{
 		Node(int,int);
 		void SetNeighbor(int);
 		void SetChannel(int);
-		array<int>^ GetState(void);
-		void SetPosition(array<int>^);
-		array<int>^ GetPosition(void);
+		cli::array<int>^ GetState(void);
+		void SetPosition(cli::array<int>^);
+		cli::array<int>^ GetPosition(void);
 
 		void Reset(void);
 	public:

@@ -50,7 +50,7 @@ namespace BeepingModel {
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
-			this->data_manager = gcnew DataManager();
+			this->data_manager = gcnew DataManager(this->controller);
 		}
 
 	protected:
@@ -62,7 +62,7 @@ namespace BeepingModel {
 			if (components)
 			{
 				delete components;
-				//delete data_manager;
+				delete data_manager;
 			}
 		}
 	private: System::Windows::Forms::Button^  btn_auto;
@@ -629,7 +629,7 @@ private: bool SaveCsvFile( String^ path ) {
 
 private: bool SaveJsonFile( String^ path ) {
 		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
-		writer->WriteLine(this->data_manager->OutPutJSON());
+		writer->WriteLine(this->data_manager->OutPutJSONrefController());
 		writer->Close();
 		return true;
 	}

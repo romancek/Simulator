@@ -1,1 +1,11 @@
-﻿{"GraphInformation":{"D":2.5499999999999998,"Delta":10,"F":15,"Global_Round":5.5499999999999998,"Radius":50},"M":200,"N":100}
+﻿{
+  "GraphInformation": {
+    "D": 2.5499999999999998,
+    "Delta": 10,
+    "F": 15,
+    "Global_Round": 5.5499999999999998,
+    "Radius": 50
+  },
+  "M": 200,
+  "N": 100
+}

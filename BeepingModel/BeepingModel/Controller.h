@@ -9,18 +9,19 @@ namespace BeepingModel{
 		int n;		//network size
 		int m;	//channel size
 		double density;
+		int global_round;
+	public:
 		int unitdisk_r;
 		int graph_topology;
 		bool updated;
-		int global_round;
 		int UpperN;
 		int c;
 		int F;	//available number of channels
 	public:
 		int x,y;
 		int channel_num;
-		array<Node^>^ nodes;
-		array<Channel^>^ channels;
+		cli::array<Node^>^ nodes;
+		cli::array<Channel^>^ channels;
 	public:
 		Controller(int,int);
 		void InitializeGraph(int);

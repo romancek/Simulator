@@ -44,10 +44,10 @@
 typedef struct  {
 public:
 	bool AA;
-	bool Can_Draw;	//graph draw
+	bool Can_Draw;		//graph draw
 	unsigned int unitdisk_r;
-	int topology;	//0:Random, 1:UnitDisk
-	unsigned int F;				//[multicast] available number of channels
+	int topology;		//0:Random, 1:UnitDisk
+	unsigned int F;		//[multicast] available number of channels
 }Settings;
 
 typedef struct {
