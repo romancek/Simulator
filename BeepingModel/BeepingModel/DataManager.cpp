@@ -130,14 +130,11 @@ array DataManager::WriteNodeInfo()
 		_position->insert(make_pair("y", value((double)_posOfCliArray[1])));
 
 		object* _node = new object;
-		object* _nodeSet = new object;
 		_node->insert(make_pair("Round", value((double)_n->local_round)));
 		_node->insert(make_pair("State", value(_state)));
 		_node->insert(make_pair("Position", value(*_position)));
-		char _id[10] = { 0 };
-		sprintf_s(_id, 10, "%d", _n->Id);
-		_nodeSet->insert(make_pair(_id,value(*_node)));
-		_narr.push_back(value(*_nodeSet));
+		_node->insert(make_pair("Id", value((double)_n->Id)));
+		_narr.push_back(value(*_node));
 	}
 	return _narr;
 }
