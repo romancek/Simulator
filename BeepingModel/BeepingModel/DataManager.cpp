@@ -96,6 +96,8 @@ object* DataManager::WriteGraphInfo()
 	_graph->insert(make_pair("Global_Round", value((double)(this->cnt->GlobalRound))));
 	_graph->insert(make_pair("Radius", value((double)(this->cnt->unitdisk_r))));
 	_graph->insert(make_pair("F", value((double)(this->cnt->F))));
+	_graph->insert(make_pair("M", value((double)(this->cnt->M))));
+	_graph->insert(make_pair("N", value((double)(this->cnt->N))));
 
 	return _graph;
 }
