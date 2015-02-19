@@ -6,8 +6,8 @@ namespace BeepingModel{
 	{
 	private:
 		int id;
-		int state;	//0:silent,1:beep,2:collision
-		array<int>^ endpoint;
+		int state;	//6:silent,5:beep,7:collision
+		cli::array<int>^ endpoint;
 	public:
 		Channel(void);
 		Channel(int);
@@ -17,9 +17,9 @@ namespace BeepingModel{
 			int get() { return this->id; }
 			void set( int value ) { this->id = value; }
 		}
-		property array<int>^ EndPoint {
-			array<int>^ get(){return this->endpoint;}
-			void set(array<int>^ ep){this->endpoint = ep;}
+		property cli::array<int>^ EndPoint {
+			cli::array<int>^ get(){return this->endpoint;}
+			void set(cli::array<int>^ ep){this->endpoint = ep;}
 		}
 		property int State {
 			int get(){return this->state;}

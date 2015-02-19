@@ -60,15 +60,16 @@ String^ DataManager::OutPutJSONrefController()
 {
 	object *graph = WriteGraphInfo();
 	array nodes = WriteNodeInfo();
-	object *channels = WriteChannelInfo();
+	array channels = WriteChannelInfo();
 
 	obj->insert(make_pair("GraphInformation", value(*graph)));
 	obj->insert(make_pair("Nodes", value(nodes)));
+	obj->insert(make_pair("Channels", value(channels)));
 	return gcnew String(value(*obj).serialize().c_str());
 
 	delete graph;
 	delete &nodes;
-	delete channels;
+	delete &channels;
 }
 
 object* DataManager::WriteGraphInfo()
@@ -141,9 +142,38 @@ array DataManager::WriteNodeInfo()
 	return _narr;
 }
 
-object* DataManager::WriteChannelInfo()
+array DataManager::WriteChannelInfo()
 {
 	object* _channels = new object;
+	picojson::array _carr;
+	for each (Channel^ _c in this->cnt->channels)
+	{
+		std::string _state;
+		switch (_c->State){
+		case silent:
+			_state = "silent";
+			break;
+		case beep:
+			_state = "beep";
+			break;
+		case collision:
+			_state = "collision";
+			break;
+		default:
+			break;
+		}
 
-	return _channels;
+		cli::array<int>^ _posOfCliArray = _c->EndPoint;
+		picojson::object* _endpoint = new object;
+		_endpoint->insert(make_pair("ep1", value((double)_posOfCliArray[0])));
+		_endpoint->insert(make_pair("ep2", value((double)_posOfCliArray[1])));
+
+		object* _channel = new object;
+		_channel->insert(make_pair("State", value(_state)));
+		_channel->insert(make_pair("EndPoint", value(*_endpoint)));
+		_channel->insert(make_pair("Id", value((double)_c->Id)));
+		_carr.push_back(value(*_channel));
+	}
+
+	return _carr;
 }

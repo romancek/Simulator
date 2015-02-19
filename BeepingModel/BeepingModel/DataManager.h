@@ -19,7 +19,7 @@ namespace BeepingModel{
 		System::String^ OutPutJSONrefController(void);
 		picojson::object* WriteGraphInfo();
 		picojson::array WriteNodeInfo();
-		picojson::object* WriteChannelInfo();
+		picojson::array WriteChannelInfo();
 
 	};
 }

@@ -37,6 +37,7 @@
 //hearing state
 #define beep 5
 #define silent 6
+#define collision 7
 
 //Channel Property
 #define CH_EMPTY -1000
