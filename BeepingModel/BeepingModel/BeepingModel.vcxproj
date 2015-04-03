@@ -43,8 +43,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>F:\Dev\libs\boost_1_56_0;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Dev\libs\boost_1_56_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\private\src\libs\boost_1_56_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\private\src\libs\boost_1_56_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -115,9 +115,12 @@
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
       <DeploymentContent>false</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="FormSetting.h">
       <FileType>CppForm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Node.h" />
     <ClInclude Include="Observer.h" />
