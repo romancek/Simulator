@@ -20,5 +20,6 @@ namespace BeepingModel{
 		void Draw(void);
 		void Clear(void);
 		void SetParameter(Settings*);
+		void AllocatePens();
 	};
 }

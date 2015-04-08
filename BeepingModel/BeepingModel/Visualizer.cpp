@@ -10,24 +10,28 @@ Visualizer::Visualizer(void)
 
 Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 {
-	//•`‰æ—p
-	//silent,beep,collision
-	this->pen_line = gcnew array<Pen^>(3) ;
-	this->pen_line[0] = gcnew Pen(Color::Black,PEN_WIDTH);
-	this->pen_line[1] = gcnew Pen(Color::DarkOrange,PEN_WIDTH);
-	this->pen_line[2] = gcnew Pen(Color::Red,PEN_WIDTH);
-	//sleep,inactive,competing,MIS
-	this->pen_node = gcnew array<Pen^>(4);
-	this->pen_node[0] = gcnew Pen(Color::White,PEN_WIDTH); 
-	this->pen_node[1] = gcnew Pen(Color::Black,PEN_WIDTH);
-	this->pen_node[2] = gcnew Pen(Color::HotPink,PEN_WIDTH);
-	this->pen_node[3] = gcnew Pen(Color::Red,PEN_WIDTH);
-	this->brush = gcnew array<SolidBrush^>(2);
-	this->brush[0] = gcnew SolidBrush( Color::Gainsboro );
-	this->brush[1] = gcnew SolidBrush( Color::Red );
-	
+	this->AllocatePens();
 	this->controller = c;
 	this->g = gr;
+}
+
+void Visualizer::AllocatePens()
+{
+	//silent,beep,collision
+	this->pen_line = gcnew array<Pen^>(3);
+	this->pen_line[0] = gcnew Pen(Color::Black, PEN_WIDTH);
+	this->pen_line[1] = gcnew Pen(Color::DarkOrange, PEN_WIDTH);
+	this->pen_line[2] = gcnew Pen(Color::Red, PEN_WIDTH);
+	//sleep,inactive,competing,MIS
+	this->pen_node = gcnew array<Pen^>(4);
+	this->pen_node[0] = gcnew Pen(Color::White, PEN_WIDTH);
+	this->pen_node[1] = gcnew Pen(Color::Black, PEN_WIDTH);
+	this->pen_node[2] = gcnew Pen(Color::HotPink, PEN_WIDTH);
+	this->pen_node[3] = gcnew Pen(Color::Red, PEN_WIDTH);
+	this->brush = gcnew array<SolidBrush^>(2);
+	this->brush[0] = gcnew SolidBrush(Color::Gainsboro);
+	this->brush[1] = gcnew SolidBrush(Color::Red);
+
 }
 
 void Visualizer::Draw(void)
@@ -122,5 +126,6 @@ void Visualizer::SetParameter(Settings* settings)
 	this->AA = settings->AA;
 	this->NODE_SIZE = settings->NODE_SIZE;
 	this->PEN_WIDTH = settings->PEN_WIDTH;
+	this->AllocatePens();
 }
 

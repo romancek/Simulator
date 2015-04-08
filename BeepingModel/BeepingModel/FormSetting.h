@@ -26,7 +26,15 @@ namespace BeepingModel {
 	private: System::Windows::Forms::CheckBox^  checkBox_can_draw;
 	private: System::Windows::Forms::GroupBox^  groupBox_Drawing;
 	private: System::Windows::Forms::GroupBox^  groupBox_Parameter;
+	private: System::Windows::Forms::GroupBox^  groupBox_Size;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_PEN_WIDTH;
+
+
+	private: System::Windows::Forms::Label^  label_PEN_WIDTH;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_NODE_SIZE;
+	private: System::Windows::Forms::Label^  label_NODE_SIZE;
 	private: Settings* settings;
+	private: bool cancel;
 	public:
 		FormSetting(Settings* settings)
 		{
@@ -37,6 +45,9 @@ namespace BeepingModel {
 		Settings* GetSetting()
 		{
 			return this->settings;
+		}
+		bool Cancel(){
+			return cancel;
 		}
 	protected:
 		/// <summary>
@@ -82,10 +93,18 @@ namespace BeepingModel {
 			this->numericUpDown_channels = (gcnew System::Windows::Forms::NumericUpDown());
 			this->checkBox_can_draw = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox_Drawing = (gcnew System::Windows::Forms::GroupBox());
+			this->groupBox_Size = (gcnew System::Windows::Forms::GroupBox());
+			this->numericUpDown_PEN_WIDTH = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label_PEN_WIDTH = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown_NODE_SIZE = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label_NODE_SIZE = (gcnew System::Windows::Forms::Label());
 			this->groupBox_Parameter = (gcnew System::Windows::Forms::GroupBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->BeginInit();
 			this->groupBox_Drawing->SuspendLayout();
+			this->groupBox_Size->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_PEN_WIDTH))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_NODE_SIZE))->BeginInit();
 			this->groupBox_Parameter->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -126,7 +145,7 @@ namespace BeepingModel {
 			// checkBox_AA
 			// 
 			this->checkBox_AA->AutoSize = true;
-			this->checkBox_AA->Location = System::Drawing::Point(65, 17);
+			this->checkBox_AA->Location = System::Drawing::Point(37, 24);
 			this->checkBox_AA->Name = L"checkBox_AA";
 			this->checkBox_AA->Size = System::Drawing::Size(130, 18);
 			this->checkBox_AA->TabIndex = 2;
@@ -197,7 +216,7 @@ namespace BeepingModel {
 			// checkBox_can_draw
 			// 
 			this->checkBox_can_draw->AutoSize = true;
-			this->checkBox_can_draw->Location = System::Drawing::Point(227, 17);
+			this->checkBox_can_draw->Location = System::Drawing::Point(37, 58);
 			this->checkBox_can_draw->Name = L"checkBox_can_draw";
 			this->checkBox_can_draw->Size = System::Drawing::Size(129, 18);
 			this->checkBox_can_draw->TabIndex = 9;
@@ -207,16 +226,72 @@ namespace BeepingModel {
 			// 
 			// groupBox_Drawing
 			// 
+			this->groupBox_Drawing->Controls->Add(this->groupBox_Size);
 			this->groupBox_Drawing->Controls->Add(this->checkBox_can_draw);
 			this->groupBox_Drawing->Controls->Add(this->checkBox_AA);
 			this->groupBox_Drawing->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->groupBox_Drawing->Location = System::Drawing::Point(27, 12);
 			this->groupBox_Drawing->Name = L"groupBox_Drawing";
-			this->groupBox_Drawing->Size = System::Drawing::Size(681, 49);
+			this->groupBox_Drawing->Size = System::Drawing::Size(681, 93);
 			this->groupBox_Drawing->TabIndex = 10;
 			this->groupBox_Drawing->TabStop = false;
 			this->groupBox_Drawing->Text = L"Rendering";
+			// 
+			// groupBox_Size
+			// 
+			this->groupBox_Size->Controls->Add(this->numericUpDown_PEN_WIDTH);
+			this->groupBox_Size->Controls->Add(this->label_PEN_WIDTH);
+			this->groupBox_Size->Controls->Add(this->numericUpDown_NODE_SIZE);
+			this->groupBox_Size->Controls->Add(this->label_NODE_SIZE);
+			this->groupBox_Size->Location = System::Drawing::Point(225, 13);
+			this->groupBox_Size->Name = L"groupBox_Size";
+			this->groupBox_Size->Size = System::Drawing::Size(224, 69);
+			this->groupBox_Size->TabIndex = 14;
+			this->groupBox_Size->TabStop = false;
+			this->groupBox_Size->Text = L"Size";
+			// 
+			// numericUpDown_PEN_WIDTH
+			// 
+			this->numericUpDown_PEN_WIDTH->DecimalPlaces = 1;
+			this->numericUpDown_PEN_WIDTH->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 65536 });
+			this->numericUpDown_PEN_WIDTH->Location = System::Drawing::Point(117, 26);
+			this->numericUpDown_PEN_WIDTH->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
+			this->numericUpDown_PEN_WIDTH->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 65536 });
+			this->numericUpDown_PEN_WIDTH->Name = L"numericUpDown_PEN_WIDTH";
+			this->numericUpDown_PEN_WIDTH->Size = System::Drawing::Size(46, 22);
+			this->numericUpDown_PEN_WIDTH->TabIndex = 13;
+			this->numericUpDown_PEN_WIDTH->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 65536 });
+			this->numericUpDown_PEN_WIDTH->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_PEN_WIDTH_ValueChanged);
+			// 
+			// label_PEN_WIDTH
+			// 
+			this->label_PEN_WIDTH->AutoSize = true;
+			this->label_PEN_WIDTH->Location = System::Drawing::Point(170, 28);
+			this->label_PEN_WIDTH->Name = L"label_PEN_WIDTH";
+			this->label_PEN_WIDTH->Size = System::Drawing::Size(33, 14);
+			this->label_PEN_WIDTH->TabIndex = 12;
+			this->label_PEN_WIDTH->Text = L"Line";
+			// 
+			// numericUpDown_NODE_SIZE
+			// 
+			this->numericUpDown_NODE_SIZE->Location = System::Drawing::Point(11, 26);
+			this->numericUpDown_NODE_SIZE->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 50, 0, 0, 0 });
+			this->numericUpDown_NODE_SIZE->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDown_NODE_SIZE->Name = L"numericUpDown_NODE_SIZE";
+			this->numericUpDown_NODE_SIZE->Size = System::Drawing::Size(46, 22);
+			this->numericUpDown_NODE_SIZE->TabIndex = 11;
+			this->numericUpDown_NODE_SIZE->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDown_NODE_SIZE->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_NODE_SIZE_ValueChanged);
+			// 
+			// label_NODE_SIZE
+			// 
+			this->label_NODE_SIZE->AutoSize = true;
+			this->label_NODE_SIZE->Location = System::Drawing::Point(64, 28);
+			this->label_NODE_SIZE->Name = L"label_NODE_SIZE";
+			this->label_NODE_SIZE->Size = System::Drawing::Size(40, 14);
+			this->label_NODE_SIZE->TabIndex = 10;
+			this->label_NODE_SIZE->Text = L"Node";
 			// 
 			// groupBox_Parameter
 			// 
@@ -230,7 +305,7 @@ namespace BeepingModel {
 			this->groupBox_Parameter->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->groupBox_Parameter->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->groupBox_Parameter->Location = System::Drawing::Point(28, 62);
+			this->groupBox_Parameter->Location = System::Drawing::Point(28, 111);
 			this->groupBox_Parameter->Name = L"groupBox_Parameter";
 			this->groupBox_Parameter->Size = System::Drawing::Size(679, 341);
 			this->groupBox_Parameter->TabIndex = 11;
@@ -260,6 +335,10 @@ namespace BeepingModel {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->EndInit();
 			this->groupBox_Drawing->ResumeLayout(false);
 			this->groupBox_Drawing->PerformLayout();
+			this->groupBox_Size->ResumeLayout(false);
+			this->groupBox_Size->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_PEN_WIDTH))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_NODE_SIZE))->EndInit();
 			this->groupBox_Parameter->ResumeLayout(false);
 			this->groupBox_Parameter->PerformLayout();
 			this->ResumeLayout(false);
@@ -271,6 +350,8 @@ private: System::Void FormSetting_Load(System::Object^  sender, System::EventArg
 private: void ReflectDisplay ( ) {
 		this->numericUpDown_UnitDisk_radius->Value = this->settings->unitdisk_r;
 		this->numericUpDown_channels->Value = this->settings->F;
+		this->numericUpDown_NODE_SIZE->Value = this->settings->NODE_SIZE;
+		this->numericUpDown_PEN_WIDTH->Value = (Decimal)this->settings->PEN_WIDTH;
 		if ( this->settings->AA)
 		{
 			this->checkBox_AA->Checked = true;
@@ -292,9 +373,11 @@ private: void ReflectDisplay ( ) {
 		}
 	}
 private: System::Void btn_cancel_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->cancel = true;
 		this->Close();
 	}
 private: System::Void btn_ok_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->cancel = false;
 		this->Close();
 	}
 private: System::Void checkBox_AA_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -322,6 +405,12 @@ private: System::Void numericUpDown_UnitDisk_radius_ValueChanged(System::Object^
 	}
 private: System::Void numericUpDown_channels_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 		this->settings->F = (int)this->numericUpDown_channels->Value;
+	}
+private: System::Void numericUpDown_PEN_WIDTH_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+		this->settings->PEN_WIDTH = (float)this->numericUpDown_PEN_WIDTH->Value;
+	}
+private: System::Void numericUpDown_NODE_SIZE_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+		this->settings->NODE_SIZE = (int)this->numericUpDown_NODE_SIZE->Value;
 	}
 private: System::Void listBox_topology_SelectedIndexChanged(System::Object^  /*sender*/, System::EventArgs^  /*e*/) {
 		String^ selectedStr = this->listBox_topology->SelectedItem->ToString();

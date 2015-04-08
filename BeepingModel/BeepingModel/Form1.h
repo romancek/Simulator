@@ -680,7 +680,10 @@ private: void InitSetting () {
 	}
 private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		FormSetting^ fs = gcnew FormSetting(this->settings);
+				
 		fs->ShowDialog();
+		if (fs->Cancel())return;
+
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		settings = fs->GetSetting();
 		this->visualizer->SetParameter(settings);
