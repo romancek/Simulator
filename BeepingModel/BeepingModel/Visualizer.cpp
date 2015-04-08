@@ -120,5 +120,7 @@ void Visualizer::Clear()
 void Visualizer::SetParameter(Settings* settings)
 {
 	this->AA = settings->AA;
+	this->NODE_SIZE = settings->NODE_SIZE;
+	this->PEN_WIDTH = settings->PEN_WIDTH;
 }
 

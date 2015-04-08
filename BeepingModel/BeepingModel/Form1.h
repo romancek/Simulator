@@ -321,7 +321,8 @@ namespace BeepingModel {
 			// saveFileDialog1
 			// 
 			this->saveFileDialog1->DefaultExt = L"Save";
-			this->saveFileDialog1->FileName = L"Save file";
+			System::DateTime moment = System::DateTime::Now;
+			this->saveFileDialog1->FileName = String::Format("SimData_{0}{1:D2}{2:D2}",moment.Year,moment.Month,moment.Day);
 			this->saveFileDialog1->Filter = L"PNGファイル(*.png)|*.png|JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*"
 				L".*";
 			this->saveFileDialog1->RestoreDirectory = true;
@@ -477,7 +478,7 @@ namespace BeepingModel {
 			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
+			
 		}
 #pragma endregion
 
@@ -671,6 +672,8 @@ private: void InitSetting () {
 		this->settings = new Settings;
 		this->settings->AA = false;
 		this->settings->Can_Draw = true;
+		this->settings->NODE_SIZE = 5;
+		this->settings->PEN_WIDTH = 0.1f;
 		this->settings->unitdisk_r = 50;
 		this->settings->F = 1;
 		this->settings->topology = 1;

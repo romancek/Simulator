@@ -19,10 +19,6 @@
 #define _MIS_Apper_Stop_ms 5
 #define _CheckInfo_Speed_ms 50
 
-//Rendering Property
-#define NODE_SIZE 5
-#define PEN_WIDTH 0.1f
-
 /*
  * Algorithm Property
  */
@@ -33,7 +29,8 @@
 #define inactive 2
 #define competing 3
 #define MIS 4
-#define sleep 7
+#define MM 4
+#define sleep 8
 //hearing state
 #define beep 5
 #define silent 6
@@ -44,11 +41,15 @@
 
 typedef struct  {
 public:
-	bool AA;
-	bool Can_Draw;		//graph draw
+	//System Property
 	unsigned int unitdisk_r;
 	int topology;		//0:Random, 1:UnitDisk
 	unsigned int F;		//[multicast] available number of channels
+	//Rendering Property
+	bool AA;
+	bool Can_Draw;		//graph draw
+	unsigned int NODE_SIZE;
+	float PEN_WIDTH;
 }Settings;
 
 typedef struct {
@@ -87,3 +88,4 @@ public:
 #include "Form1.h"
 #include "Algorithm.h"
 #include "TimeWatch.h"
+

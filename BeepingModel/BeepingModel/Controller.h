@@ -10,6 +10,7 @@ namespace BeepingModel{
 		int m;	//channel size
 		double density;
 		int global_round;
+		unsigned int NODE_SIZE;
 	public:
 		int unitdisk_r;
 		int graph_topology;
@@ -20,6 +21,8 @@ namespace BeepingModel{
 	public:
 		int x,y;
 		int channel_num;
+		int diameter;
+		int delta;
 		cli::array<Node^>^ nodes;
 		cli::array<Channel^>^ channels;
 	public:
@@ -36,6 +39,7 @@ namespace BeepingModel{
 		double GetNodeDistance(int,int,int,int);
 		void SetGraphParameter(Settings*);
 		unsigned int Random_Device(void);
+		void ComputeAttribute(void);
 		void Run(void);
 		void Run_UpperN(void);
 		void Run_MM(void);

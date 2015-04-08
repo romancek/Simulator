@@ -12,6 +12,8 @@ namespace BeepingModel{
 		array<Pen^>^ pen_line;
 		array<SolidBrush^>^ brush;
 		bool AA;
+		int NODE_SIZE;
+		float PEN_WIDTH;
 	public:
 		Visualizer(void);
 		Visualizer(Controller^,Graphics^);

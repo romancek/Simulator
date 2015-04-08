@@ -61,6 +61,12 @@ void Controller::InitializeGraph(int n, int m, double density)
 		channels[i] = gcnew Channel(i);
 	}
 	this->CreateGraph();
+	this->ComputeAttribute();
+}
+
+void Controller::ComputeAttribute()
+{
+
 }
 
 void Controller::ResizeField(int x, int y)
@@ -251,6 +257,7 @@ void Controller::SetGraphParameter(Settings* setting)
 	this->graph_topology = setting->topology;
 	this->unitdisk_r = setting->unitdisk_r;
 	this->F = setting->F;
+	this->NODE_SIZE = setting->NODE_SIZE;
 }
 
 /*
@@ -396,6 +403,10 @@ void Controller::Run_UpperN(void)
 	}
 	this->global_round++;
 }
+
+/*
+ * Experimental MM Algorithm
+ */
 
 void Controller::Run_MM()
 {
