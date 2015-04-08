@@ -41,6 +41,7 @@ namespace BeepingModel {
 			InitializeComponent();
 			this->settings = settings;
 			ReflectDisplay();
+			this->cancel = false;
 		}
 		Settings* GetSetting()
 		{
