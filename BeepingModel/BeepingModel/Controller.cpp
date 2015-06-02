@@ -64,9 +64,22 @@ void Controller::InitializeGraph(int n, int m, double density)
 	this->ComputeAttribute();
 }
 
+/*
+* Compute Network Parameter etc. Diameter, Maximum Degree(Delta), 
+*/
+
 void Controller::ComputeAttribute()
 {
-
+	int maxdegree = 0, diam = 0, _degree = 0;
+	for each (Node^ n in this->nodes)
+	{
+		_degree = n->neighbors.size();
+		if (_degree != 0 && _degree > maxdegree)
+		{
+			maxdegree = _degree;
+		}
+	}
+	this->delta = maxdegree;
 }
 
 void Controller::ResizeField(int x, int y)
@@ -245,6 +258,7 @@ void Controller::SetUnitDiskEdge(void)
 	{
 		this->channels[balanced_ch]->SetEndPoint(-1, -1);
 	}
+	this->m = channel_num;
 }
 
 double Controller::GetNodeDistance(int p1x, int p1y, int p2x, int p2y)

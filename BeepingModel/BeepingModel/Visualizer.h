@@ -8,9 +8,9 @@ namespace BeepingModel{
 	private:
 		Controller^ controller;
 		Graphics^ g;
-		array<Pen^>^ pen_node;
-		array<Pen^>^ pen_line;
-		array<SolidBrush^>^ brush;
+		cli::array<Pen^>^ pen_node;
+		cli::array<Pen^>^ pen_line;
+		cli::array<SolidBrush^>^ brush;
 		bool AA;
 		int NODE_SIZE;
 		float PEN_WIDTH;

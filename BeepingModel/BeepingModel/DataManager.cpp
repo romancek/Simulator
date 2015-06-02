@@ -92,8 +92,8 @@ object* DataManager::WriteGraphInfo()
 
 	_graph->insert(make_pair("Field_Size", value(fieldsize)));
 	_graph->insert(make_pair("Topology", value(topology)));
-	//_graph->insert(make_pair("D", value((double)())));
-	//_graph->insert(make_pair("Delta", value((double)(10))));
+	//_graph->insert(make_pair("Diameter", value((double)())));
+	_graph->insert(make_pair("Delta", value((double)(this->cnt->delta))));
 	_graph->insert(make_pair("Global_Round", value((double)(this->cnt->GlobalRound))));
 	_graph->insert(make_pair("Radius", value((double)(this->cnt->unitdisk_r))));
 	_graph->insert(make_pair("F", value((double)(this->cnt->F))));
