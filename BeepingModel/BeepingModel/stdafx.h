@@ -31,6 +31,7 @@
 #define MIS 4
 #define MM 4
 #define sleep 8
+#define Lonely 9	//not matching
 //hearing state
 #define beep 5
 #define silent 6

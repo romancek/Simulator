@@ -230,7 +230,7 @@ void Controller::SetUnitDiskEdge(void)
 		{
 			if( j == i )continue;
 			//チャネルが既に存在しているかチェック
-			for ( int nr = 0; nr < this->nodes[i]->ch_num;nr++ )
+			for ( int nr = 0; nr < this->nodes[i]->neighbors.size(); nr++ )
 			{
 				if ( this->nodes[i]->neighbors.at(nr) == j ) selected = true;
 			}
@@ -291,7 +291,6 @@ unsigned int Controller::Random_Device()
 void Controller::Run(void)
 {
 	this->Run_UpperN();
-
 }
 /*
  * Algorithm 1
@@ -429,14 +428,41 @@ void Controller::Run_MM()
 	 */
 	for each ( Node^ n in this->nodes )
 	{
-		
+		switch (n->current_step)
+		{
+		case 1:
+			// Initialize
+			if (n->phase == 1)
+			{
+				n->candidate = NULL;
+			}
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		default :
+			break;
+		}
 	}
 	/*
 	 * Receive Action
 	 */
 	for each ( Node^ n in this->nodes )
 	{
-		
+		switch (n->current_step)
+		{
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		default :
+			break;
+		}
+		n->phase++;
+		n->local_round;
 	}
 	this->global_round++;
 }

@@ -10,14 +10,16 @@ namespace BeepingModel{
 	public:
 		cli::array<int>^ states;
 		cli::array<int>^ position;
+		String^ state;
+		int current_step;
 		int local_round;
 		int listenround;
 		int phase;						// i : 1 to clogN
 		int step;						// 1 to logN
 		int MIS_state;					//0:if,1:listen,2:else,3:beep
 		int udk_r;						//UnitDisk radius
+		int candidate;					//matching candidate channel number
 	public:
-		int ch_num;
 		int global_freq;						//1~F channels
 		cli::array<int>^ available_freq;		//1:available, 0:not available	
 		cliext::vector<int> neighbors;

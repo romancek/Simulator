@@ -5,7 +5,6 @@ using namespace BeepingModel;
 Node::Node(void)
 {
 	this->id = -1;
-	this->ch_num = 0;
 	this->local_round = 1;
 	this->states = gcnew array<int>{sleep,sleep,silent};
 }
@@ -14,7 +13,9 @@ Node::Node(int id, int F)
 {
 	Reset();
 	this->id = id;
-	this->ch_num = 0;
+	this->current_step = 1;
+	this->state = "Lonely";
+	this->candidate = NULL;
 	this->neighbors.clear();
 	this->channels.clear();
 	this->local_round = 1;
@@ -29,7 +30,6 @@ Node::Node(int id, int F)
 void Node::SetNeighbor(int id)
 {
 	this->neighbors.push_back(id);
-	this->ch_num++;
 }
 
 void Node::SetChannel(int ch_id)
