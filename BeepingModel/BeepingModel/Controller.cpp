@@ -453,16 +453,25 @@ void Controller::Run_MM()
 		switch (n->current_step)
 		{
 		case 1:
+
+			n->phase++;
 			break;
 		case 2:
+
+			n->phase++;
 			break;
 		case 3:
+
+			n->Round++;
+			if (n->Round > 4)
+			{
+				n->phase++;
+				n->Round = 1;
+			}
 			break;
 		default :
 			break;
 		}
-		n->phase++;
-		n->local_round;
 	}
 	this->global_round++;
 }
