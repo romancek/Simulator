@@ -38,11 +38,11 @@ void Visualizer::Draw(void)
 {
 	//Double Buffering
 	BufferedGraphicsContext^ currentContext = BufferedGraphicsManager::Current;
-	BufferedGraphics^ grafx = currentContext->Allocate(this->g,  Rectangle( 0, 0, this->controller->x, this->controller->y ));
-	grafx->Graphics->Clear( Color::White );
+	BufferedGraphics^ grafx = currentContext->Allocate(this->g, Rectangle(0, 0, this->controller->x, this->controller->y));
+	grafx->Graphics->Clear(Color::White);
 
 	//AA
-	if ( this->AA )
+	if (this->AA)
 	{
 		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
 	}
@@ -51,11 +51,30 @@ void Visualizer::Draw(void)
 		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
 	}
 
+	switch (channel_mode)
+	{
+	case 0:
+		this->DrawSingleChannel(grafx);
+		break;
+	case 1:
+		this->DrawMultiChannel(grafx);
+		break;
+	default:
+		break;
+	}
+
+	//Render & Release Double Buffer
+	grafx->Render();
+	grafx->~BufferedGraphics();
+}
+
+void Visualizer::DrawSingleChannel(BufferedGraphics^ grafx)
+{
 	int type = 0;	// 0:silent, 1:beep, 2:collision
 	for each(Channel^ ch in this->controller->channels)
 	{
 		array<int>^ ep = ch->EndPoint;
-		if (ep[0] == CH_EMPTY) 
+		if (ep[0] == CH_EMPTY)
 		{
 #ifdef _DEBUG
 			System::Diagnostics::Debug::Fail("Channel has not endpoints node");
@@ -68,52 +87,118 @@ void Visualizer::Draw(void)
 		array<int>^ p1 = this->controller->nodes[ep[0]]->GetPosition();
 		array<int>^ p2 = this->controller->nodes[ep[1]]->GetPosition();
 #ifdef _DEBUG
-		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1],ch->Id);
+		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1], ch->Id);
 		//System::Diagnostics::Debug::WriteLine(a);
 #endif
 
-		if ( ( this->controller->nodes[ep[0]]->ActionState == listen  || this->controller->nodes[ep[0]]->ActionState ==sleep ) 
-			&& ( this->controller->nodes[ep[1]]->ActionState == listen || this->controller->nodes[ep[1]]->ActionState == sleep ) ) //silent or sleep
-		{ 
+		if ((this->controller->nodes[ep[0]]->ActionState == listen || this->controller->nodes[ep[0]]->ActionState == sleep)
+			&& (this->controller->nodes[ep[1]]->ActionState == listen || this->controller->nodes[ep[1]]->ActionState == sleep)) //silent or sleep
+		{
 			type = 0;
 		}
-		else if ( this->controller->nodes[ep[0]]->ActionState == beeping 
-			&& this->controller->nodes[ep[1]]->ActionState == beeping ) //collision
-		{ 
+		else if (this->controller->nodes[ep[0]]->ActionState == beeping
+			&& this->controller->nodes[ep[1]]->ActionState == beeping) //collision
+		{
 			type = 2;
 		}
 		else //beep
 		{
 			type = 1;
 		}
-		grafx->Graphics->DrawLine(this->pen_line[type], p1[0]+NODE_SIZE/2, p1[1]+NODE_SIZE/2, p2[0]+NODE_SIZE/2, p2[1]+NODE_SIZE/2);
+		grafx->Graphics->DrawLine(this->pen_line[type], p1[0] + NODE_SIZE / 2, p1[1] + NODE_SIZE / 2, p2[0] + NODE_SIZE / 2, p2[1] + NODE_SIZE / 2);
 	}
 
-	for each ( Node^ n in this->controller->nodes )
+	for each (Node^ n in this->controller->nodes)
 	{
-		if ( n->NodeState == sleep ){
+		if (n->NodeState == sleep){
 			type = 0;
 		}
-		else if ( n->NodeState == inactive )
+		else if (n->NodeState == inactive)
 		{
 			type = 1;
 		}
-		else if ( n->NodeState == competing )
+		else if (n->NodeState == competing)
 		{
 			type = 2;
 		}
-		else if ( n->NodeState == MIS )
+		else if (n->NodeState == MIS)
 		{
 			type = 3;
 		}
 		array<int>^ pos = n->GetPosition();
-		Rectangle rect = Rectangle(pos[0],pos[1],NODE_SIZE,NODE_SIZE);
-		grafx->Graphics->FillEllipse( this->brush[type/3], rect );
-		grafx->Graphics->DrawEllipse( this->pen_node[type], rect );
+		Rectangle rect = Rectangle(pos[0], pos[1], NODE_SIZE, NODE_SIZE);
+		grafx->Graphics->FillEllipse(this->brush[type / 3], rect);
+		grafx->Graphics->DrawEllipse(this->pen_node[type], rect);
 	}
-	//Render & Release Double Buffer
-	grafx->Render();
-	grafx->~BufferedGraphics();
+}
+
+void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
+{
+	int type = 0;	// 0:silent, 1:beep, 2:collision
+	for each(Channel^ ch in this->controller->channels)
+	{
+		array<int>^ ep = ch->EndPoint;
+		if (ep[0] == CH_EMPTY)
+		{
+#ifdef _DEBUG
+			System::Diagnostics::Debug::Fail("Channel has not endpoints node");
+#endif
+		}
+		else if (ep[0] < 0)
+		{
+			continue;
+		}
+		array<int>^ p1 = this->controller->nodes[ep[0]]->GetPosition();
+		array<int>^ p2 = this->controller->nodes[ep[1]]->GetPosition();
+#ifdef _DEBUG
+		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1], ch->Id);
+		//System::Diagnostics::Debug::WriteLine(a);
+#endif
+
+		if ((this->controller->nodes[ep[0]]->ActionState == listen || this->controller->nodes[ep[0]]->ActionState == sleep)
+			&& (this->controller->nodes[ep[1]]->ActionState == listen || this->controller->nodes[ep[1]]->ActionState == sleep)) //silent or sleep
+		{
+			type = 0;
+		}
+		else if (this->controller->nodes[ep[0]]->ActionState == beeping
+			&& this->controller->nodes[ep[1]]->ActionState == beeping) //collision
+		{
+			type = 2;
+		}
+		else //beep
+		{
+			type = 1;
+		}
+		grafx->Graphics->DrawLine(this->pen_line[type], p1[0] + NODE_SIZE / 2, p1[1] + NODE_SIZE / 2, p2[0] + NODE_SIZE / 2, p2[1] + NODE_SIZE / 2);
+	}
+
+	for each (Node^ n in this->controller->nodes)
+	{
+		if (n->NodeState == sleep){
+			type = 0;
+		}
+		else if (n->NodeState == inactive)
+		{
+			type = 1;
+		}
+		else if (n->NodeState == competing)
+		{
+			type = 2;
+		}
+		else if (n->NodeState == MIS)
+		{
+			type = 3;
+		}
+		array<int>^ pos = n->GetPosition();
+		Rectangle rect = Rectangle(pos[0], pos[1], NODE_SIZE, NODE_SIZE);
+		grafx->Graphics->FillEllipse(this->brush[type / 3], rect);
+		grafx->Graphics->DrawEllipse(this->pen_node[type], rect);
+	}
+}
+
+void Visualizer::MakeMultiColors(unsigned int ch_num)
+{
+
 }
 
 void Visualizer::Clear()
@@ -126,6 +211,17 @@ void Visualizer::SetParameter(Settings* settings)
 	this->AA = settings->AA;
 	this->NODE_SIZE = settings->NODE_SIZE;
 	this->PEN_WIDTH = settings->PEN_WIDTH;
+	unsigned int ch_num = settings->F;
+	if (ch_num == 1)
+	{
+		this->channel_mode = 0;
+	}
+	else
+	{
+		this->channel_mode = 1;
+		this->MakeMultiColors(ch_num);
+	}
 	this->AllocatePens();
 }
+
 

@@ -66,7 +66,6 @@ namespace BeepingModel {
 			}
 		}
 	private: System::Windows::Forms::Button^  btn_auto;
-	protected: 
 	private: System::Windows::Forms::Button^  btn_step;
 	private: System::Windows::Forms::Button^  btn_stop;
 	private: System::Windows::Forms::TextBox^  textBox_n;
@@ -84,7 +83,6 @@ namespace BeepingModel {
 	private: System::Windows::Forms::ToolStripMenuItem^  toolToolStripMenuItem;
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
-	private:
 		/// <summary>
 		/// 必要なデザイナー変数です。
 		/// </summary>
@@ -130,6 +128,7 @@ namespace BeepingModel {
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
+
 			// 
 			// btn_auto
 			// 
@@ -477,9 +476,8 @@ namespace BeepingModel {
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
-			this->PerformLayout();
-			
-		}
+			this->PerformLayout();		
+}
 #pragma endregion
 
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
