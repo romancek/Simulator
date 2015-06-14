@@ -23,13 +23,16 @@ namespace BeepingModel{
 		int global_freq;						//1~F channels
 		cli::array<int>^ available_freq;		//1:available, 0:not available	
 		cliext::vector<int> neighbors;
-		cliext::vector<int> channels;
+		cliext::vector<unsigned int> channels;	//neighbor ids
+		unsigned int current_ch;
 	public:
 		Node();
 		Node(int,int);
 		void SetNeighbor(int);
 		void SetChannel(int);
 		cli::array<int>^ GetState(void);
+		void BEEP(unsigned int);
+		void LISTEN(unsigned int);
 		void SetPosition(cli::array<int>^);
 		cli::array<int>^ GetPosition(void);
 

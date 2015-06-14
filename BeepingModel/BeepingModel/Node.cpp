@@ -7,6 +7,7 @@ Node::Node(void)
 	this->id = -1;
 	this->local_round = 1;
 	this->states = gcnew array<int>{sleep,sleep,silent};
+	this->current_ch = 0;
 }
 
 Node::Node(int id, int F)
@@ -25,6 +26,20 @@ Node::Node(int id, int F)
 	//Multi-Channel Mode
 	this->global_freq = F;
 	this->available_freq = gcnew array<int>(F){ 1 };
+	this->current_ch = 0;
+}
+
+void Node::BEEP(unsigned int ch_num)
+{
+	this->states[0] = beeping;
+	this->current_ch = ch_num;
+
+}
+
+void Node::LISTEN(unsigned int ch_num)
+{
+	this->states[0] = listen;
+	this->current_ch = ch_num;
 }
 
 void Node::SetNeighbor(int id)
