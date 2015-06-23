@@ -11,28 +11,32 @@ namespace BeepingModel{
 		cli::array<int>^ states;
 		cli::array<int>^ position;
 		String^ state;
-		int current_step;
+		int current_step;				// 0 : terminated
 		int local_round;
 		int listenround;
 		int phase;						// i : 1 to clogN
 		int step;						// 1 to logN
-		int MIS_state;					//0:if,1:listen,2:else,3:beep
-		int udk_r;						//UnitDisk radius
-		int candidate;					//matching candidate channel number
+		int MIS_state;					// 0:if,1:listen,2:else,3:beep
+		int udk_r;						// UnitDisk radius
+		int candidate;					// matching candidate channel number
 	public:
-		int global_freq;						//1~F channels
-		cli::array<int>^ available_freq;		//1:available, 0:not available	
-		cliext::vector<int> neighbors;
-		cliext::vector<unsigned int> channels;	//neighbor ids
-		unsigned int current_ch;
+		int global_freq;						// 1~F channels
+		cli::array<bool>^ available_freq;		// 1:available, 0:not available	
+		cliext::vector<int> neighbors;			// neighbor ids
+		cliext::vector<unsigned int> channels;	// connected ch ids
+		int current_ch;
+		int match_ch;
+		cli::array<unsigned __int8>^ slot;		// 3 slot in step 2
+		bool succ_pattern;
+		unsigned int transit_state;
 	public:
 		Node();
 		Node(int,int);
 		void SetNeighbor(int);
 		void SetChannel(int);
 		cli::array<int>^ GetState(void);
-		void BEEP(unsigned int);
-		void LISTEN(unsigned int);
+		void BEEP(int);					//-1 : not select
+		void LISTEN(int);
 		void SetPosition(cli::array<int>^);
 		cli::array<int>^ GetPosition(void);
 

@@ -290,7 +290,8 @@ unsigned int Controller::Random_Device()
 
 void Controller::Run(void)
 {
-	this->Run_UpperN();
+	//this->Run_UpperN();
+	this->Run_MM();
 }
 /*
  * Algorithm 1
@@ -423,55 +424,193 @@ void Controller::Run_UpperN(void)
 
 void Controller::Run_MM()
 {
+	boost::random_device rd;
+	boost::random::mt19937 gen(rd());
+	
 	/*
-	 * Send Action
+	 * First Action
 	 */
 	for each ( Node^ n in this->nodes )
 	{
 		switch (n->current_step)
 		{
 		case 1:
-			// Initialize
-			if (n->phase == 1)
+			n->candidate = NULL;
+			if ( n->NodeState == Lonely )
 			{
-				n->candidate = NULL;
+				/* Random Choice in available channel */
+				cliext::vector<unsigned int> _ch;
+				for (int f = 0; f < this->F;f++)
+				{
+					if ( n->available_freq[f] ) _ch.push_back(f);
+				}
+				boost::random::uniform_int_distribution<> dist(0, _ch.size());
+				n->BEEP(dist(gen));
+			}
+			else
+			{
+				/* Wait for 1 round */
 			}
 			break;
 		case 2:
+			if ( n->candidate != NULL )
+			{
+				if (n->transit_state == 0)
+				{
+					/* Detect Pattern for Correct Matching */
+					n->slot = gcnew array<unsigned __int8>(2){ listen };
+					boost::hellekalek1995 gen(rd());
+					boost::bernoulli_distribution<> dst(0.5);
+					boost::variate_generator< boost::hellekalek1995&, boost::bernoulli_distribution<> > rand(gen, dst);
+					if (rand() == 1){
+						n->slot[0] = beeping;
+					}
+					else
+					{
+						n->slot[1] = beeping;
+					}
+				}
+				else if (n->transit_state == 1)
+				{
+					if (n->succ_pattern == false)
+					{
+						n->BEEP(n->candidate);
+					}
+					
+				}
+			}
+			else
+			{
+				/* Wait for 3 round */
+			}
 			break;
 		case 3:
+			if (n->NodeState == MM && (n->phase-1) == n->match_ch)
+			{
+				n->BEEP(n->phase-1);
+			}
 			break;
 		default :
 			break;
 		}
 	}
 	/*
-	 * Receive Action
+	 * Second Action
 	 */
 	for each ( Node^ n in this->nodes )
 	{
-		switch (n->current_step)
+		switch ( n->current_step )
 		{
 		case 1:
-
-			n->phase++;
+			if (n->NodeState == Lonely)
+			{
+				bool _occur_colllision = false;
+				for each(int id in n->neighbors)
+				{
+					if (this->nodes[id]->ActionState == beeping && n->current_ch == this->nodes[id]->current_ch)
+					{
+						_occur_colllision = true;
+						n->candidate = n->current_ch;
+					}
+				}
+			}
+			else
+			{
+				/* Wait for 1 round*/
+			}
+			n->Round++;
+			n->current_step = 2;
 			break;
 		case 2:
+			if ( n->candidate != NULL )
+			{
+				if (n->transit_state == 0)
+				{
+					n->succ_pattern = true;
+					int count_in_slot1 = 0, count_in_slot2 = 0;
+					for each(int id in n->neighbors)
+					{
+						if (this->nodes[id]->candidate == n->candidate)
+						{
+							//sender side collision detection
+							if ((n->slot[0] == beeping && this->nodes[id]->slot[0] == beeping)
+								|| (n->slot[1] == beeping && this->nodes[id]->slot[1] == beeping))
+							{
+								n->succ_pattern = false;
+							}
+							//receiver side collision detection
+							if (n->slot[0] == listen && this->nodes[id]->slot[0] == beeping)count_in_slot1++;
+							if (n->slot[1] == listen && this->nodes[id]->slot[1] == beeping)count_in_slot2++;
+						}
+					}
+					if (count_in_slot1 > 1 || count_in_slot2 > 1)n->succ_pattern = false;
 
-			n->phase++;
+					n->transit_state = 1;
+					n->Round+=2;
+				}
+				else if (n->transit_state == 1)
+				{
+					bool _isMatch = true;
+					for each(int id in n->neighbors)
+					{
+						/* If No beep in slot 3, success matching */
+						if (this->nodes[id]->candidate == n->candidate && this->nodes[id]->ActionState == beeping)
+						{
+							_isMatch = false;
+						}
+					}
+					if (_isMatch)
+					{
+						n->match_ch = n->candidate;
+						n->NodeState = MM;
+					}
+					n->transit_state = 0;
+					n->Round++;
+					n->current_step = 3;
+				}
+			}
+			else
+			{
+				/* Wait for 3 round */
+				n->phase++;
+				n->Round++;
+				if (n->phase > 3)
+				{
+					n->current_step = 3;
+					n->transit_state = 0;
+				}
+			}
 			break;
 		case 3:
-
-			n->Round++;
-			if (n->Round > 4)
+			if ( n->NodeState == Lonely )
 			{
-				n->phase++;
-				n->Round = 1;
+				for each(int id in n->neighbors)
+				{
+					if (this->nodes[id]->ActionState == beeping && (n->phase-1) == this->nodes[id]->current_ch)
+					{
+						n->available_freq[n->phase - 1] = false;
+					}
+				}
+			}
+			n->phase++;
+			n->Round++;
+			if ( n->phase > this->F )
+			{
+				if ( n->NodeState == MM )
+				{
+					n->ActionState = listen;
+					n->state = "Terminate";
+					n->current_ch = -1;
+					n->current_step = 0;
+				}
+				n->phase = 1;
+				n->current_step = 1;
 			}
 			break;
 		default :
 			break;
 		}
+
 	}
 	this->global_round++;
 }

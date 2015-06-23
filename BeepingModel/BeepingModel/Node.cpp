@@ -15,28 +15,31 @@ Node::Node(int id, int F)
 	Reset();
 	this->id = id;
 	this->current_step = 1;
-	this->state = "Lonely";
+	this->state = "Executing";
 	this->candidate = NULL;
 	this->neighbors.clear();
 	this->channels.clear();
 	this->local_round = 1;
-	this->states = gcnew array<int>{sleep,sleep,silent};
+	this->states = gcnew array<int>{sleep,Lonely,silent};
 	this->MIS_state = 0;
 	this->udk_r = UDK_R;
 	//Multi-Channel Mode
 	this->global_freq = F;
-	this->available_freq = gcnew array<int>(F){ 1 };
+	this->available_freq = gcnew array<bool>(F){ true };
 	this->current_ch = 0;
+	this->match_ch = -1;
+	this->slot = nullptr;
+	this->succ_pattern = false;
 }
 
-void Node::BEEP(unsigned int ch_num)
+void Node::BEEP(int ch_num)
 {
 	this->states[0] = beeping;
 	this->current_ch = ch_num;
 
 }
 
-void Node::LISTEN(unsigned int ch_num)
+void Node::LISTEN(int ch_num)
 {
 	this->states[0] = listen;
 	this->current_ch = ch_num;

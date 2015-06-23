@@ -60,16 +60,16 @@ String^ DataManager::OutPutJSONrefController()
 {
 	object *graph = WriteGraphInfo();
 	array nodes = WriteNodeInfo();
-	array channels = WriteChannelInfo();
+	//array channels = WriteChannelInfo();
 
 	obj->insert(make_pair("GraphInformation", value(*graph)));
 	obj->insert(make_pair("Nodes", value(nodes)));
-	obj->insert(make_pair("Channels", value(channels)));
+	//obj->insert(make_pair("Channels", value(channels)));
 	return gcnew String(value(*obj).serialize().c_str());
 
 	delete graph;
 	delete &nodes;
-	delete &channels;
+	//delete &channels;
 }
 
 object* DataManager::WriteGraphInfo()
@@ -117,11 +117,11 @@ array DataManager::WriteNodeInfo()
 		case competing:
 			_state = "competing";
 			break;
-		case MIS:
-			_state = "MIS";
+		case MM:
+			_state = "MM";
 			break;
-		case sleep:
-			_state = "sleep";
+		case Lonely:
+			_state = "Lonely";
 			break;
 		default:
 			break;
@@ -134,9 +134,11 @@ array DataManager::WriteNodeInfo()
 
 		object* _node = new object;
 		_node->insert(make_pair("Round", value((double)_n->local_round)));
-		_node->insert(make_pair("State", value(_state)));
+		_node->insert(make_pair("Node State", value(_state)));
+		_node->insert(make_pair("Algorithm State", value((const char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(_n->state)).ToPointer())));
 		_node->insert(make_pair("Position", value(*_position)));
 		_node->insert(make_pair("Id", value((double)_n->Id)));
+		_node->insert(make_pair("Match Channel", value((double)_n->match_ch)));
 		_narr.push_back(value(*_node));
 	}
 	return _narr;

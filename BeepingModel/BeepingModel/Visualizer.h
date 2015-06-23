@@ -10,6 +10,7 @@ namespace BeepingModel{
 		Graphics^ g;
 		cli::array<Pen^>^ pen_node;
 		cli::array<Pen^>^ pen_line;
+		cli::array<Pen^>^ pen_line_multi;
 		cli::array<SolidBrush^>^ brush;
 		cli::array<unsigned int>^ ch_colors;
 		unsigned int channel_mode; //0:Single,1:Multi
@@ -23,7 +24,7 @@ namespace BeepingModel{
 		void Draw(void);
 		void DrawSingleChannel(BufferedGraphics^);
 		void DrawMultiChannel(BufferedGraphics^);
-		void MakeMultiColors(unsigned int);
+		void MakeMultiColors();
 		void Clear(void);
 		void SetParameter(Settings*);
 		void AllocatePens();

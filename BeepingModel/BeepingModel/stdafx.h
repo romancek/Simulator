@@ -15,7 +15,7 @@
 //#define _mis_apper_stop_ms 500
 //#define _checkinfo_speed_ms 200
 
-#define _Run_Speed_ms 5 
+#define _Run_Speed_ms 100 
 #define _MIS_Apper_Stop_ms 5
 #define _CheckInfo_Speed_ms 50
 
