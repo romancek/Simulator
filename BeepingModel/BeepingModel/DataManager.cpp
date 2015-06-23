@@ -127,6 +127,16 @@ array DataManager::WriteNodeInfo()
 			break;
 		}
 		
+		std::string _alg_state;
+		if (_n->state == "Executing")
+		{
+			_alg_state = "Executing";
+		}
+		else if (_n->state == "Terminate")
+		{
+			_alg_state = "Terminate";
+		}
+
 		cli::array<int>^ _posOfCliArray = _n->GetPosition();
 		picojson::object* _position = new object;
 		_position->insert(make_pair("x", value((double)_posOfCliArray[0])));
@@ -135,7 +145,7 @@ array DataManager::WriteNodeInfo()
 		object* _node = new object;
 		_node->insert(make_pair("Round", value((double)_n->local_round)));
 		_node->insert(make_pair("Node State", value(_state)));
-		_node->insert(make_pair("Algorithm State", value((const char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(_n->state)).ToPointer())));
+		_node->insert(make_pair("Algorithm State", value(_alg_state)));
 		_node->insert(make_pair("Position", value(*_position)));
 		_node->insert(make_pair("Id", value((double)_n->Id)));
 		_node->insert(make_pair("Match Channel", value((double)_n->match_ch)));

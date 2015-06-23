@@ -12,6 +12,7 @@ namespace BeepingModel{
 		cli::array<Pen^>^ pen_line;
 		cli::array<Pen^>^ pen_line_multi;
 		cli::array<SolidBrush^>^ brush;
+		cli::array<SolidBrush^>^ brush_multi;
 		cli::array<unsigned int>^ ch_colors;
 		unsigned int channel_mode; //0:Single,1:Multi
 		bool AA;

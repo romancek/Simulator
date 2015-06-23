@@ -424,9 +424,6 @@ void Controller::Run_UpperN(void)
 
 void Controller::Run_MM()
 {
-	boost::random_device rd;
-	boost::random::mt19937 gen(rd());
-	
 	/*
 	 * First Action
 	 */
@@ -435,59 +432,80 @@ void Controller::Run_MM()
 		switch (n->current_step)
 		{
 		case 1:
-			n->candidate = NULL;
+			n->candidate = -1;
 			if ( n->NodeState == Lonely )
 			{
 				/* Random Choice in available channel */
-				cliext::vector<unsigned int> _ch;
+				std::vector<unsigned int> _ch;
 				for (int f = 0; f < this->F;f++)
 				{
 					if ( n->available_freq[f] ) _ch.push_back(f);
 				}
-				boost::random::uniform_int_distribution<> dist(0, _ch.size());
-				n->BEEP(dist(gen));
-			}
-			else
-			{
-				/* Wait for 1 round */
+				boost::random_device rd;
+				boost::random::mt19937 gen(rd());
+				boost::random::uniform_int_distribution<> dist(0, _ch.size()-1);
+				n->BEEP(_ch[dist(gen)]);
 			}
 			break;
 		case 2:
-			if ( n->candidate != NULL )
+			if ( n->candidate != -1 )
 			{
-				if (n->transit_state == 0)
+				if (n->phase == 1)
 				{
+					n->succ_pattern = true;
 					/* Detect Pattern for Correct Matching */
-					n->slot = gcnew array<unsigned __int8>(2){ listen };
+					boost::random_device rd;
 					boost::hellekalek1995 gen(rd());
 					boost::bernoulli_distribution<> dst(0.5);
 					boost::variate_generator< boost::hellekalek1995&, boost::bernoulli_distribution<> > rand(gen, dst);
 					if (rand() == 1){
-						n->slot[0] = beeping;
+						n->BEEP(n->candidate);
+						n->transit_state = 0;
 					}
 					else
 					{
-						n->slot[1] = beeping;
+						n->LISTEN(n->candidate);
+						n->transit_state = 1;
 					}
 				}
-				else if (n->transit_state == 1)
+				else if (n->phase == 2)
 				{
-					if (n->succ_pattern == false)
+					if (n->transit_state == 1)
 					{
 						n->BEEP(n->candidate);
 					}
+					else
+					{
+						n->LISTEN(n->candidate);
+					}
 					
+				}
+				else if (n->phase == 3)
+				{
+					if (n->succ_pattern)
+					{
+						n->LISTEN(n->candidate);
+					}
+					else
+					{
+						n->BEEP(n->candidate);
+					}
 				}
 			}
 			else
 			{
 				/* Wait for 3 round */
+				n->WAIT();
 			}
 			break;
 		case 3:
 			if (n->NodeState == MM && (n->phase-1) == n->match_ch)
 			{
 				n->BEEP(n->phase-1);
+			}
+			else
+			{
+				n->LISTEN(n->phase - 1);
 			}
 			break;
 		default :
@@ -514,71 +532,89 @@ void Controller::Run_MM()
 					}
 				}
 			}
-			else
-			{
-				/* Wait for 1 round*/
-			}
 			n->Round++;
 			n->current_step = 2;
+			n->phase = 1;
 			break;
 		case 2:
-			if ( n->candidate != NULL )
+			if ( n->candidate != -1 )
 			{
-				if (n->transit_state == 0)
+				if (n->phase == 1)
 				{
-					n->succ_pattern = true;
-					int count_in_slot1 = 0, count_in_slot2 = 0;
-					for each(int id in n->neighbors)
+					int _collision_num = 1; // sender side
+					if (n->transit_state == 1)
 					{
-						if (this->nodes[id]->candidate == n->candidate)
-						{
-							//sender side collision detection
-							if ((n->slot[0] == beeping && this->nodes[id]->slot[0] == beeping)
-								|| (n->slot[1] == beeping && this->nodes[id]->slot[1] == beeping))
-							{
-								n->succ_pattern = false;
-							}
-							//receiver side collision detection
-							if (n->slot[0] == listen && this->nodes[id]->slot[0] == beeping)count_in_slot1++;
-							if (n->slot[1] == listen && this->nodes[id]->slot[1] == beeping)count_in_slot2++;
-						}
+						_collision_num = 2; // receiver side
 					}
-					if (count_in_slot1 > 1 || count_in_slot2 > 1)n->succ_pattern = false;
 
-					n->transit_state = 1;
-					n->Round+=2;
-				}
-				else if (n->transit_state == 1)
-				{
-					bool _isMatch = true;
+					int _neighbors_beep_count = 0;
 					for each(int id in n->neighbors)
 					{
-						/* If No beep in slot 3, success matching */
-						if (this->nodes[id]->candidate == n->candidate && this->nodes[id]->ActionState == beeping)
+						if (this->nodes[id]->candidate == n->candidate 
+							&& this->nodes[id]->ActionState == beeping)
 						{
-							_isMatch = false;
+							
+							_neighbors_beep_count++;
+							
 						}
 					}
-					if (_isMatch)
+					if (_neighbors_beep_count >= _collision_num)n->succ_pattern = false;
+				}
+				else if (n->phase == 2)
+				{
+					int _collision_num = 1; // sender side
+					if (n->transit_state == 0)
 					{
-						n->match_ch = n->candidate;
-						n->NodeState = MM;
+						_collision_num = 2; // receiver side
 					}
-					n->transit_state = 0;
-					n->Round++;
-					n->current_step = 3;
+
+					int _neighbors_beep_count = 0;
+					for each(int id in n->neighbors)
+					{
+						if (this->nodes[id]->candidate == n->candidate
+							&& this->nodes[id]->ActionState == beeping)
+						{
+							_neighbors_beep_count++;
+							
+						}
+					}
+					if (_neighbors_beep_count >= _collision_num)n->succ_pattern = false;
+				}
+				else if (n->phase == 3)
+				{
+					if (n->succ_pattern)
+					{
+						int _neighbors_beep_count = 0;
+						for each(int id in n->neighbors)
+						{
+							if (this->nodes[id]->candidate == n->candidate
+								&& this->nodes[id]->ActionState == beeping)
+							{
+								_neighbors_beep_count++;
+
+							}
+						}
+						/* Matching is Success */
+						if (_neighbors_beep_count == 0)
+						{
+							n->match_ch = n->candidate;
+							n->NodeState = MM;
+						}
+					}
 				}
 			}
 			else
 			{
 				/* Wait for 3 round */
-				n->phase++;
-				n->Round++;
-				if (n->phase > 3)
-				{
-					n->current_step = 3;
-					n->transit_state = 0;
-				}
+				
+			}
+			n->phase++;
+			n->Round++;
+			if (n->phase > 3)
+			{
+				n->current_step = 3;
+				n->transit_state = 0;
+				n->phase = 1;
 			}
 			break;
 		case 3:
@@ -599,6 +635,7 @@ void Controller::Run_MM()
 				if ( n->NodeState == MM )
 				{
 					n->ActionState = listen;
+					n->candidate = -1;
 					n->state = "Terminate";
 					n->current_ch = -1;
 					n->current_step = 0;

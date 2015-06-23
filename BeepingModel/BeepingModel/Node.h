@@ -37,6 +37,7 @@ namespace BeepingModel{
 		cli::array<int>^ GetState(void);
 		void BEEP(int);					//-1 : not select
 		void LISTEN(int);
+		void WAIT();
 		void SetPosition(cli::array<int>^);
 		cli::array<int>^ GetPosition(void);
 

@@ -16,7 +16,7 @@ Node::Node(int id, int F)
 	this->id = id;
 	this->current_step = 1;
 	this->state = "Executing";
-	this->candidate = NULL;
+	this->candidate = -1;
 	this->neighbors.clear();
 	this->channels.clear();
 	this->local_round = 1;
@@ -43,6 +43,12 @@ void Node::LISTEN(int ch_num)
 {
 	this->states[0] = listen;
 	this->current_ch = ch_num;
+}
+
+void Node::WAIT()
+{
+	this->ActionState = listen;
+	this->current_ch = -1;
 }
 
 void Node::SetNeighbor(int id)

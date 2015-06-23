@@ -210,13 +210,20 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 		if (n->NodeState == Lonely){
 			type = 1;
 		}
-		else if (n->NodeState == ( MIS || MM ))
+		else if (n->NodeState == MM)
 		{
 			type = 3;
 		}
 		array<int>^ pos = n->GetPosition();
 		Rectangle rect = Rectangle(pos[0], pos[1], NODE_SIZE, NODE_SIZE);
-		grafx->Graphics->FillEllipse(this->brush[type / 3], rect);
+		if (type == 1)
+		{
+			grafx->Graphics->FillEllipse(this->brush[0], rect);
+		}
+		else if (type == 3)
+		{
+			grafx->Graphics->FillEllipse(this->brush_multi[n->match_ch], rect);
+		}
 		grafx->Graphics->DrawEllipse(this->pen_node[type], rect);
 	}
 }
@@ -224,6 +231,7 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 void Visualizer::MakeMultiColors()
 {
 	this->pen_line_multi = gcnew array<Pen^>(this->F);
+	this->brush_multi = gcnew array<SolidBrush^>(this->F);
 	boost::random_device rd;
 	boost::random::mt19937 gen(rd());
 	boost::random::uniform_int_distribution<> dist(0, 2^24-1);
@@ -231,8 +239,9 @@ void Visualizer::MakeMultiColors()
 	for (unsigned int i = 0; i < F;i++)
 	{
 		_color = dist(gen);
-		if (_color == (0xFF0000 || 0x000000 || 0xFFFFFF))continue;
-		this->pen_line_multi[i] = gcnew Pen(Color::FromArgb(_color), PEN_WIDTH);
+		if (_color == 0xFF0000)continue;
+		this->pen_line_multi[i] = gcnew Pen(Color::FromArgb(_color+0xFF000000), PEN_WIDTH);
+		this->brush_multi[i] = gcnew SolidBrush(Color::FromArgb(_color+0xFF000000));
 	}
 }
 
