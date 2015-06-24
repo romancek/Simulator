@@ -321,7 +321,7 @@ namespace BeepingModel {
 			// 
 			this->saveFileDialog1->DefaultExt = L"Save";
 			System::DateTime moment = System::DateTime::Now;
-			this->saveFileDialog1->FileName = String::Format("simulation_data_{0}{1:D2}{2:D2}",moment.Year,moment.Month,moment.Day);
+			this->saveFileDialog1->FileName = String::Format("simulation_data_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}",moment.Year,moment.Month,moment.Day,moment.Hour,moment.Minute,moment.Second);
 			this->saveFileDialog1->Filter = L"PNGファイル(*.png)|*.png|JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*"
 				L".*";
 			this->saveFileDialog1->RestoreDirectory = true;
