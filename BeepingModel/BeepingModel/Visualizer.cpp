@@ -168,10 +168,6 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 		else if (n0->ActionState == beeping && n1->ActionState == beeping && n0->current_ch == n1->current_ch) //collision
 		{
 			type = 2;
-#ifdef _DEBUG
-			String^ a = String::Format("[Collision]\tn0[{0}]\tn1[{1}]", n0->state,n1->state);
-			System::Diagnostics::Debug::WriteLine(a);
-#endif
 		}
 		else //beep
 		{

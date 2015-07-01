@@ -543,10 +543,6 @@ void Controller::Run_MM()
 				}
 				if (_occur_colllision){
 					n->candidate = n->current_ch;
-#ifdef _DEBUG
-					String^ a = String::Format("Node ID[{0}]\tCandidate[{1}]",n->Id,n->candidate);
-					System::Diagnostics::Debug::WriteLine(a);
-#endif
 				}
 				else
 				{
