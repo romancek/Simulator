@@ -9,10 +9,14 @@ namespace BeepingModel{
 	public:
 		Visualizer^ _vis;
 		Controller^ _cnt;
+		DataManager^ _dmg;
 	public:
 		Observer(void);
-		Observer(Controller^, Visualizer^);
+		Observer(Controller^, Visualizer^, DataManager^);
 		void Run();
+		void Simulate();		
+		bool isFinishAlgorithm();
+		bool CheckValid();
 
 	public:
 		property bool Stop

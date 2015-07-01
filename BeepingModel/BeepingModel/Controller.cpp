@@ -24,16 +24,16 @@ void Controller::InitializeGraph(int topology)
 	this->graph_topology = topology;
 	nodes = gcnew array<Node^>(this->n);
 	channels = gcnew array<Channel^>(this->m);
-	for ( int i = 0;i < n;i++ )
+	for (int i = 0; i < n; i++)
 	{
-		nodes[i] = gcnew Node(i,this->F);
+		nodes[i] = gcnew Node(i, this->F);
 	}
-	for ( int i = 0;i < m;i++ )
+	for (int i = 0; i < m; i++)
 	{
 		channels[i] = gcnew Channel(i);
 	}
 #ifdef _DEBUG
-	for each ( Node^ n in nodes )
+	for each (Node^ n in nodes)
 	{
 		Debug::WriteLine(n->Id);
 	}
@@ -52,11 +52,11 @@ void Controller::InitializeGraph(int n, int m, double density)
 	channels = nullptr;
 	nodes = gcnew array<Node^>(this->n);
 	channels = gcnew array<Channel^>(this->m);
-	for ( int i = 0;i < n;i++ )
+	for (int i = 0; i < n; i++)
 	{
-		nodes[i] = gcnew Node(i,this->F);
+		nodes[i] = gcnew Node(i, this->F);
 	}
-	for ( int i = 0;i < m;i++ )
+	for (int i = 0; i < m; i++)
 	{
 		channels[i] = gcnew Channel(i);
 	}
@@ -65,7 +65,7 @@ void Controller::InitializeGraph(int n, int m, double density)
 }
 
 /*
-* Compute Network Parameter etc. Diameter, Maximum Degree(Delta), 
+* Compute Network Parameter etc. Diameter, Maximum Degree(Delta),
 */
 
 void Controller::ComputeAttribute()
@@ -80,6 +80,18 @@ void Controller::ComputeAttribute()
 		}
 	}
 	this->delta = maxdegree;
+}
+
+void Controller::RefleshFrequency()
+{
+	for each(Node^ n in this->nodes)
+	{
+		n->available_freq = gcnew array<bool>(this->F);
+		for (int f = 0; f < this->F; f++)
+		{
+			n->available_freq[f] = true;
+		}
+	}
 }
 
 void Controller::ResizeField(int x, int y)
@@ -156,10 +168,6 @@ void Controller::CreateRandomEdge(void)
 			int n1 = rand_edge[0];
 			int n2 = rand_edge[1];
 			created_edge.insert(pair<int, int>(n1, n2));//rand_edge[0], rand_edge[1]));
-#ifdef _DEBUG
-			String^ a = String::Format("channel[{0}]:({1},{2})",i,rand_edge[0],rand_edge[1]);
-			Debug::WriteLine(a);
-#endif
 			selected = false;
 			i++;
 		}
@@ -191,7 +199,7 @@ void Controller::SetRandomizedPosition(void)
 
 		for (auto exa : exist_area)
 		{
-			if ( GetNodeDistance( dx, dy, exa.first, exa.second ) < NODE_SIZE/2 )
+			if (GetNodeDistance(dx + NODE_SIZE / 2, dy + NODE_SIZE / 2, exa.first + NODE_SIZE / 2, exa.second + NODE_SIZE / 2) < NODE_SIZE)
 			{
 				selected = true;
 				break;

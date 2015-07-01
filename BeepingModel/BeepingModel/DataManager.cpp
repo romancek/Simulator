@@ -59,6 +59,7 @@ String^ DataManager::OutPutJSON()
 
 String^ DataManager::OutPutJSONrefController()
 {
+	this->obj = new object;
 	object *graph = WriteGraphInfo();
 	array nodes = WriteNodeInfo();
 	//array channels = WriteChannelInfo();
@@ -68,10 +69,11 @@ String^ DataManager::OutPutJSONrefController()
 	//obj->insert(make_pair("Channels", value(channels)));
 
 	delete graph;
-	delete &nodes;
+	//delete &nodes;
 	//delete &channels;
-
-	return gcnew String(value(*obj).serialize().c_str());
+	String^ output = gcnew String(value(*obj).serialize().c_str());
+	delete this->obj;
+	return output;
 }
 
 object* DataManager::WriteGraphInfo()

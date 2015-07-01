@@ -243,7 +243,7 @@ void Visualizer::MakeMultiColors()
 	this->brush_multi = gcnew array<SolidBrush^>(this->F+1);
 	boost::random_device rd;
 	boost::random::mt19937 gen(rd());
-	boost::random::uniform_int_distribution<> dist(0, (int)Math::Pow(2,24)-1);//TODO
+	boost::random::uniform_int_distribution<> dist(0, (int)Math::Pow(2,24)-1);
 	int _color;
 	for (unsigned int i = 0; i <= F;i++)
 	{

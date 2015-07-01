@@ -40,6 +40,7 @@ namespace BeepingModel{
 		void SetGraphParameter(Settings*);
 		unsigned int Random_Device(void);
 		void ComputeAttribute(void);
+		void RefleshFrequency(void);
 		void Run(void);
 		void Run_UpperN(void);
 		void Run_MM(void);

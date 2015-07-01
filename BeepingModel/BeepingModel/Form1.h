@@ -36,6 +36,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_topology;
 	private: System::Windows::Forms::Label^  label_channels;
 	private: System::Windows::Forms::Label^  label_F;
+	private: System::Windows::Forms::Button^  btn_simulate;
 
 	private: Settings* settings;
 	public:
@@ -46,11 +47,11 @@ namespace BeepingModel {
 			this->controller = gcnew Controller( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
 			this->controller->InitializeGraph(this->settings->topology);
 			this->visualizer = gcnew Visualizer( controller, graph_panel->CreateGraphics() );
-			this->observer = gcnew Observer( this->controller, this->visualizer );
+			this->data_manager = gcnew DataManager(this->controller);
+			this->observer = gcnew Observer( this->controller, this->visualizer , this->data_manager);
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
-			this->data_manager = gcnew DataManager(this->controller);
 		}
 
 	protected:
@@ -124,11 +125,11 @@ namespace BeepingModel {
 			this->label_radius = (gcnew System::Windows::Forms::Label());
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->btn_simulate = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
-
 			// 
 			// btn_auto
 			// 
@@ -137,7 +138,7 @@ namespace BeepingModel {
 			this->btn_auto->FlatAppearance->BorderSize = 2;
 			this->btn_auto->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btn_auto->ForeColor = System::Drawing::Color::Gold;
-			this->btn_auto->Location = System::Drawing::Point(48, 70);
+			this->btn_auto->Location = System::Drawing::Point(48, 67);
 			this->btn_auto->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_auto->Name = L"btn_auto";
 			this->btn_auto->Size = System::Drawing::Size(80, 27);
@@ -169,7 +170,7 @@ namespace BeepingModel {
 			this->btn_stop->FlatAppearance->BorderSize = 2;
 			this->btn_stop->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btn_stop->ForeColor = System::Drawing::Color::Gold;
-			this->btn_stop->Location = System::Drawing::Point(48, 122);
+			this->btn_stop->Location = System::Drawing::Point(48, 116);
 			this->btn_stop->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_stop->Name = L"btn_stop";
 			this->btn_stop->Size = System::Drawing::Size(80, 27);
@@ -320,8 +321,6 @@ namespace BeepingModel {
 			// saveFileDialog1
 			// 
 			this->saveFileDialog1->DefaultExt = L"Save";
-			System::DateTime moment = System::DateTime::Now;
-			this->saveFileDialog1->FileName = String::Format("simulation_data_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}",moment.Year,moment.Month,moment.Day,moment.Hour,moment.Minute,moment.Second);
 			this->saveFileDialog1->Filter = L"PNGファイル(*.png)|*.png|JSONファイル(*.json)|*.json|CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*"
 				L".*";
 			this->saveFileDialog1->RestoreDirectory = true;
@@ -432,6 +431,7 @@ namespace BeepingModel {
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
 				static_cast<System::Int32>(static_cast<System::Byte>(64)));
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->panel1->Controls->Add(this->btn_simulate);
 			this->panel1->Controls->Add(this->btn_set);
 			this->panel1->Controls->Add(this->label4);
 			this->panel1->Controls->Add(this->groupBox1);
@@ -448,6 +448,22 @@ namespace BeepingModel {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(194, 777);
 			this->panel1->TabIndex = 15;
+			// 
+			// btn_simulate
+			// 
+			this->btn_simulate->BackColor = System::Drawing::Color::Transparent;
+			this->btn_simulate->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_simulate->FlatAppearance->BorderSize = 2;
+			this->btn_simulate->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_simulate->ForeColor = System::Drawing::Color::Gold;
+			this->btn_simulate->Location = System::Drawing::Point(48, 165);
+			this->btn_simulate->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btn_simulate->Name = L"btn_simulate";
+			this->btn_simulate->Size = System::Drawing::Size(80, 27);
+			this->btn_simulate->TabIndex = 14;
+			this->btn_simulate->Text = L"Simulate";
+			this->btn_simulate->UseVisualStyleBackColor = false;
+			this->btn_simulate->Click += gcnew System::EventHandler(this, &Form1::btn_simulate_Click);
 			// 
 			// Form1
 			// 
@@ -476,8 +492,9 @@ namespace BeepingModel {
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
-			this->PerformLayout();		
-}
+			this->PerformLayout();
+
+		}
 #pragma endregion
 
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -681,7 +698,7 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 				
 		fs->ShowDialog();
 		if (fs->Cancel())return;
-
+		this->visualizer->Draw();
 		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		settings = fs->GetSetting();
 		this->visualizer->SetParameter(settings);
@@ -703,6 +720,11 @@ private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^
 			this->Run_Algorithm->Start();
 		}
 		this->observer->Stop = false;
+	}
+
+ private: System::Void btn_simulate_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->observer->Simulate();
+
 	}
 
 private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
