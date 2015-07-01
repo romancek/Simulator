@@ -3,6 +3,7 @@
 using namespace BeepingModel;
 using namespace picojson;
 using namespace std;
+
 DataManager::DataManager()
 {
 	this->obj = new object;
@@ -65,11 +66,12 @@ String^ DataManager::OutPutJSONrefController()
 	obj->insert(make_pair("GraphInformation", value(*graph)));
 	obj->insert(make_pair("Nodes", value(nodes)));
 	//obj->insert(make_pair("Channels", value(channels)));
-	return gcnew String(value(*obj).serialize().c_str());
 
 	delete graph;
 	delete &nodes;
 	//delete &channels;
+
+	return gcnew String(value(*obj).serialize().c_str());
 }
 
 object* DataManager::WriteGraphInfo()
@@ -105,7 +107,6 @@ object* DataManager::WriteGraphInfo()
 
 array DataManager::WriteNodeInfo()
 {
-	object* _nodes = new object;
 	picojson::array _narr;
 	for each (Node^ _n in this->cnt->nodes)
 	{
@@ -156,7 +157,6 @@ array DataManager::WriteNodeInfo()
 
 array DataManager::WriteChannelInfo()
 {
-	object* _channels = new object;
 	picojson::array _carr;
 	for each (Channel^ _c in this->cnt->channels)
 	{
