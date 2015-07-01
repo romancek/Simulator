@@ -25,8 +25,10 @@ Node::Node(int id, int F)
 	this->udk_r = UDK_R;
 	//Multi-Channel Mode
 	this->global_freq = F;
-	this->available_freq = gcnew array<bool>(F){ true };
-	this->current_ch = 0;
+	this->available_freq = gcnew array<bool>(F);
+	for (int f = 0; f < F; f++)this->available_freq[f] = true;
+
+	this->current_ch = -1;
 	this->match_ch = -1;
 	this->slot = nullptr;
 	this->succ_pattern = false;
@@ -47,7 +49,7 @@ void Node::LISTEN(int ch_num)
 
 void Node::WAIT()
 {
-	this->ActionState = listen;
+	this->states[0] = listen;
 	this->current_ch = -1;
 }
 

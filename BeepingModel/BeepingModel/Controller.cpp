@@ -431,6 +431,8 @@ void Controller::Run_MM()
 	{
 		switch (n->current_step)
 		{
+		case -1:
+			break;
 		case 1:
 			n->candidate = -1;
 			if ( n->NodeState == Lonely )
@@ -499,13 +501,20 @@ void Controller::Run_MM()
 			}
 			break;
 		case 3:
-			if (n->NodeState == MM && (n->phase-1) == n->match_ch)
+			if (n->phase == 1)
 			{
-				n->BEEP(n->phase-1);
+				if (n->NodeState == Lonely) n->BEEP(this->F);
 			}
 			else
 			{
-				n->LISTEN(n->phase - 1);
+				if (n->NodeState == MM && (n->phase - 1) == n->match_ch)
+				{
+					n->BEEP(n->phase - 1);
+				}
+				else
+				{
+					n->LISTEN(n->phase - 1);
+				}
 			}
 			break;
 		default :
@@ -519,6 +528,8 @@ void Controller::Run_MM()
 	{
 		switch ( n->current_step )
 		{
+		case -1:
+			break;
 		case 1:
 			if (n->NodeState == Lonely)
 			{
@@ -528,8 +539,18 @@ void Controller::Run_MM()
 					if (this->nodes[id]->ActionState == beeping && n->current_ch == this->nodes[id]->current_ch)
 					{
 						_occur_colllision = true;
-						n->candidate = n->current_ch;
 					}
+				}
+				if (_occur_colllision){
+					n->candidate = n->current_ch;
+#ifdef _DEBUG
+					String^ a = String::Format("Node ID[{0}]\tCandidate[{1}]",n->Id,n->candidate);
+					System::Diagnostics::Debug::WriteLine(a);
+#endif
+				}
+				else
+				{
+					n->candidate = -1;
 				}
 			}
 			n->Round++;
@@ -618,19 +639,50 @@ void Controller::Run_MM()
 			}
 			break;
 		case 3:
-			if ( n->NodeState == Lonely )
+			if (n->phase == 1)
 			{
-				for each(int id in n->neighbors)
+				if (n->NodeState == Lonely)
 				{
-					if (this->nodes[id]->ActionState == beeping && (n->phase-1) == this->nodes[id]->current_ch)
+					bool _isTerminate = true;
+					for each(int id in n->neighbors)
 					{
-						n->available_freq[n->phase - 1] = false;
+						if (this->nodes[id]->ActionState == beeping && this->nodes[id]->current_ch == this->F)
+						{
+							 _isTerminate = false;
+						}
+					}
+					if (_isTerminate)
+					{
+						n->ActionState = listen;
+						n->candidate = -1;
+						n->state = "Terminate";
+						n->current_ch = -1;
+						n->current_step = -1;
+						break;
+					}
+				}
+				else
+				{
+					/* Wait for 1 round */
+				}
+			}
+			else
+			{
+				if (n->NodeState == Lonely)
+				{
+					for each(int id in n->neighbors)
+					{
+						if (this->nodes[id]->ActionState == beeping && (n->phase - 1) == this->nodes[id]->current_ch)
+						{
+							n->available_freq[n->phase - 1] = false;
+						}
 					}
 				}
 			}
+			
 			n->phase++;
 			n->Round++;
-			if ( n->phase > this->F )
+			if ( n->phase > this->F+1 ) //phase 1~F+1
 			{
 				if ( n->NodeState == MM )
 				{
@@ -638,7 +690,8 @@ void Controller::Run_MM()
 					n->candidate = -1;
 					n->state = "Terminate";
 					n->current_ch = -1;
-					n->current_step = 0;
+					n->current_step = -1;
+					break;
 				}
 				n->phase = 1;
 				n->current_step = 1;

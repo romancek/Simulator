@@ -670,10 +670,10 @@ private: void InitSetting () {
 		this->settings = new Settings;
 		this->settings->AA = false;
 		this->settings->Can_Draw = true;
-		this->settings->NODE_SIZE = 5;
+		this->settings->NODE_SIZE = 10;
 		this->settings->PEN_WIDTH = 0.1f;
-		this->settings->unitdisk_r = 50;
-		this->settings->F = 1;
+		this->settings->unitdisk_r = 150;
+		this->settings->F = 10;
 		this->settings->topology = 1;
 	}
 private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {

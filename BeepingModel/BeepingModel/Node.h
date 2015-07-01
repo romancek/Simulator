@@ -8,7 +8,7 @@ namespace BeepingModel{
 	private:
 		int id;
 	public:
-		cli::array<int>^ states;
+		cli::array<int>^ states;		//Action,Node,Listen
 		cli::array<int>^ position;
 		String^ state;
 		int current_step;				// 0 : terminated
@@ -24,7 +24,7 @@ namespace BeepingModel{
 		cli::array<bool>^ available_freq;		// 1:available, 0:not available	
 		cliext::vector<int> neighbors;			// neighbor ids
 		cliext::vector<unsigned int> channels;	// connected ch ids
-		int current_ch;
+		int current_ch;							// -1:null 0~F-1:compete F:broadcast ch
 		int match_ch;
 		cli::array<unsigned __int8>^ slot;		// 3 slot in step 2
 		bool succ_pattern;

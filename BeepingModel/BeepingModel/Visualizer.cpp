@@ -28,6 +28,7 @@ void Visualizer::AllocatePens()
 	this->pen_node[1] = gcnew Pen(Color::Black, PEN_WIDTH);
 	this->pen_node[2] = gcnew Pen(Color::HotPink, PEN_WIDTH);
 	this->pen_node[3] = gcnew Pen(Color::Red, PEN_WIDTH);
+
 	this->brush = gcnew array<SolidBrush^>(2);
 	this->brush[0] = gcnew SolidBrush(Color::Gainsboro);
 	this->brush[1] = gcnew SolidBrush(Color::Red);
@@ -51,7 +52,7 @@ void Visualizer::Draw(void)
 		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
 	}
 
-	switch (channel_mode)
+	switch (this->channel_mode)
 	{
 	case 0:
 		this->DrawSingleChannel(grafx);
@@ -148,23 +149,29 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 		{
 			continue;
 		}
-		array<int>^ p1 = this->controller->nodes[ep[0]]->GetPosition();
-		array<int>^ p2 = this->controller->nodes[ep[1]]->GetPosition();
+
+		Node^ n0 = this->controller->nodes[ep[0]];
+		Node^ n1 = this->controller->nodes[ep[1]];
+
+		array<int>^ p1 = n0->GetPosition();
+		array<int>^ p2 = n1->GetPosition();
 #ifdef _DEBUG
 		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1], ch->Id);
 		//System::Diagnostics::Debug::WriteLine(a);
 #endif
 
-		if ((this->controller->nodes[ep[0]]->ActionState == listen || this->controller->nodes[ep[0]]->ActionState == sleep)
-			&& (this->controller->nodes[ep[1]]->ActionState == listen || this->controller->nodes[ep[1]]->ActionState == sleep)) //silent or sleep
+		if ((n0->ActionState == listen || n0->ActionState == sleep)
+			&& (n1->ActionState == listen || n1->ActionState == sleep)) //silent or sleep
 		{
 			type = 0;
 		}
-		else if (this->controller->nodes[ep[0]]->ActionState == beeping
-			&& this->controller->nodes[ep[1]]->ActionState == beeping
-			&& this->controller->nodes[ep[0]]->current_ch == this->controller->nodes[ep[1]]->current_ch) //collision
+		else if (n0->ActionState == beeping && n1->ActionState == beeping && n0->current_ch == n1->current_ch) //collision
 		{
 			type = 2;
+#ifdef _DEBUG
+			String^ a = String::Format("[Collision]\tn0[{0}]\tn1[{1}]", n0->state,n1->state);
+			System::Diagnostics::Debug::WriteLine(a);
+#endif
 		}
 		else //beep
 		{
@@ -173,19 +180,17 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 
 		if (type == 1)
 		{
-			if ((this->controller->nodes[ep[0]]->ActionState == beeping
-				&& this->controller->nodes[ep[1]]->ActionState == listen)
-				|| (this->controller->nodes[ep[0]]->ActionState == listen
-				&& this->controller->nodes[ep[1]]->ActionState == beeping))
+			if ((n0->ActionState == beeping && n1->ActionState == listen) 
+				|| (n0->ActionState == listen && n1->ActionState == beeping))
 			{
 				int _ch_color = 0;
-				if (this->controller->nodes[ep[0]]->ActionState == beeping)
+				if (n0->ActionState == beeping)
 				{
-					_ch_color = this->controller->nodes[ep[0]]->current_ch;
+					_ch_color = n0->current_ch;
 				}
 				else
 				{
-					_ch_color = this->controller->nodes[ep[1]]->current_ch;
+					_ch_color = n1->current_ch;
 				}
 				grafx->Graphics->DrawLine(this->pen_line_multi[_ch_color], p1[0] + NODE_SIZE / 2, p1[1] + NODE_SIZE / 2, p2[0] + NODE_SIZE / 2, p2[1] + NODE_SIZE / 2);
 			}
@@ -193,8 +198,8 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 			{
 				int _xc = (p1[0] + p2[0] + NODE_SIZE) / 2, _yc = (p1[1] + p2[1] + NODE_SIZE) / 2;
 				int _ch_color0 = 0, _ch_color1 = 0;
-				_ch_color0 = this->controller->nodes[ep[0]]->current_ch;
-				_ch_color1 = this->controller->nodes[ep[1]]->current_ch;
+				_ch_color0 = n0->current_ch;
+				_ch_color1 = n1->current_ch;
 				grafx->Graphics->DrawLine(this->pen_line_multi[_ch_color0], p1[0] + NODE_SIZE / 2, p1[1] + NODE_SIZE / 2, _xc, _yc);
 				grafx->Graphics->DrawLine(this->pen_line_multi[_ch_color1], _xc, _yc, p2[0] + NODE_SIZE / 2, p2[1] + NODE_SIZE / 2);
 			}
@@ -205,41 +210,48 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 		}
 	}
 
+	/*
+	 *	MM(Terminate) : Red line & match color Fill
+	 *	Lonely(Terminate) : White Line & Gainsboro Fill
+	 *	Lonely : Black Line & Gainsboro Fill
+	 */
+
 	for each (Node^ n in this->controller->nodes)
 	{
-		if (n->NodeState == Lonely){
-			type = 1;
-		}
-		else if (n->NodeState == MM)
-		{
-			type = 3;
-		}
 		array<int>^ pos = n->GetPosition();
 		Rectangle rect = Rectangle(pos[0], pos[1], NODE_SIZE, NODE_SIZE);
-		if (type == 1)
+
+		if (n->NodeState == MM)
 		{
-			grafx->Graphics->FillEllipse(this->brush[0], rect);
-		}
-		else if (type == 3)
-		{
+			type = 3;
 			grafx->Graphics->FillEllipse(this->brush_multi[n->match_ch], rect);
 		}
+		else if (n->state == "Terminate")
+		{
+			type = 0;
+			grafx->Graphics->FillEllipse(this->brush[0], rect);
+		}
+		else if (n->NodeState == Lonely)
+		{
+			type = 1;
+			grafx->Graphics->FillEllipse(this->brush[0], rect);
+		}
+
 		grafx->Graphics->DrawEllipse(this->pen_node[type], rect);
 	}
 }
 
 void Visualizer::MakeMultiColors()
 {
-	this->pen_line_multi = gcnew array<Pen^>(this->F);
-	this->brush_multi = gcnew array<SolidBrush^>(this->F);
+	this->pen_line_multi = gcnew array<Pen^>(this->F+1);
+	this->brush_multi = gcnew array<SolidBrush^>(this->F+1);
 	boost::random_device rd;
 	boost::random::mt19937 gen(rd());
-	boost::random::uniform_int_distribution<> dist(0, 2^24-1);
+	boost::random::uniform_int_distribution<> dist(0, (int)Math::Pow(2,24)-1);//TODO
 	int _color;
-	for (unsigned int i = 0; i < F;i++)
+	for (unsigned int i = 0; i <= F;i++)
 	{
 		_color = dist(gen);
-		if (_color == 0xFF0000)continue;
 		this->pen_line_multi[i] = gcnew Pen(Color::FromArgb(_color+0xFF000000), PEN_WIDTH);
 		this->brush_multi[i] = gcnew SolidBrush(Color::FromArgb(_color+0xFF000000));
 	}
