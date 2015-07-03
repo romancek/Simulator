@@ -70,7 +70,7 @@ void Observer::Simulate()
 {
 	this->_can_draw = false;
 	int n = this->_cnt->N;
-	int m = n*(n-1)/2;
+	int m = n*(n-1)/2+1;
 	for (int count = 0; count < SIMULATE_COUNT; count++)
 	{
 		this->_cnt->InitializeGraph(n, m, 1);

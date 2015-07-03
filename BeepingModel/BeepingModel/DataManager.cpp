@@ -69,8 +69,6 @@ String^ DataManager::OutPutJSONrefController()
 	//obj->insert(make_pair("Channels", value(channels)));
 
 	delete graph;
-	//delete &nodes;
-	//delete &channels;
 	String^ output = gcnew String(value(*obj).serialize().c_str());
 	delete this->obj;
 	return output;
