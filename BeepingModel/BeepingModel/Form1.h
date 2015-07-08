@@ -37,6 +37,8 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_channels;
 	private: System::Windows::Forms::Label^  label_F;
 	private: System::Windows::Forms::Button^  btn_simulate;
+	private: System::Windows::Forms::Label^  label_Delta;
+
 
 	private: Settings* settings;
 	public:
@@ -119,6 +121,7 @@ namespace BeepingModel {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label_Delta = (gcnew System::Windows::Forms::Label());
 			this->label_F = (gcnew System::Windows::Forms::Label());
 			this->label_channels = (gcnew System::Windows::Forms::Label());
 			this->label_topology = (gcnew System::Windows::Forms::Label());
@@ -358,6 +361,7 @@ namespace BeepingModel {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label_Delta);
 			this->groupBox1->Controls->Add(this->label_F);
 			this->groupBox1->Controls->Add(this->label_channels);
 			this->groupBox1->Controls->Add(this->label_topology);
@@ -372,6 +376,16 @@ namespace BeepingModel {
 			this->groupBox1->TabIndex = 13;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Parameter";
+			// 
+			// label_Delta
+			// 
+			this->label_Delta->AutoSize = true;
+			this->label_Delta->ForeColor = System::Drawing::Color::White;
+			this->label_Delta->Location = System::Drawing::Point(17, 163);
+			this->label_Delta->Name = L"label_Delta";
+			this->label_Delta->Size = System::Drawing::Size(128, 14);
+			this->label_Delta->TabIndex = 14;
+			this->label_Delta->Text = L"Maximum Degree : ";
 			// 
 			// label_F
 			// 
@@ -555,6 +569,8 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 				if ( this->settings->topology == 1 )
 				{
 					this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);
+					this->label_Delta->Text = String::Format("Maximum Degree : {0}",this->controller->delta);
+
 				}
 			}
 		}

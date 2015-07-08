@@ -12,6 +12,7 @@ namespace BeepingModel{
 		Channel(void);
 		Channel(int);
 		void SetEndPoint(int,int);
+		void Reset(void);
 	public:
 		property int Id {
 			int get() { return this->id; }

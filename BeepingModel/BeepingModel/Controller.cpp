@@ -22,6 +22,7 @@ void Controller::InitializeGraph(int topology)
 {
 	//‰Šú‰»ˆ—
 	this->graph_topology = topology;
+	this->global_round = 1;
 	nodes = gcnew array<Node^>(this->n);
 	channels = gcnew array<Channel^>(this->m);
 	for (int i = 0; i < n; i++)
@@ -62,6 +63,19 @@ void Controller::InitializeGraph(int n, int m, double density)
 	}
 	this->CreateGraph();
 	this->ComputeAttribute();
+}
+
+void Controller::Initialize()
+{
+	this->global_round = 1;
+	for each (Node^ n in this->nodes)
+	{
+		n->Reset();
+	}
+	for each (Channel^ ch in this->channels)
+	{
+		ch->Reset();
+	}
 }
 
 /*

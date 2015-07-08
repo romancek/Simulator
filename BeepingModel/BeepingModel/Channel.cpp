@@ -20,3 +20,7 @@ void Channel::SetEndPoint(int v1, int v2)
 	this->endpoint = ep;
 }
 
+void Channel::Reset()
+{
+
+}

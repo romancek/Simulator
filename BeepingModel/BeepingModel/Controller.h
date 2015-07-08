@@ -27,8 +27,9 @@ namespace BeepingModel{
 		cli::array<Channel^>^ channels;
 	public:
 		Controller(int,int);
-		void InitializeGraph(int);
+		void InitializeGraph(int);		//remake graph
 		void InitializeGraph(int,int,double);
+		void Initialize(void);			//init node's & channel's value 
 		void ResizeField(int,int);
 		void CreateGraph();
 		void CreateRandomGraph(void);	//Random graph only

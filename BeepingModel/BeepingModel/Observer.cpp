@@ -70,18 +70,37 @@ void Observer::Simulate()
 {
 	this->_can_draw = false;
 	int n = this->_cnt->N;
-	int m = n*(n-1)/2+1;
+	int m = n*(n-1)/2;
+	this->_cnt->InitializeGraph(n, m, 1);
+	this->_cnt->F = 2 * (this->_cnt->delta - 1) + 1;
+	this->_cnt->RefleshFrequency();
+	/* Simulate in Same Graph */
+	for (int count = 0; count < SIMULATE_COUNT; count++)
+	{
+		while (!isFinishAlgorithm() && !CheckValid())
+		{
+			this->_cnt->Run();
+		}
+		System::DateTime moment = System::DateTime::Now;
+		String^ path = String::Format("simulation_data_same_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}.json", moment.Year, moment.Month, moment.Day, moment.Hour, moment.Minute, moment.Second);
+		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
+		writer->WriteLine(this->_dmg->OutPutJSONrefController());
+		writer->Close();
+		this->_cnt->Initialize();
+	}
+
+	/* Simulate in Different Graph but n is uniform*/
 	for (int count = 0; count < SIMULATE_COUNT; count++)
 	{
 		this->_cnt->InitializeGraph(n, m, 1);
-		this->_cnt->F = 2*(this->_cnt->delta - 1);
+		this->_cnt->F = 2*(this->_cnt->delta - 1)+1;
 		this->_cnt->RefleshFrequency();
 		while (!isFinishAlgorithm() && !CheckValid())
 		{
 			this->_cnt->Run();
 		}
 		System::DateTime moment = System::DateTime::Now;
-		String^ path = String::Format("simulation_data_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}.json", moment.Year, moment.Month, moment.Day, moment.Hour, moment.Minute, moment.Second);
+		String^ path = String::Format("simulation_data_different_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}.json", moment.Year, moment.Month, moment.Day, moment.Hour, moment.Minute, moment.Second);
 		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
 		writer->WriteLine(this->_dmg->OutPutJSONrefController());
 		writer->Close();

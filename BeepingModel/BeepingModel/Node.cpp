@@ -83,4 +83,18 @@ void Node::Reset(void)
 	this->listenround = 1;
 	this->phase = 1;
 	this->step = 1;
+
+	this->current_step = 1;
+	this->state = "Executing";
+	this->candidate = -1;
+	this->local_round = 1;
+	this->states = gcnew array<int>{sleep, Lonely, silent};
+	this->MIS_state = 0;
+	//Multi-Channel Mode
+	for (int f = 0; f < this->global_freq; f++)this->available_freq[f] = true;
+
+	this->current_ch = -1;
+	this->match_ch = -1;
+	this->slot = nullptr;
+	this->succ_pattern = false;
 }
