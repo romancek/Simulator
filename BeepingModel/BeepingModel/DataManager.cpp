@@ -144,6 +144,9 @@ array DataManager::WriteNodeInfo()
 		_position->insert(make_pair("y", value((double)_posOfCliArray[1])));
 
 		object* _node = new object;
+		picojson::array neighborsId;
+		for each(int id in _n->neighbors) neighborsId.push_back(value((double)id));
+		_node->insert(make_pair("Neighbor", value(neighborsId)));
 		_node->insert(make_pair("Round", value((double)_n->local_round)));
 		_node->insert(make_pair("Node State", value(_state)));
 		_node->insert(make_pair("Algorithm State", value(_alg_state)));
