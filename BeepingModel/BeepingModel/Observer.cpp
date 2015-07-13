@@ -17,7 +17,7 @@ Observer::Observer(Controller^ controller, Visualizer^ visualizer, DataManager^ 
 
 void Observer::Run()
 {
-	while(1)
+	while (!isFinishAlgorithm() && !CheckValid())
 	{
 		this->_cnt->Run();
 		TimeWatch t;
