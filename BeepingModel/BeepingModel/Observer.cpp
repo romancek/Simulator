@@ -17,16 +17,15 @@ Observer::Observer(Controller^ controller, Visualizer^ visualizer, DataManager^ 
 
 void Observer::Run()
 {
-	bool end = false;
-	while (!end)
+	while (true)
 	{
 		this->_cnt->Run();
 		TimeWatch t;
 		if ( _can_draw ) this->_vis->Draw();
 		System::Diagnostics::Debug::WriteLine(String::Format("{0}ms/round", t.elapsed()));
 		if ( this->stop )break;
+		if (DetectTerminate())break;
 		Thread::Sleep(_Run_Speed_ms);
-		end = DetectTerminate();
 	}
 }
 
@@ -86,21 +85,17 @@ bool Observer::isValid()
 
 void Observer::Simulate()
 {
-	bool end = false;
 	this->_can_draw = false;
 	int n = this->_cnt->N;
-	int m = n*(n-1)/2;
+	int m = this->_cnt->M;
 
-	this->_cnt->InitializeGraph(n, m, 1);
-	this->_cnt->F = 2 * (this->_cnt->delta - 1) + 1;
-	this->_cnt->RefleshFrequency();
 	/* Simulate in Same Graph */
 	for (int count = 0; count < SIMULATE_COUNT; count++)
 	{
-		while (!end)
+		while (true)
 		{
 			this->_cnt->Run();
-			end = DetectTerminate();
+			if (DetectTerminate())break;
 		}
 		System::DateTime moment = System::DateTime::Now;
 		String^ path = String::Format("simulation_data_same_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}.json", moment.Year, moment.Month, moment.Day, moment.Hour, moment.Minute, moment.Second);
@@ -109,17 +104,14 @@ void Observer::Simulate()
 		writer->Close();
 		this->_cnt->Initialize();
 	}
-	end = false;
 	/* Simulate in Different Graph but n is uniform*/
 	for (int count = 0; count < SIMULATE_COUNT; count++)
 	{
 		this->_cnt->InitializeGraph(n, m, 1);
-		this->_cnt->F = 2*(this->_cnt->delta - 1)+1;
-		this->_cnt->RefleshFrequency();
-		while (!end)
+		while (true)
 		{
 			this->_cnt->Run();
-			end = DetectTerminate();
+			if (DetectTerminate())break;
 		}
 		System::DateTime moment = System::DateTime::Now;
 		String^ path = String::Format("simulation_data_different_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}.json", moment.Year, moment.Month, moment.Day, moment.Hour, moment.Minute, moment.Second);

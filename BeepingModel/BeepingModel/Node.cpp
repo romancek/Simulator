@@ -78,7 +78,14 @@ array<int>^ Node::GetPosition(void)
 	return this->position;
 }
 
-void Node::Reset(void)
+void Node::Reset()
+{
+	this->listenround = 1;
+	this->phase = 1;
+	this->step = 1;
+}
+
+void Node::Reset(int F)
 {
 	this->listenround = 1;
 	this->phase = 1;
@@ -91,6 +98,7 @@ void Node::Reset(void)
 	this->states = gcnew array<int>{sleep, Lonely, silent};
 	this->MIS_state = 0;
 	//Multi-Channel Mode
+	this->global_freq = F;
 	for (int f = 0; f < this->global_freq; f++)this->available_freq[f] = true;
 
 	this->current_ch = -1;

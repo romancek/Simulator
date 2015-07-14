@@ -37,6 +37,7 @@ void Visualizer::AllocatePens()
 
 void Visualizer::Draw(void)
 {
+	if (this->controller->nodes == nullptr || this->controller->channels == nullptr)return;
 	//Double Buffering
 	BufferedGraphicsContext^ currentContext = BufferedGraphicsManager::Current;
 	BufferedGraphics^ grafx = currentContext->Allocate(this->g, Rectangle(0, 0, this->controller->x, this->controller->y));

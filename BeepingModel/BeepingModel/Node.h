@@ -40,8 +40,8 @@ namespace BeepingModel{
 		void WAIT();
 		void SetPosition(cli::array<int>^);
 		cli::array<int>^ GetPosition(void);
-
 		void Reset(void);
+		void Reset(int);
 	public:
 		property int Id {
 			int get() { return this->id; }

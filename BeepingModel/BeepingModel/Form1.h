@@ -47,8 +47,8 @@ namespace BeepingModel {
 			InitializeComponent();
 			InitSetting();
 			this->controller = gcnew Controller( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
-			this->controller->InitializeGraph(this->settings->topology);
 			this->visualizer = gcnew Visualizer( controller, graph_panel->CreateGraphics() );
+			this->visualizer->SetParameter(this->settings);
 			this->data_manager = gcnew DataManager(this->controller);
 			this->observer = gcnew Observer( this->controller, this->visualizer , this->data_manager);
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
@@ -564,8 +564,15 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 			else
 			{
 				double density = Convert::ToDouble(this->textBox_density->Text);
+
+				this->controller->SetGraphParameter(settings);
 				this->controller->InitializeGraph( n, m, density);
+				this->settings->F = this->controller->F;
+
+				this->visualizer->SetParameter(settings);
+				this->observer->CanDraw = settings->Can_Draw;
 				this->visualizer->Draw();
+				this->PrintParam();
 				if ( this->settings->topology == 1 )
 				{
 					this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);
@@ -703,9 +710,9 @@ private: void InitSetting () {
 		this->settings = new Settings;
 		this->settings->AA = false;
 		this->settings->Can_Draw = true;
-		this->settings->NODE_SIZE = 10;
+		this->settings->NODE_SIZE = 5;
 		this->settings->PEN_WIDTH = 0.1f;
-		this->settings->unitdisk_r = 150;
+		this->settings->unitdisk_r = 40;
 		this->settings->F = 10;
 		this->settings->topology = 1;
 	}
@@ -714,12 +721,8 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 				
 		fs->ShowDialog();
 		if (fs->Cancel())return;
-		this->visualizer->Draw();
-		System::Diagnostics::Debug::WriteLine("Setting Form return");
 		settings = fs->GetSetting();
-		this->visualizer->SetParameter(settings);
-		this->controller->SetGraphParameter(settings);
-		this->observer->CanDraw = settings->Can_Draw;
+		this->visualizer->Draw();
 		this->PrintParam();
 	}
 
@@ -740,7 +743,6 @@ private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^
 
  private: System::Void btn_simulate_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->observer->Simulate();
-
 	}
 
 private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {

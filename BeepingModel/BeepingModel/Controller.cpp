@@ -5,9 +5,8 @@ using namespace System::Diagnostics;
 
 Controller::Controller(int x, int y)
 {
-	this->n = N_SIZE;
-	this->m = M_SIZE;
-	this->density = _DENSITY;
+	this->nodes = nullptr;
+	this->channels = nullptr;
 	this->updated = true;
 	this->graph_topology = 0;
 	this->UpperN = 1000;
@@ -63,6 +62,7 @@ void Controller::InitializeGraph(int n, int m, double density)
 	}
 	this->CreateGraph();
 	this->ComputeAttribute();
+	this->RefleshFrequency();
 }
 
 void Controller::Initialize()
@@ -70,7 +70,7 @@ void Controller::Initialize()
 	this->global_round = 1;
 	for each (Node^ n in this->nodes)
 	{
-		n->Reset();
+		n->Reset(this->F);
 	}
 	for each (Channel^ ch in this->channels)
 	{
@@ -98,8 +98,10 @@ void Controller::ComputeAttribute()
 
 void Controller::RefleshFrequency()
 {
+	this->F = 2 * (this->delta - 1) + 1;
 	for each(Node^ n in this->nodes)
 	{
+		n->global_freq = this->F;
 		n->available_freq = gcnew array<bool>(this->F);
 		for (int f = 0; f < this->F; f++)
 		{
@@ -454,6 +456,8 @@ void Controller::Run_MM()
 		switch (n->current_step)
 		{
 		case -1:
+			n->ActionState == listen;
+			n->current_ch = -1;
 			break;
 		case 1:
 			n->candidate = -1;
@@ -671,10 +675,8 @@ void Controller::Run_MM()
 					}
 					if (_isTerminate)
 					{
-						n->ActionState = listen;
 						n->candidate = -1;
 						n->state = "Terminate";
-						n->current_ch = -1;
 						n->current_step = -1;
 						break;
 					}
@@ -704,10 +706,8 @@ void Controller::Run_MM()
 			{
 				if ( n->NodeState == MM )
 				{
-					n->ActionState = listen;
 					n->candidate = -1;
 					n->state = "Terminate";
-					n->current_ch = -1;
 					n->current_step = -1;
 					break;
 				}
