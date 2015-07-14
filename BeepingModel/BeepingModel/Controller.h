@@ -29,7 +29,8 @@ namespace BeepingModel{
 		Controller(int,int);
 		void InitializeGraph(int);		//remake graph
 		void InitializeGraph(int,int,double);
-		void Initialize(void);			//init node's & channel's value 
+		void Initialize(void);			//init node's & channel's value
+		void ChangeGraph(void);
 		void ResizeField(int,int);
 		void CreateGraph();
 		void CreateRandomGraph(void);	//Random graph only

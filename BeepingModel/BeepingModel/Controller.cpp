@@ -78,6 +78,13 @@ void Controller::Initialize()
 	}
 }
 
+void Controller::ChangeGraph()
+{
+	this->CreateGraph();
+	this->ComputeAttribute();
+	this->RefleshFrequency();
+}
+
 /*
 * Compute Network Parameter etc. Diameter, Maximum Degree(Delta),
 */

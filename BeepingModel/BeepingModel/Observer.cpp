@@ -87,7 +87,7 @@ void Observer::Simulate()
 {
 	this->_can_draw = false;
 	int n = this->_cnt->N;
-	int m = this->_cnt->M;
+	int m = MAXIMUM_CHANNEL;//n*(n - 1) / 2;
 
 	/* Simulate in Same Graph */
 	for (int count = 0; count < SIMULATE_COUNT; count++)

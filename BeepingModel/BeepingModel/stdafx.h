@@ -10,6 +10,8 @@
 #define	_DENSITY 1.0	//‚‚¢‚Æ”Z“x‚ª’á‚¢
 #define UDK_R 50		//UnitDisk radius
 #define SIMULATE_COUNT 100
+#define MAXIMUM_CHANNEL 100000
+
 
 //Thread Speed Property
 //#define _run_speed_ms 50 

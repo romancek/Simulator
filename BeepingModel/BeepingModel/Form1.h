@@ -548,7 +548,7 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 			int m;
 			if ( this->settings->topology == 1 )
 			{
-				m = n*(n-1)/2;
+				m = MAXIMUM_CHANNEL;//n*(n-1)/2;
 				this->textBox_m->Clear();
 				this->textBox_m->Paste(Convert::ToString(m));
 			}
