@@ -14,9 +14,10 @@ namespace BeepingModel{
 		Observer(void);
 		Observer(Controller^, Visualizer^, DataManager^);
 		void Run();
-		void Simulate();		
-		bool isFinishAlgorithm();
-		bool CheckValid();
+		void Simulate();
+		bool DetectTerminate();
+		bool isFinished();
+		bool isValid();
 
 	public:
 		property bool Stop

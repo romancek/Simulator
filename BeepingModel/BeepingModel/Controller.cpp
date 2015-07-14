@@ -529,13 +529,13 @@ void Controller::Run_MM()
 			}
 			else
 			{
-				if (n->NodeState == MM && (n->phase - 1) == n->match_ch)
+				if (n->NodeState == MM && (n->phase - 2) == n->match_ch)
 				{
-					n->BEEP(n->phase - 1);
+					n->BEEP(n->phase - 2);
 				}
 				else
 				{
-					n->LISTEN(n->phase - 1);
+					n->LISTEN(n->phase - 2);
 				}
 			}
 			break;
@@ -690,9 +690,9 @@ void Controller::Run_MM()
 				{
 					for each(int id in n->neighbors)
 					{
-						if (this->nodes[id]->ActionState == beeping && (n->phase - 1) == this->nodes[id]->current_ch)
+						if (this->nodes[id]->ActionState == beeping && (n->phase - 2) == this->nodes[id]->current_ch)
 						{
-							n->available_freq[n->phase - 1] = false;
+							n->available_freq[n->phase - 2] = false;
 						}
 					}
 				}
