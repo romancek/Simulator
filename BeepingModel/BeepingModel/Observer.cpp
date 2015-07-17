@@ -20,8 +20,8 @@ void Observer::SetCondition(Settings* settings)
 	this->_can_draw = settings->Can_Draw;
 	this->exec_times = settings->execution_times;
 	this->exec_start = settings->execution_condition[0];
-	this->exec_end = settings->execution_condition[0];
-	this->exec_interval = settings->execution_condition[0];
+	this->exec_end = settings->execution_condition[1];
+	this->exec_interval = settings->execution_condition[2];
 	this->same_topology = settings->isSameTopology;
 }
 
