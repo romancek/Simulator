@@ -34,6 +34,18 @@ namespace BeepingModel {
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_NODE_SIZE;
 	private: System::Windows::Forms::Label^  label_NODE_SIZE;
 	private: Settings* settings;
+	private: System::Windows::Forms::GroupBox^  groupBox1;
+	private: System::Windows::Forms::CheckBox^  checkBox_isSameTopology;
+	private: System::Windows::Forms::GroupBox^  groupBox2;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_Execution_Condition_End;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_Execution_Condition_Interval;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_Execution_Condition_Start;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_Execution_times;
+
 	private: bool cancel;
 	public:
 		FormSetting(Settings* settings)
@@ -100,6 +112,17 @@ namespace BeepingModel {
 			this->numericUpDown_NODE_SIZE = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label_NODE_SIZE = (gcnew System::Windows::Forms::Label());
 			this->groupBox_Parameter = (gcnew System::Windows::Forms::GroupBox());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->checkBox_isSameTopology = (gcnew System::Windows::Forms::CheckBox());
+			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->numericUpDown_Execution_Condition_End = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown_Execution_Condition_Interval = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown_Execution_Condition_Start = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown_Execution_times = (gcnew System::Windows::Forms::NumericUpDown());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->BeginInit();
 			this->groupBox_Drawing->SuspendLayout();
@@ -107,6 +130,12 @@ namespace BeepingModel {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_PEN_WIDTH))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_NODE_SIZE))->BeginInit();
 			this->groupBox_Parameter->SuspendLayout();
+			this->groupBox1->SuspendLayout();
+			this->groupBox2->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_End))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_Interval))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_Start))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_times))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btn_ok
@@ -308,10 +337,148 @@ namespace BeepingModel {
 				static_cast<System::Byte>(0)));
 			this->groupBox_Parameter->Location = System::Drawing::Point(28, 111);
 			this->groupBox_Parameter->Name = L"groupBox_Parameter";
-			this->groupBox_Parameter->Size = System::Drawing::Size(679, 341);
+			this->groupBox_Parameter->Size = System::Drawing::Size(679, 151);
 			this->groupBox_Parameter->TabIndex = 11;
 			this->groupBox_Parameter->TabStop = false;
 			this->groupBox_Parameter->Text = L"Graph Property";
+			// 
+			// groupBox1
+			// 
+			this->groupBox1->BackColor = System::Drawing::Color::White;
+			this->groupBox1->Controls->Add(this->checkBox_isSameTopology);
+			this->groupBox1->Controls->Add(this->groupBox2);
+			this->groupBox1->Controls->Add(this->label4);
+			this->groupBox1->Controls->Add(this->numericUpDown_Execution_times);
+			this->groupBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->groupBox1->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->groupBox1->Location = System::Drawing::Point(29, 279);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(679, 151);
+			this->groupBox1->TabIndex = 12;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Simulation Property";
+			// 
+			// checkBox_isSameTopology
+			// 
+			this->checkBox_isSameTopology->AutoSize = true;
+			this->checkBox_isSameTopology->Location = System::Drawing::Point(65, 76);
+			this->checkBox_isSameTopology->Name = L"checkBox_isSameTopology";
+			this->checkBox_isSameTopology->Size = System::Drawing::Size(125, 18);
+			this->checkBox_isSameTopology->TabIndex = 15;
+			this->checkBox_isSameTopology->Text = L"SameTopology\?";
+			this->checkBox_isSameTopology->UseVisualStyleBackColor = true;
+			this->checkBox_isSameTopology->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_isSameTopology_CheckedChanged);
+			// 
+			// groupBox2
+			// 
+			this->groupBox2->Controls->Add(this->numericUpDown_Execution_Condition_End);
+			this->groupBox2->Controls->Add(this->label5);
+			this->groupBox2->Controls->Add(this->numericUpDown_Execution_Condition_Interval);
+			this->groupBox2->Controls->Add(this->label3);
+			this->groupBox2->Controls->Add(this->numericUpDown_Execution_Condition_Start);
+			this->groupBox2->Controls->Add(this->label2);
+			this->groupBox2->Location = System::Drawing::Point(262, 21);
+			this->groupBox2->Name = L"groupBox2";
+			this->groupBox2->Size = System::Drawing::Size(411, 73);
+			this->groupBox2->TabIndex = 13;
+			this->groupBox2->TabStop = false;
+			this->groupBox2->Text = L"Condition(n)";
+			// 
+			// numericUpDown_Execution_Condition_End
+			// 
+			this->numericUpDown_Execution_Condition_End->Location = System::Drawing::Point(135, 32);
+			this->numericUpDown_Execution_Condition_End->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				1000000, 0,
+					0, 0
+			});
+			this->numericUpDown_Execution_Condition_End->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDown_Execution_Condition_End->Name = L"numericUpDown_Execution_Condition_End";
+			this->numericUpDown_Execution_Condition_End->Size = System::Drawing::Size(86, 22);
+			this->numericUpDown_Execution_Condition_End->TabIndex = 12;
+			this->numericUpDown_Execution_Condition_End->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10000, 0, 0, 0 });
+			this->numericUpDown_Execution_Condition_End->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_Execution_Condition_End_ValueChanged);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(226, 36);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(31, 14);
+			this->label5->TabIndex = 11;
+			this->label5->Text = L"End";
+			// 
+			// numericUpDown_Execution_Condition_Interval
+			// 
+			this->numericUpDown_Execution_Condition_Interval->Location = System::Drawing::Point(262, 32);
+			this->numericUpDown_Execution_Condition_Interval->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				100000,
+					0, 0, 0
+			});
+			this->numericUpDown_Execution_Condition_Interval->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				1, 0, 0,
+					0
+			});
+			this->numericUpDown_Execution_Condition_Interval->Name = L"numericUpDown_Execution_Condition_Interval";
+			this->numericUpDown_Execution_Condition_Interval->Size = System::Drawing::Size(76, 22);
+			this->numericUpDown_Execution_Condition_Interval->TabIndex = 10;
+			this->numericUpDown_Execution_Condition_Interval->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				1000, 0,
+					0, 0
+			});
+			this->numericUpDown_Execution_Condition_Interval->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_Execution_Condition_Interval_ValueChanged);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(343, 36);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(56, 14);
+			this->label3->TabIndex = 9;
+			this->label3->Text = L"Interval";
+			// 
+			// numericUpDown_Execution_Condition_Start
+			// 
+			this->numericUpDown_Execution_Condition_Start->Location = System::Drawing::Point(6, 32);
+			this->numericUpDown_Execution_Condition_Start->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				100000, 0,
+					0, 0
+			});
+			this->numericUpDown_Execution_Condition_Start->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDown_Execution_Condition_Start->Name = L"numericUpDown_Execution_Condition_Start";
+			this->numericUpDown_Execution_Condition_Start->Size = System::Drawing::Size(81, 22);
+			this->numericUpDown_Execution_Condition_Start->TabIndex = 8;
+			this->numericUpDown_Execution_Condition_Start->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
+			this->numericUpDown_Execution_Condition_Start->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_Execution_Condition_Start_ValueChanged);
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(92, 34);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(38, 14);
+			this->label2->TabIndex = 7;
+			this->label2->Text = L"Start";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(82, 32);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(108, 14);
+			this->label4->TabIndex = 4;
+			this->label4->Text = L"Execution Times";
+			// 
+			// numericUpDown_Execution_times
+			// 
+			this->numericUpDown_Execution_times->Location = System::Drawing::Point(29, 28);
+			this->numericUpDown_Execution_times->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 256, 0, 0, 0 });
+			this->numericUpDown_Execution_times->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDown_Execution_times->Name = L"numericUpDown_Execution_times";
+			this->numericUpDown_Execution_times->Size = System::Drawing::Size(47, 22);
+			this->numericUpDown_Execution_times->TabIndex = 3;
+			this->numericUpDown_Execution_times->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
+			this->numericUpDown_Execution_times->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_Execution_times_ValueChanged);
 			// 
 			// FormSetting
 			// 
@@ -319,6 +486,7 @@ namespace BeepingModel {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(743, 514);
+			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->groupBox_Parameter);
 			this->Controls->Add(this->groupBox_Drawing);
 			this->Controls->Add(this->btn_cancel);
@@ -342,6 +510,14 @@ namespace BeepingModel {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_NODE_SIZE))->EndInit();
 			this->groupBox_Parameter->ResumeLayout(false);
 			this->groupBox_Parameter->PerformLayout();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
+			this->groupBox2->ResumeLayout(false);
+			this->groupBox2->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_End))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_Interval))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_Start))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_times))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -353,14 +529,15 @@ private: void ReflectDisplay ( ) {
 		this->numericUpDown_channels->Value = this->settings->F;
 		this->numericUpDown_NODE_SIZE->Value = this->settings->NODE_SIZE;
 		this->numericUpDown_PEN_WIDTH->Value = (Decimal)this->settings->PEN_WIDTH;
-		if ( this->settings->AA)
-		{
-			this->checkBox_AA->Checked = true;
-		}
-		if ( this->settings->Can_Draw )
-		{
-			this->checkBox_can_draw->Checked = true;
-		}
+		this->numericUpDown_Execution_times->Value = this->settings->execution_times;
+		this->numericUpDown_Execution_Condition_Start->Value = this->settings->execution_condition[0];
+		this->numericUpDown_Execution_Condition_End->Value = this->settings->execution_condition[1];
+		this->numericUpDown_Execution_Condition_Interval->Value = this->settings->execution_condition[2];
+
+		this->checkBox_AA->Checked = this->settings->AA;
+		this->checkBox_can_draw->Checked = this->settings->Can_Draw;
+		this->checkBox_isSameTopology->Checked = this->settings->isSameTopology;
+
 		switch ( this->settings->topology )
 		{
 		case 0:
@@ -382,24 +559,10 @@ private: System::Void btn_ok_Click(System::Object^  sender, System::EventArgs^  
 		this->Close();
 	}
 private: System::Void checkBox_AA_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-		if( this->checkBox_AA->Checked )
-		{
-			this->settings->AA = true;
-		}
-		else
-		{
-			this->settings->AA = false; 
-		}
+	this->settings->AA = this->checkBox_AA->Checked;
 	}
 private: System::Void checkBox_can_draw_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-		if( this->checkBox_can_draw->Checked )
-		{
-			this->settings->Can_Draw = true;
-		}
-		else
-		{
-			this->settings->Can_Draw = false; 
-		}
+	this->settings->Can_Draw = this->checkBox_can_draw->Checked;
 	}
 private: System::Void numericUpDown_UnitDisk_radius_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 		this->settings->unitdisk_r = (int)this->numericUpDown_UnitDisk_radius->Value;
@@ -425,5 +588,20 @@ private: System::Void listBox_topology_SelectedIndexChanged(System::Object^  /*s
 			this->settings->topology = 1;
 		}
 	}
+private: System::Void numericUpDown_Execution_times_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->execution_times = (unsigned int)this->numericUpDown_Execution_times->Value;
+}
+private: System::Void numericUpDown_Execution_Condition_Start_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->execution_condition[0] = (unsigned int)this->numericUpDown_Execution_Condition_Start->Value;
+}
+private: System::Void numericUpDown_Execution_Condition_End_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->execution_condition[1] = (unsigned int)this->numericUpDown_Execution_Condition_End->Value;
+}
+private: System::Void numericUpDown_Execution_Condition_Interval_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->execution_condition[2] = (unsigned int)this->numericUpDown_Execution_Condition_Interval->Value;
+}
+private: System::Void checkBox_isSameTopology_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->isSameTopology = this->checkBox_isSameTopology->Checked;
+}
 };
 }

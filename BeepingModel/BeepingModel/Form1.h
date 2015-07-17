@@ -570,7 +570,7 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 				this->settings->F = this->controller->F;
 
 				this->visualizer->SetParameter(settings);
-				this->observer->CanDraw = settings->Can_Draw;
+				this->observer->SetCondition(settings);
 				this->visualizer->Draw();
 				this->PrintParam();
 				if ( this->settings->topology == 1 )
@@ -715,6 +715,11 @@ private: void InitSetting () {
 		this->settings->unitdisk_r = 40;
 		this->settings->F = 10;
 		this->settings->topology = 1;
+		this->settings->execution_times = 100;
+		this->settings->execution_condition[0] = 1000;
+		this->settings->execution_condition[1] = 10000;
+		this->settings->execution_condition[2] = 1000;
+		this->settings->isSameTopology = true;
 	}
 private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		FormSetting^ fs = gcnew FormSetting(this->settings);
@@ -722,6 +727,7 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		fs->ShowDialog();
 		if (fs->Cancel())return;
 		settings = fs->GetSetting();
+		this->observer->SetCondition(settings);
 		this->visualizer->Draw();
 		this->PrintParam();
 	}

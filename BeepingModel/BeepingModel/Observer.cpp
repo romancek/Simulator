@@ -15,6 +15,16 @@ Observer::Observer(Controller^ controller, Visualizer^ visualizer, DataManager^ 
 	this->_dmg = datamanager;
 }
 
+void Observer::SetCondition(Settings* settings)
+{
+	this->_can_draw = settings->Can_Draw;
+	this->exec_times = settings->execution_times;
+	this->exec_start = settings->execution_condition[0];
+	this->exec_end = settings->execution_condition[0];
+	this->exec_interval = settings->execution_condition[0];
+	this->same_topology = settings->isSameTopology;
+}
+
 void Observer::Run()
 {
 	while (true)
@@ -86,35 +96,54 @@ bool Observer::isValid()
 void Observer::Simulate()
 {
 	this->_can_draw = false;
-	int n = this->_cnt->N;
-	int m = MAXIMUM_CHANNEL;//n*(n - 1) / 2;
+	for (unsigned int i = exec_start; i <= exec_end; i += exec_interval)
+	{
+		if (this->same_topology)
+		{
+			SimulateWithSame(i);
+		}
+		else
+		{
+			SimulateWithDifferent(i);
+		}
+	}
+}
 
+void Observer::SimulateWithSame(int n)
+{
+	String^ dir = String::Format("n={0}",n);
+	Directory::CreateDirectory(dir);
+	this->_cnt->InitializeGraph(n, MAXIMUM_CHANNEL, 1);
 	/* Simulate in Same Graph */
-	for (int count = 0; count < SIMULATE_COUNT; count++)
+	for (unsigned int count = 0; count < exec_times; count++)
 	{
 		while (true)
 		{
 			this->_cnt->Run();
 			if (DetectTerminate())break;
 		}
-		System::DateTime moment = System::DateTime::Now;
-		String^ path = String::Format("simulation_data_same_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}.json", moment.Year, moment.Month, moment.Day, moment.Hour, moment.Minute, moment.Second);
+		String^ path = String::Format("{0}/same_{1}.json", dir, count);
 		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
 		writer->WriteLine(this->_dmg->OutPutJSONrefController());
 		writer->Close();
 		this->_cnt->Initialize();
 	}
+}
+
+void Observer::SimulateWithDifferent(int n)
+{
+	String^ dir = String::Format("n={0}", n);
+	Directory::CreateDirectory(dir);
 	/* Simulate in Different Graph but n is uniform*/
-	for (int count = 0; count < SIMULATE_COUNT; count++)
+	for (unsigned int count = 0; count < exec_times; count++)
 	{
-		this->_cnt->InitializeGraph(n, m, 1);
+		this->_cnt->InitializeGraph(n, MAXIMUM_CHANNEL, 1);
 		while (true)
 		{
 			this->_cnt->Run();
 			if (DetectTerminate())break;
 		}
-		System::DateTime moment = System::DateTime::Now;
-		String^ path = String::Format("simulation_data_different_{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}.json", moment.Year, moment.Month, moment.Day, moment.Hour, moment.Minute, moment.Second);
+		String^ path = String::Format("{0}/different_{1}.json", dir, count);
 		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
 		writer->WriteLine(this->_dmg->OutPutJSONrefController());
 		writer->Close();

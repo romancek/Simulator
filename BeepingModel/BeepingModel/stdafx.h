@@ -54,6 +54,10 @@ public:
 	bool Can_Draw;		//graph draw
 	unsigned int NODE_SIZE;
 	float PEN_WIDTH;
+	//Simulation Property
+	unsigned int execution_times;
+	unsigned int execution_condition[3];	//0:start,1:end,2:interval
+	bool isSameTopology;
 }Settings;
 
 typedef struct {

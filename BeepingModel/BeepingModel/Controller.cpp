@@ -463,7 +463,7 @@ void Controller::Run_MM()
 		switch (n->current_step)
 		{
 		case -1:
-			n->ActionState == listen;
+			n->ActionState = listen;
 			n->current_ch = -1;
 			break;
 		case 1:
