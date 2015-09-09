@@ -160,6 +160,12 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 		String^ a = String::Format("DrawLine,channel id:{4} , p1[{0},{1}], p2[{2},{3}]", p1[0], p1[1], p2[0], p2[1], ch->Id);
 		//System::Diagnostics::Debug::WriteLine(a);
 #endif
+		//MM color
+		if (n0->NodeState == MM && n1->NodeState == MM && n0->match_ch == n1->match_ch)
+		{
+			grafx->Graphics->DrawLine(this->pen_line_multi[n0->match_ch], p1[0] + NODE_SIZE / 2, p1[1] + NODE_SIZE / 2, p2[0] + NODE_SIZE / 2, p2[1] + NODE_SIZE / 2);
+			continue;
+		}
 
 		if ((n0->ActionState == listen || n0->ActionState == sleep)
 			&& (n1->ActionState == listen || n1->ActionState == sleep)) //silent or sleep

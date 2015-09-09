@@ -62,7 +62,7 @@ void Controller::InitializeGraph(int n, int m, double density)
 	}
 	this->CreateGraph();
 	this->ComputeAttribute();
-	this->RefleshFrequency();
+	this->RefleshFrequency(2 * (this->delta - 1) + 1);
 }
 
 void Controller::Initialize()
@@ -82,7 +82,7 @@ void Controller::ChangeGraph()
 {
 	this->CreateGraph();
 	this->ComputeAttribute();
-	this->RefleshFrequency();
+	this->RefleshFrequency(2 * (this->delta - 1) + 1);
 }
 
 /*
@@ -103,9 +103,9 @@ void Controller::ComputeAttribute()
 	this->delta = maxdegree;
 }
 
-void Controller::RefleshFrequency()
+void Controller::RefleshFrequency(int ch_num)
 {
-	this->F = 2 * (this->delta - 1) + 1;
+	this->F = ch_num;
 	for each(Node^ n in this->nodes)
 	{
 		n->global_freq = this->F;

@@ -546,13 +546,20 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 		{
 			int n = Convert::ToInt32(this->textBox_n->Text,10);
 			int m;
-			if ( this->settings->topology == 1 )
+			if ( this->settings->topology == 1 /*Unit Disk Graph*/)
 			{
-				m = MAXIMUM_CHANNEL;//n*(n-1)/2;
+				if (n >= 1000)
+				{
+					m = MAXIMUM_CHANNEL;//n*(n-1)/2;
+				}
+				else
+				{
+					m = n*(n - 1) / 2;
+				}
 				this->textBox_m->Clear();
 				this->textBox_m->Paste(Convert::ToString(m));
 			}
-			else
+			else /*Random Graph*/
 			{
 				m = Convert::ToInt32(this->textBox_m->Text,10);
 			}
@@ -727,6 +734,11 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 		fs->ShowDialog();
 		if (fs->Cancel())return;
 		settings = fs->GetSetting();
+		if (settings->F != this->controller->F)
+		{
+			this->controller->RefleshFrequency(settings->F);
+			this->visualizer->SetParameter(settings);
+		}
 		this->observer->SetCondition(settings);
 		this->visualizer->Draw();
 		this->PrintParam();

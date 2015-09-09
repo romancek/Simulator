@@ -234,11 +234,11 @@ namespace BeepingModel {
 			// 
 			// numericUpDown_channels
 			// 
-			this->numericUpDown_channels->Location = System::Drawing::Point(30, 111);
-			this->numericUpDown_channels->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 128, 0, 0, 0 });
+			this->numericUpDown_channels->Location = System::Drawing::Point(20, 111);
+			this->numericUpDown_channels->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1024, 0, 0, 0 });
 			this->numericUpDown_channels->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown_channels->Name = L"numericUpDown_channels";
-			this->numericUpDown_channels->Size = System::Drawing::Size(43, 22);
+			this->numericUpDown_channels->Size = System::Drawing::Size(53, 22);
 			this->numericUpDown_channels->TabIndex = 8;
 			this->numericUpDown_channels->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
 			this->numericUpDown_channels->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_channels_ValueChanged);
