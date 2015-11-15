@@ -26,7 +26,8 @@ namespace BeepingModel {
 	private: System::Windows::Forms::CheckBox^  checkBox_can_draw;
 	private: System::Windows::Forms::GroupBox^  groupBox_Drawing;
 	private: System::Windows::Forms::GroupBox^  groupBox_Parameter;
-	private: System::Windows::Forms::GroupBox^  groupBox_Size;
+	private: System::Windows::Forms::GroupBox^  groupBox_LineSize;
+
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_PEN_WIDTH;
 
 
@@ -45,6 +46,18 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_Execution_times;
+	private: System::Windows::Forms::GroupBox^  groupBox_FieldSize;
+
+
+
+	private: System::Windows::Forms::Label^  label_FieldY;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_FieldX;
+
+
+
+	private: System::Windows::Forms::Label^  label_FieldX;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_FieldY;
+
 
 	private: bool cancel;
 	public:
@@ -60,7 +73,7 @@ namespace BeepingModel {
 			return this->settings;
 		}
 		bool Cancel(){
-			return cancel;
+			return this->cancel;
 		}
 	protected:
 		/// <summary>
@@ -106,7 +119,12 @@ namespace BeepingModel {
 			this->numericUpDown_channels = (gcnew System::Windows::Forms::NumericUpDown());
 			this->checkBox_can_draw = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox_Drawing = (gcnew System::Windows::Forms::GroupBox());
-			this->groupBox_Size = (gcnew System::Windows::Forms::GroupBox());
+			this->groupBox_FieldSize = (gcnew System::Windows::Forms::GroupBox());
+			this->numericUpDown_FieldY = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label_FieldY = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown_FieldX = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label_FieldX = (gcnew System::Windows::Forms::Label());
+			this->groupBox_LineSize = (gcnew System::Windows::Forms::GroupBox());
 			this->numericUpDown_PEN_WIDTH = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label_PEN_WIDTH = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown_NODE_SIZE = (gcnew System::Windows::Forms::NumericUpDown());
@@ -126,7 +144,10 @@ namespace BeepingModel {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->BeginInit();
 			this->groupBox_Drawing->SuspendLayout();
-			this->groupBox_Size->SuspendLayout();
+			this->groupBox_FieldSize->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_FieldY))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_FieldX))->BeginInit();
+			this->groupBox_LineSize->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_PEN_WIDTH))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_NODE_SIZE))->BeginInit();
 			this->groupBox_Parameter->SuspendLayout();
@@ -256,7 +277,8 @@ namespace BeepingModel {
 			// 
 			// groupBox_Drawing
 			// 
-			this->groupBox_Drawing->Controls->Add(this->groupBox_Size);
+			this->groupBox_Drawing->Controls->Add(this->groupBox_FieldSize);
+			this->groupBox_Drawing->Controls->Add(this->groupBox_LineSize);
 			this->groupBox_Drawing->Controls->Add(this->checkBox_can_draw);
 			this->groupBox_Drawing->Controls->Add(this->checkBox_AA);
 			this->groupBox_Drawing->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -268,18 +290,71 @@ namespace BeepingModel {
 			this->groupBox_Drawing->TabStop = false;
 			this->groupBox_Drawing->Text = L"Rendering";
 			// 
-			// groupBox_Size
+			// groupBox_FieldSize
 			// 
-			this->groupBox_Size->Controls->Add(this->numericUpDown_PEN_WIDTH);
-			this->groupBox_Size->Controls->Add(this->label_PEN_WIDTH);
-			this->groupBox_Size->Controls->Add(this->numericUpDown_NODE_SIZE);
-			this->groupBox_Size->Controls->Add(this->label_NODE_SIZE);
-			this->groupBox_Size->Location = System::Drawing::Point(225, 13);
-			this->groupBox_Size->Name = L"groupBox_Size";
-			this->groupBox_Size->Size = System::Drawing::Size(224, 69);
-			this->groupBox_Size->TabIndex = 14;
-			this->groupBox_Size->TabStop = false;
-			this->groupBox_Size->Text = L"Size";
+			this->groupBox_FieldSize->Controls->Add(this->numericUpDown_FieldY);
+			this->groupBox_FieldSize->Controls->Add(this->label_FieldY);
+			this->groupBox_FieldSize->Controls->Add(this->numericUpDown_FieldX);
+			this->groupBox_FieldSize->Controls->Add(this->label_FieldX);
+			this->groupBox_FieldSize->Location = System::Drawing::Point(455, 13);
+			this->groupBox_FieldSize->Name = L"groupBox_FieldSize";
+			this->groupBox_FieldSize->Size = System::Drawing::Size(224, 69);
+			this->groupBox_FieldSize->TabIndex = 15;
+			this->groupBox_FieldSize->TabStop = false;
+			this->groupBox_FieldSize->Text = L"Field Size";
+			// 
+			// numericUpDown_FieldY
+			// 
+			this->numericUpDown_FieldY->Location = System::Drawing::Point(115, 26);
+			this->numericUpDown_FieldY->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10000, 0, 0, 0 });
+			this->numericUpDown_FieldY->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDown_FieldY->Name = L"numericUpDown_FieldY";
+			this->numericUpDown_FieldY->Size = System::Drawing::Size(60, 22);
+			this->numericUpDown_FieldY->TabIndex = 13;
+			this->numericUpDown_FieldY->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000, 0, 0, 0 });
+			this->numericUpDown_FieldY->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_FieldY_ValueChanged);
+			// 
+			// label_FieldY
+			// 
+			this->label_FieldY->AutoSize = true;
+			this->label_FieldY->Location = System::Drawing::Point(181, 28);
+			this->label_FieldY->Name = L"label_FieldY";
+			this->label_FieldY->Size = System::Drawing::Size(14, 14);
+			this->label_FieldY->TabIndex = 12;
+			this->label_FieldY->Text = L"y";
+			// 
+			// numericUpDown_FieldX
+			// 
+			this->numericUpDown_FieldX->Location = System::Drawing::Point(11, 26);
+			this->numericUpDown_FieldX->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10000, 0, 0, 0 });
+			this->numericUpDown_FieldX->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDown_FieldX->Name = L"numericUpDown_FieldX";
+			this->numericUpDown_FieldX->Size = System::Drawing::Size(60, 22);
+			this->numericUpDown_FieldX->TabIndex = 11;
+			this->numericUpDown_FieldX->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000, 0, 0, 0 });
+			this->numericUpDown_FieldX->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_FieldX_ValueChanged);
+			// 
+			// label_FieldX
+			// 
+			this->label_FieldX->AutoSize = true;
+			this->label_FieldX->Location = System::Drawing::Point(75, 28);
+			this->label_FieldX->Name = L"label_FieldX";
+			this->label_FieldX->Size = System::Drawing::Size(14, 14);
+			this->label_FieldX->TabIndex = 10;
+			this->label_FieldX->Text = L"x";
+			// 
+			// groupBox_LineSize
+			// 
+			this->groupBox_LineSize->Controls->Add(this->numericUpDown_PEN_WIDTH);
+			this->groupBox_LineSize->Controls->Add(this->label_PEN_WIDTH);
+			this->groupBox_LineSize->Controls->Add(this->numericUpDown_NODE_SIZE);
+			this->groupBox_LineSize->Controls->Add(this->label_NODE_SIZE);
+			this->groupBox_LineSize->Location = System::Drawing::Point(225, 13);
+			this->groupBox_LineSize->Name = L"groupBox_LineSize";
+			this->groupBox_LineSize->Size = System::Drawing::Size(224, 69);
+			this->groupBox_LineSize->TabIndex = 14;
+			this->groupBox_LineSize->TabStop = false;
+			this->groupBox_LineSize->Text = L"Size";
 			// 
 			// numericUpDown_PEN_WIDTH
 			// 
@@ -504,8 +579,12 @@ namespace BeepingModel {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->EndInit();
 			this->groupBox_Drawing->ResumeLayout(false);
 			this->groupBox_Drawing->PerformLayout();
-			this->groupBox_Size->ResumeLayout(false);
-			this->groupBox_Size->PerformLayout();
+			this->groupBox_FieldSize->ResumeLayout(false);
+			this->groupBox_FieldSize->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_FieldY))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_FieldX))->EndInit();
+			this->groupBox_LineSize->ResumeLayout(false);
+			this->groupBox_LineSize->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_PEN_WIDTH))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_NODE_SIZE))->EndInit();
 			this->groupBox_Parameter->ResumeLayout(false);
@@ -529,6 +608,8 @@ private: void ReflectDisplay ( ) {
 		this->numericUpDown_channels->Value = this->settings->F;
 		this->numericUpDown_NODE_SIZE->Value = this->settings->NODE_SIZE;
 		this->numericUpDown_PEN_WIDTH->Value = (Decimal)this->settings->PEN_WIDTH;
+		this->numericUpDown_FieldX->Value = this->settings->Field_Size[0];
+		this->numericUpDown_FieldY->Value = this->settings->Field_Size[1];
 		this->numericUpDown_Execution_times->Value = this->settings->execution_times;
 		this->numericUpDown_Execution_Condition_Start->Value = this->settings->execution_condition[0];
 		this->numericUpDown_Execution_Condition_End->Value = this->settings->execution_condition[1];
@@ -602,6 +683,12 @@ private: System::Void numericUpDown_Execution_Condition_Interval_ValueChanged(Sy
 }
 private: System::Void checkBox_isSameTopology_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 	this->settings->isSameTopology = this->checkBox_isSameTopology->Checked;
+}
+private: System::Void numericUpDown_FieldX_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->Field_Size[0] = (unsigned int)this->numericUpDown_FieldX->Value;
+}
+private: System::Void numericUpDown_FieldY_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->Field_Size[1] = (unsigned int)this->numericUpDown_FieldY->Value;
 }
 };
 }

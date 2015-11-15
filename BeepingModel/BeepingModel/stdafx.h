@@ -54,6 +54,7 @@ public:
 	bool Can_Draw;		//graph draw
 	unsigned int NODE_SIZE;
 	float PEN_WIDTH;
+	unsigned int Field_Size[2];
 	//Simulation Property
 	unsigned int execution_times;
 	unsigned int execution_condition[3];	//0:start,1:end,2:interval

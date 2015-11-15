@@ -38,6 +38,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_F;
 	private: System::Windows::Forms::Button^  btn_simulate;
 	private: System::Windows::Forms::Label^  label_Delta;
+	private: System::Windows::Forms::Label^  label_FieldSize;
 
 
 	private: Settings* settings;
@@ -129,6 +130,7 @@ namespace BeepingModel {
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->btn_simulate = (gcnew System::Windows::Forms::Button());
+			this->label_FieldSize = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -361,6 +363,7 @@ namespace BeepingModel {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label_FieldSize);
 			this->groupBox1->Controls->Add(this->label_Delta);
 			this->groupBox1->Controls->Add(this->label_F);
 			this->groupBox1->Controls->Add(this->label_channels);
@@ -478,6 +481,16 @@ namespace BeepingModel {
 			this->btn_simulate->Text = L"Simulate";
 			this->btn_simulate->UseVisualStyleBackColor = false;
 			this->btn_simulate->Click += gcnew System::EventHandler(this, &Form1::btn_simulate_Click);
+			// 
+			// label_FieldSize
+			// 
+			this->label_FieldSize->AutoSize = true;
+			this->label_FieldSize->ForeColor = System::Drawing::Color::White;
+			this->label_FieldSize->Location = System::Drawing::Point(17, 191);
+			this->label_FieldSize->Name = L"label_FieldSize";
+			this->label_FieldSize->Size = System::Drawing::Size(79, 14);
+			this->label_FieldSize->TabIndex = 15;
+			this->label_FieldSize->Text = L"Field Size : ";
 			// 
 			// Form1
 			// 
@@ -727,6 +740,8 @@ private: void InitSetting () {
 		this->settings->execution_condition[1] = 10000;
 		this->settings->execution_condition[2] = 1000;
 		this->settings->isSameTopology = true;
+		this->settings->Field_Size[0] = this->graph_panel->Size.Width;
+		this->settings->Field_Size[1] = this->graph_panel->Size.Height;
 	}
 private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		FormSetting^ fs = gcnew FormSetting(this->settings);
@@ -739,6 +754,10 @@ private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, S
 			this->controller->RefleshFrequency(settings->F);
 			this->visualizer->SetParameter(settings);
 		}
+		if (settings->Field_Size[0] != this->controller->x || settings->Field_Size[1] != this->controller->y)
+		{
+			this->controller->ResizeField(settings->Field_Size[0], settings->Field_Size[1]);
+		}
 		this->observer->SetCondition(settings);
 		this->visualizer->Draw();
 		this->PrintParam();
@@ -748,6 +767,7 @@ private: System::Void PrintParam() {
 		this->label_radius->Text = String::Format("Radius : {0}",settings->unitdisk_r);
 		this->label_topology->Text = String::Format("Topology : {0}",this->TopologyInt2String(settings->topology));
 		this->label_F->Text = String::Format("F : {0}",settings->F);
+		this->label_FieldSize->Text = String::Format("Field Size : {0},{1}", settings->Field_Size[0], settings->Field_Size[1]);
 	}
 
 private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -795,9 +815,12 @@ private: System::String^ TopologyInt2String(int topology){
  */
 private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
 		this->graph_panel->Size = System::Drawing::Size( this->Width - 210 - 6, this->Height - 120 );
+		this->settings->Field_Size[0] = this->graph_panel->Width;
+		this->settings->Field_Size[1] = this->graph_panel->Height;
 		this->panel1->Size = System::Drawing::Size( 194, this->Height - 120 );
 		this->panel1->Location = System::Drawing::Point( this->Width - 210, 32 );
 		this->controller->ResizeField( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
+		this->PrintParam();
 	}
 };
 }
