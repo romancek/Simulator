@@ -734,6 +734,7 @@ private: void InitSetting () {
 		this->settings->PEN_WIDTH = 0.1f;
 		this->settings->unitdisk_r = 40;
 		this->settings->F = 10;
+		this->settings->Req_Connectivity = true;
 		this->settings->topology = 1;
 		this->settings->execution_times = 100;
 		this->settings->execution_condition[0] = 1000;

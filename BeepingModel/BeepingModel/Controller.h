@@ -14,10 +14,10 @@ namespace BeepingModel{
 	public:
 		int unitdisk_r;
 		int graph_topology;
-		bool updated;
 		int UpperN;
 		int c;
 		int F;	//available number of channels
+		bool request_connectivity;
 	public:
 		int x,y;
 		int channel_num;
@@ -38,6 +38,8 @@ namespace BeepingModel{
 		void CreateRandomEdge(void);
 		void SetRandomizedPosition(void);
 		void SetUnitDiskEdge(void);
+		void GuaranteeConnectivity(void);	//This function only works for UnitDisk
+		bool isConnected(void);
 		double GetNodeDistance(int,int,int,int);
 		void SetGraphParameter(Settings*);
 		unsigned int Random_Device(void);

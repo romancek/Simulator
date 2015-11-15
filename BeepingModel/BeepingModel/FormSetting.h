@@ -57,6 +57,7 @@ namespace BeepingModel {
 
 	private: System::Windows::Forms::Label^  label_FieldX;
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_FieldY;
+	private: System::Windows::Forms::CheckBox^  checkBox_Connected;
 
 
 	private: bool cancel;
@@ -130,6 +131,7 @@ namespace BeepingModel {
 			this->numericUpDown_NODE_SIZE = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label_NODE_SIZE = (gcnew System::Windows::Forms::Label());
 			this->groupBox_Parameter = (gcnew System::Windows::Forms::GroupBox());
+			this->checkBox_Connected = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->checkBox_isSameTopology = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
@@ -401,6 +403,7 @@ namespace BeepingModel {
 			// groupBox_Parameter
 			// 
 			this->groupBox_Parameter->BackColor = System::Drawing::Color::White;
+			this->groupBox_Parameter->Controls->Add(this->checkBox_Connected);
 			this->groupBox_Parameter->Controls->Add(this->numericUpDown_channels);
 			this->groupBox_Parameter->Controls->Add(this->label_channels);
 			this->groupBox_Parameter->Controls->Add(this->label_topology);
@@ -416,6 +419,17 @@ namespace BeepingModel {
 			this->groupBox_Parameter->TabIndex = 11;
 			this->groupBox_Parameter->TabStop = false;
 			this->groupBox_Parameter->Text = L"Graph Property";
+			// 
+			// checkBox_Connected
+			// 
+			this->checkBox_Connected->AutoSize = true;
+			this->checkBox_Connected->Location = System::Drawing::Point(224, 25);
+			this->checkBox_Connected->Name = L"checkBox_Connected";
+			this->checkBox_Connected->Size = System::Drawing::Size(105, 18);
+			this->checkBox_Connected->TabIndex = 16;
+			this->checkBox_Connected->Text = L"Connected \?";
+			this->checkBox_Connected->UseVisualStyleBackColor = true;
+			this->checkBox_Connected->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_Connected_CheckedChanged);
 			// 
 			// groupBox1
 			// 
@@ -439,9 +453,9 @@ namespace BeepingModel {
 			this->checkBox_isSameTopology->AutoSize = true;
 			this->checkBox_isSameTopology->Location = System::Drawing::Point(65, 76);
 			this->checkBox_isSameTopology->Name = L"checkBox_isSameTopology";
-			this->checkBox_isSameTopology->Size = System::Drawing::Size(125, 18);
+			this->checkBox_isSameTopology->Size = System::Drawing::Size(129, 18);
 			this->checkBox_isSameTopology->TabIndex = 15;
-			this->checkBox_isSameTopology->Text = L"SameTopology\?";
+			this->checkBox_isSameTopology->Text = L"SameTopology \?";
 			this->checkBox_isSameTopology->UseVisualStyleBackColor = true;
 			this->checkBox_isSameTopology->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_isSameTopology_CheckedChanged);
 			// 
@@ -618,6 +632,7 @@ private: void ReflectDisplay ( ) {
 		this->checkBox_AA->Checked = this->settings->AA;
 		this->checkBox_can_draw->Checked = this->settings->Can_Draw;
 		this->checkBox_isSameTopology->Checked = this->settings->isSameTopology;
+		this->checkBox_Connected->Checked = this->settings->Req_Connectivity;
 
 		switch ( this->settings->topology )
 		{
@@ -689,6 +704,9 @@ private: System::Void numericUpDown_FieldX_ValueChanged(System::Object^  sender,
 }
 private: System::Void numericUpDown_FieldY_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 	this->settings->Field_Size[1] = (unsigned int)this->numericUpDown_FieldY->Value;
+}
+private: System::Void checkBox_Connected_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->Req_Connectivity = this->checkBox_Connected->Checked;
 }
 };
 }

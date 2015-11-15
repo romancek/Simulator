@@ -7,7 +7,6 @@ Controller::Controller(int x, int y)
 {
 	this->nodes = nullptr;
 	this->channels = nullptr;
-	this->updated = true;
 	this->graph_topology = 0;
 	this->UpperN = 1000;
 	this->c = 3;
@@ -46,7 +45,6 @@ void Controller::InitializeGraph(int n, int m, double density)
 	this->n = n;
 	this->m = m;
 	this->density = density;
-	this->updated = true;
 	this->global_round = 1;
 	nodes = nullptr;
 	channels = nullptr;
@@ -147,6 +145,10 @@ void Controller::CreateUnitDiskGraph(void)
 {
 	this->SetRandomizedPosition();
 	this->SetUnitDiskEdge();
+	if (this->request_connectivity && !this->isConnected())
+	{
+		this->GuaranteeConnectivity();
+	}
 }
 
 void Controller::CreateRandomEdge(void)
@@ -294,6 +296,16 @@ void Controller::SetUnitDiskEdge(void)
 	this->m = channel_num;
 }
 
+void Controller::GuaranteeConnectivity()
+{
+
+}
+
+bool Controller::isConnected()
+{
+	return false;
+}
+
 double Controller::GetNodeDistance(int p1x, int p1y, int p2x, int p2y)
 {
 	return sqrt(pow(fabs(double(p1x-p2x)),2)+pow(fabs(double(p1y-p2y)),2));
@@ -305,6 +317,7 @@ void Controller::SetGraphParameter(Settings* setting)
 	this->unitdisk_r = setting->unitdisk_r;
 	this->F = setting->F;
 	this->NODE_SIZE = setting->NODE_SIZE;
+	this->request_connectivity = setting->Req_Connectivity;
 }
 
 /*
