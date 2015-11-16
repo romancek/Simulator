@@ -18,6 +18,7 @@ namespace BeepingModel{
 		int c;
 		int F;	//available number of channels
 		bool request_connectivity;
+		unsigned int component_num;		//number of components
 	public:
 		int x,y;
 		int channel_num;
@@ -40,6 +41,8 @@ namespace BeepingModel{
 		void SetUnitDiskEdge(void);
 		void GuaranteeConnectivity(void);	//This function only works for UnitDisk
 		bool isConnected(void);
+		unsigned int Traversal(void);
+		void DFS(int,int);
 		double GetNodeDistance(int,int,int,int);
 		void SetGraphParameter(Settings*);
 		unsigned int Random_Device(void);

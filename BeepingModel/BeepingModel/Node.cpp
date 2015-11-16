@@ -32,6 +32,8 @@ Node::Node(int id, int F)
 	this->match_ch = -1;
 	this->slot = nullptr;
 	this->succ_pattern = false;
+	//Using for DFS
+	this->marked = -1;
 }
 
 void Node::BEEP(int ch_num)
@@ -105,4 +107,5 @@ void Node::Reset(int F)
 	this->match_ch = -1;
 	this->slot = nullptr;
 	this->succ_pattern = false;
+	this->marked = -1;
 }

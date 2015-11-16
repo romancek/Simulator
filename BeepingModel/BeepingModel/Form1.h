@@ -39,6 +39,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Button^  btn_simulate;
 	private: System::Windows::Forms::Label^  label_Delta;
 	private: System::Windows::Forms::Label^  label_FieldSize;
+	private: System::Windows::Forms::Label^  label_ComponentNum;
 
 
 	private: Settings* settings;
@@ -122,6 +123,7 @@ namespace BeepingModel {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label_FieldSize = (gcnew System::Windows::Forms::Label());
 			this->label_Delta = (gcnew System::Windows::Forms::Label());
 			this->label_F = (gcnew System::Windows::Forms::Label());
 			this->label_channels = (gcnew System::Windows::Forms::Label());
@@ -130,7 +132,7 @@ namespace BeepingModel {
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->btn_simulate = (gcnew System::Windows::Forms::Button());
-			this->label_FieldSize = (gcnew System::Windows::Forms::Label());
+			this->label_ComponentNum = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -363,6 +365,7 @@ namespace BeepingModel {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label_ComponentNum);
 			this->groupBox1->Controls->Add(this->label_FieldSize);
 			this->groupBox1->Controls->Add(this->label_Delta);
 			this->groupBox1->Controls->Add(this->label_F);
@@ -379,6 +382,16 @@ namespace BeepingModel {
 			this->groupBox1->TabIndex = 13;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Parameter";
+			// 
+			// label_FieldSize
+			// 
+			this->label_FieldSize->AutoSize = true;
+			this->label_FieldSize->ForeColor = System::Drawing::Color::White;
+			this->label_FieldSize->Location = System::Drawing::Point(17, 191);
+			this->label_FieldSize->Name = L"label_FieldSize";
+			this->label_FieldSize->Size = System::Drawing::Size(79, 14);
+			this->label_FieldSize->TabIndex = 15;
+			this->label_FieldSize->Text = L"Field Size : ";
 			// 
 			// label_Delta
 			// 
@@ -482,15 +495,15 @@ namespace BeepingModel {
 			this->btn_simulate->UseVisualStyleBackColor = false;
 			this->btn_simulate->Click += gcnew System::EventHandler(this, &Form1::btn_simulate_Click);
 			// 
-			// label_FieldSize
+			// label_ComponentNum
 			// 
-			this->label_FieldSize->AutoSize = true;
-			this->label_FieldSize->ForeColor = System::Drawing::Color::White;
-			this->label_FieldSize->Location = System::Drawing::Point(17, 191);
-			this->label_FieldSize->Name = L"label_FieldSize";
-			this->label_FieldSize->Size = System::Drawing::Size(79, 14);
-			this->label_FieldSize->TabIndex = 15;
-			this->label_FieldSize->Text = L"Field Size : ";
+			this->label_ComponentNum->AutoSize = true;
+			this->label_ComponentNum->ForeColor = System::Drawing::Color::White;
+			this->label_ComponentNum->Location = System::Drawing::Point(16, 219);
+			this->label_ComponentNum->Name = L"label_ComponentNum";
+			this->label_ComponentNum->Size = System::Drawing::Size(125, 14);
+			this->label_ComponentNum->TabIndex = 16;
+			this->label_ComponentNum->Text = L"Component Num : ";
 			// 
 			// Form1
 			// 
@@ -593,6 +606,7 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 				this->observer->SetCondition(settings);
 				this->visualizer->Draw();
 				this->PrintParam();
+				this->label_ComponentNum->Text = String::Format("Component Num : {0}",this->controller->component_num );
 				if ( this->settings->topology == 1 )
 				{
 					this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);

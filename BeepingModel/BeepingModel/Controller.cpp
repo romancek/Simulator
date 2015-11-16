@@ -145,7 +145,7 @@ void Controller::CreateUnitDiskGraph(void)
 {
 	this->SetRandomizedPosition();
 	this->SetUnitDiskEdge();
-	if (this->request_connectivity && !this->isConnected())
+	if (!this->isConnected() && this->request_connectivity)
 	{
 		this->GuaranteeConnectivity();
 	}
@@ -299,11 +299,44 @@ void Controller::SetUnitDiskEdge(void)
 void Controller::GuaranteeConnectivity()
 {
 
+#ifdef _DEBUG
+	String^ msg = String::Format("{0} subgraphs",this->component_num);
+	MessageBox::Show(msg,"Not Connected Graph",MessageBoxButtons::OK,MessageBoxIcon::Asterisk);
+#endif
 }
 
 bool Controller::isConnected()
 {
-	return false;
+	this->component_num = this->Traversal();
+	if (this->component_num > 1)return false;
+	return true;
+}
+
+unsigned int Controller::Traversal()
+{
+	unsigned int component_number = 0;		//connected group number
+	for (int id = 0; id < this->n;id++)
+	{
+		if (this->nodes[id]->marked != -1)
+		{
+			continue;
+		}
+		else
+		{
+			this->DFS(id,component_number++);
+		}
+	}
+	return component_number;
+}
+
+void Controller::DFS(int source,int gnum)
+{
+	this->nodes[source]->marked = gnum;
+	for each (int neighbor in this->nodes[source]->neighbors)
+	{
+		if (this->nodes[neighbor]->marked != -1)continue;
+		this->DFS(neighbor,gnum);
+	}
 }
 
 double Controller::GetNodeDistance(int p1x, int p1y, int p2x, int p2y)

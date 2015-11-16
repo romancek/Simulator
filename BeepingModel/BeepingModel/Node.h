@@ -19,6 +19,7 @@ namespace BeepingModel{
 		int MIS_state;					// 0:if,1:listen,2:else,3:beep
 		int udk_r;						// UnitDisk radius
 		int candidate;					// matching candidate channel number
+		int marked;						// components number -1:unmarked 0~n-1:marked
 	public:
 		int global_freq;						// 1~F channels
 		cli::array<bool>^ available_freq;		// 1:available, 0:not available	
