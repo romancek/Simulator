@@ -293,16 +293,31 @@ void Controller::SetUnitDiskEdge(void)
 	{
 		this->channels[balanced_ch]->SetEndPoint(-1, -1);
 	}
-	this->m = channel_num;
+	//this->m = channel_num;
 }
 
 void Controller::GuaranteeConnectivity()
 {
-
-#ifdef _DEBUG
-	String^ msg = String::Format("{0} subgraphs",this->component_num);
-	MessageBox::Show(msg,"Not Connected Graph",MessageBoxButtons::OK,MessageBoxIcon::Asterisk);
-#endif
+	for (int count = 0; count < 100;count++)
+	{
+		// init graph structure
+		nodes = nullptr;
+		channels = nullptr;
+		nodes = gcnew array<Node^>(this->n);
+		channels = gcnew array<Channel^>(this->m);
+		for (int i = 0; i < n; i++)
+		{
+			nodes[i] = gcnew Node(i, this->F);
+		}
+		for (int i = 0; i < m; i++)
+		{
+			channels[i] = gcnew Channel(i);
+		}
+		// repositioning 
+		this->SetRandomizedPosition();
+		this->SetUnitDiskEdge();
+		if (this->isConnected())break;
+	}
 }
 
 bool Controller::isConnected()

@@ -49,6 +49,7 @@ namespace BeepingModel {
 			InitializeComponent();
 			InitSetting();
 			this->controller = gcnew Controller( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
+			this->controller->SetGraphParameter(this->settings);
 			this->visualizer = gcnew Visualizer( controller, graph_panel->CreateGraphics() );
 			this->visualizer->SetParameter(this->settings);
 			this->data_manager = gcnew DataManager(this->controller);
@@ -742,13 +743,13 @@ private: bool LoadJsonFile( String^ path ) {
 
 private: void InitSetting () {
 		this->settings = new Settings;
-		this->settings->AA = false;
+		this->settings->AA = true;
 		this->settings->Can_Draw = true;
-		this->settings->NODE_SIZE = 5;
+		this->settings->NODE_SIZE = 1;
 		this->settings->PEN_WIDTH = 0.1f;
-		this->settings->unitdisk_r = 40;
+		this->settings->unitdisk_r = 50;
 		this->settings->F = 10;
-		this->settings->Req_Connectivity = true;
+		this->settings->Req_Connectivity = false;
 		this->settings->topology = 1;
 		this->settings->execution_times = 100;
 		this->settings->execution_condition[0] = 1000;
