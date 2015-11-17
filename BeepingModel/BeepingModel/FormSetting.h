@@ -58,6 +58,9 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_FieldX;
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_FieldY;
 	private: System::Windows::Forms::CheckBox^  checkBox_Connected;
+	private: System::Windows::Forms::GroupBox^  groupBox_CheckConnected;
+	private: System::Windows::Forms::Label^  label_ConnectedCheckNum;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_ConnectedCheckNum;
 
 
 	private: bool cancel;
@@ -143,6 +146,9 @@ namespace BeepingModel {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown_Execution_times = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label_ConnectedCheckNum = (gcnew System::Windows::Forms::Label());
+			this->numericUpDown_ConnectedCheckNum = (gcnew System::Windows::Forms::NumericUpDown());
+			this->groupBox_CheckConnected = (gcnew System::Windows::Forms::GroupBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->BeginInit();
 			this->groupBox_Drawing->SuspendLayout();
@@ -159,6 +165,8 @@ namespace BeepingModel {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_Interval))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_Start))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_times))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_ConnectedCheckNum))->BeginInit();
+			this->groupBox_CheckConnected->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// btn_ok
@@ -403,7 +411,7 @@ namespace BeepingModel {
 			// groupBox_Parameter
 			// 
 			this->groupBox_Parameter->BackColor = System::Drawing::Color::White;
-			this->groupBox_Parameter->Controls->Add(this->checkBox_Connected);
+			this->groupBox_Parameter->Controls->Add(this->groupBox_CheckConnected);
 			this->groupBox_Parameter->Controls->Add(this->numericUpDown_channels);
 			this->groupBox_Parameter->Controls->Add(this->label_channels);
 			this->groupBox_Parameter->Controls->Add(this->label_topology);
@@ -423,11 +431,11 @@ namespace BeepingModel {
 			// checkBox_Connected
 			// 
 			this->checkBox_Connected->AutoSize = true;
-			this->checkBox_Connected->Location = System::Drawing::Point(224, 25);
+			this->checkBox_Connected->Location = System::Drawing::Point(20, 25);
 			this->checkBox_Connected->Name = L"checkBox_Connected";
-			this->checkBox_Connected->Size = System::Drawing::Size(105, 18);
+			this->checkBox_Connected->Size = System::Drawing::Size(75, 18);
 			this->checkBox_Connected->TabIndex = 16;
-			this->checkBox_Connected->Text = L"Connected \?";
+			this->checkBox_Connected->Text = L"Check \?";
 			this->checkBox_Connected->UseVisualStyleBackColor = true;
 			this->checkBox_Connected->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_Connected_CheckedChanged);
 			// 
@@ -569,6 +577,38 @@ namespace BeepingModel {
 			this->numericUpDown_Execution_times->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
 			this->numericUpDown_Execution_times->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_Execution_times_ValueChanged);
 			// 
+			// label_ConnectedCheckNum
+			// 
+			this->label_ConnectedCheckNum->AutoSize = true;
+			this->label_ConnectedCheckNum->Location = System::Drawing::Point(184, 26);
+			this->label_ConnectedCheckNum->Name = L"label_ConnectedCheckNum";
+			this->label_ConnectedCheckNum->Size = System::Drawing::Size(58, 14);
+			this->label_ConnectedCheckNum->TabIndex = 18;
+			this->label_ConnectedCheckNum->Text = L"Try Num";
+			// 
+			// numericUpDown_ConnectedCheckNum
+			// 
+			this->numericUpDown_ConnectedCheckNum->Location = System::Drawing::Point(114, 23);
+			this->numericUpDown_ConnectedCheckNum->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10000, 0, 0, 0 });
+			this->numericUpDown_ConnectedCheckNum->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
+			this->numericUpDown_ConnectedCheckNum->Name = L"numericUpDown_ConnectedCheckNum";
+			this->numericUpDown_ConnectedCheckNum->Size = System::Drawing::Size(64, 22);
+			this->numericUpDown_ConnectedCheckNum->TabIndex = 17;
+			this->numericUpDown_ConnectedCheckNum->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 100, 0, 0, 0 });
+			this->numericUpDown_ConnectedCheckNum->ValueChanged += gcnew System::EventHandler(this, &FormSetting::numericUpDown_ConnectedCheckNum_ValueChanged);
+			// 
+			// groupBox_CheckConnected
+			// 
+			this->groupBox_CheckConnected->Controls->Add(this->label_ConnectedCheckNum);
+			this->groupBox_CheckConnected->Controls->Add(this->numericUpDown_ConnectedCheckNum);
+			this->groupBox_CheckConnected->Controls->Add(this->checkBox_Connected);
+			this->groupBox_CheckConnected->Location = System::Drawing::Point(215, 19);
+			this->groupBox_CheckConnected->Name = L"groupBox_CheckConnected";
+			this->groupBox_CheckConnected->Size = System::Drawing::Size(268, 62);
+			this->groupBox_CheckConnected->TabIndex = 19;
+			this->groupBox_CheckConnected->TabStop = false;
+			this->groupBox_CheckConnected->Text = L"Connectedness Checking";
+			// 
 			// FormSetting
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
@@ -611,6 +651,9 @@ namespace BeepingModel {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_Interval))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_Condition_Start))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_times))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_ConnectedCheckNum))->EndInit();
+			this->groupBox_CheckConnected->ResumeLayout(false);
+			this->groupBox_CheckConnected->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
@@ -633,6 +676,7 @@ private: void ReflectDisplay ( ) {
 		this->checkBox_can_draw->Checked = this->settings->Can_Draw;
 		this->checkBox_isSameTopology->Checked = this->settings->isSameTopology;
 		this->checkBox_Connected->Checked = this->settings->Req_Connectivity;
+		this->numericUpDown_ConnectedCheckNum->Value = this->settings->Check_num;
 
 		switch ( this->settings->topology )
 		{
@@ -707,6 +751,9 @@ private: System::Void numericUpDown_FieldY_ValueChanged(System::Object^  sender,
 }
 private: System::Void checkBox_Connected_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
 	this->settings->Req_Connectivity = this->checkBox_Connected->Checked;
+}
+private: System::Void numericUpDown_ConnectedCheckNum_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->settings->Check_num = (unsigned int)this->numericUpDown_ConnectedCheckNum->Value;
 }
 };
 }

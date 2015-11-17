@@ -50,6 +50,7 @@ public:
 	int topology;		//0:Random, 1:UnitDisk
 	unsigned int F;		//[multicast] available number of channels
 	bool Req_Connectivity;
+	unsigned int Check_num;
 	//Rendering Property
 	bool AA;
 	bool Can_Draw;		//graph draw

@@ -750,6 +750,7 @@ private: void InitSetting () {
 		this->settings->unitdisk_r = 50;
 		this->settings->F = 10;
 		this->settings->Req_Connectivity = false;
+		this->settings->Check_num = 100;
 		this->settings->topology = 1;
 		this->settings->execution_times = 100;
 		this->settings->execution_condition[0] = 1000;

@@ -18,6 +18,7 @@ namespace BeepingModel{
 		int c;
 		int F;	//available number of channels
 		bool request_connectivity;
+		unsigned int connectivity_check_num;
 		unsigned int component_num;		//number of components
 	public:
 		int x,y;

@@ -298,7 +298,7 @@ void Controller::SetUnitDiskEdge(void)
 
 void Controller::GuaranteeConnectivity()
 {
-	for (int count = 0; count < 100;count++)
+	for (int count = 0; count < this->connectivity_check_num;count++)
 	{
 		// init graph structure
 		nodes = nullptr;
@@ -366,6 +366,7 @@ void Controller::SetGraphParameter(Settings* setting)
 	this->F = setting->F;
 	this->NODE_SIZE = setting->NODE_SIZE;
 	this->request_connectivity = setting->Req_Connectivity;
+	this->connectivity_check_num = setting->Check_num;
 }
 
 /*
