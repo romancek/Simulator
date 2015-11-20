@@ -14,6 +14,7 @@ Node::Node(int id, int F)
 {
 	Reset();
 	this->id = id;
+	this->position = nullptr;
 	this->current_step = 1;
 	this->state = "Executing";
 	this->candidate = -1;

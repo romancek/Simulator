@@ -39,6 +39,8 @@ namespace BeepingModel{
 		void CreateUnitDiskGraph(void);	//UnitDisk graph only
 		void CreateRandomEdge(void);
 		void SetRandomizedPosition(void);
+		void SetPositionInUnitDisk(int);
+		bool CanPut(int, int);
 		void SetUnitDiskEdge(void);
 		void GuaranteeConnectivity(void);	//This function only works for UnitDisk
 		bool isConnected(void);

@@ -611,9 +611,12 @@ private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^ 
 				if ( this->settings->topology == 1 )
 				{
 					this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);
-					this->label_Delta->Text = String::Format("Maximum Degree : {0}",this->controller->delta);
-
 				}
+				else
+				{
+					this->label_channels->Text = String::Format("Channels : {0}", this->controller->M);
+				}
+				this->label_Delta->Text = String::Format("Maximum Degree : {0}", this->controller->delta);
 			}
 		}
 	}

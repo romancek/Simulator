@@ -139,6 +139,10 @@ void Controller::CreateRandomGraph(void)
 {
 	this->CreateRandomEdge();
 	this->SetRandomizedPosition();
+	if (!this->isConnected() && this->request_connectivity)
+	{
+		this->GuaranteeConnectivity();
+	}
 }
 
 void Controller::CreateUnitDiskGraph(void)
@@ -207,12 +211,8 @@ void Controller::CreateRandomEdge(void)
 
 void Controller::SetRandomizedPosition(void)
 {
-	using namespace std;
-	int dx=0;
-	int dy=0;
+	int dx, dy;
 	int i = 0;
-	bool selected = false;
-	multimap<int,int> exist_area;
 
 	boost::random_device rd;
 	boost::random::mt19937 gen( rd() );
@@ -221,28 +221,20 @@ void Controller::SetRandomizedPosition(void)
 	
 	while ( i < this->n )
 	{
+		if (this->nodes[i]->position != nullptr)
+		{
+			i++;
+			continue;
+		}
 		dx = distX(gen);
 		dy = distY(gen);
 
-		for (auto exa : exist_area)
-		{
-			if (GetNodeDistance(dx + NODE_SIZE / 2, dy + NODE_SIZE / 2, exa.first + NODE_SIZE / 2, exa.second + NODE_SIZE / 2) < NODE_SIZE)
-			{
-				selected = true;
-				break;
-			}
-			else
-			{
-				selected = false;
-			}
-		}
 		//node not exists
-		if ( !selected )
+		if ( this->CanPut(dx,dy) )
 		{
 			array<int>^ position = {dx,dy};
 			this->nodes[i]->SetPosition(position);
-			exist_area.insert(pair <int, int> (dx, dy));
-			selected = false;
+			//this->SetPositionInUnitDisk(i);
 			i++;
 		}
 		else //node already exists
@@ -250,6 +242,54 @@ void Controller::SetRandomizedPosition(void)
 			continue;
 		}
 	}
+}
+
+void Controller::SetPositionInUnitDisk(int id)
+{
+	boost::random_device rd;
+	boost::random::mt19937 gen(rd());
+	boost::random::uniform_int_distribution<> distRadius(NODE_SIZE, unitdisk_r);
+	boost::random::uniform_int_distribution<> distAngle(0, 360);
+
+	int dr, da, dx, dy;
+	array<int>^ center = this->nodes[id]->GetPosition();
+	int i = 0;
+	int nid;
+	while (i < this->nodes[id]->neighbors.size())
+	{
+		nid = this->nodes[id]->neighbors.at(i);
+		if (this->nodes[nid]->position == nullptr)
+		{
+			dr = distRadius(gen);
+			da = distAngle(gen);
+			dx = dr * cos(Math::PI / 180 * da);
+			dy = dr * sin(Math::PI / 180 * da);
+			if (center[0] + dx + NODE_SIZE > this->x || center[0] + dx < 0 
+				|| center[1] + dy + NODE_SIZE > this->y || center[1] + dy < 0)continue;
+			if (this->CanPut(center[0]+dx, center[1]+dy))
+			{
+				array<int>^ position = { center[0]+dx, center[1]+dy };
+				this->nodes[nid]->SetPosition(position);
+				this->SetPositionInUnitDisk(nid);
+			}
+			else
+			{
+				continue;
+			}
+		}
+		i++;
+	}
+}
+
+bool Controller::CanPut(int x,int y)
+{
+	for each (Node^ n in this->nodes)
+	{
+		array<int>^ pos = n->GetPosition();
+		if (pos == nullptr)continue;
+		if (this->GetNodeDistance(x,y,pos[0],pos[1]) < NODE_SIZE)return false;
+	}
+	return true;
 }
 
 void Controller::SetUnitDiskEdge(void)
@@ -298,7 +338,7 @@ void Controller::SetUnitDiskEdge(void)
 
 void Controller::GuaranteeConnectivity()
 {
-	for (int count = 0; count < this->connectivity_check_num;count++)
+	for (unsigned int count = 0; count < this->connectivity_check_num;count++)
 	{
 		// init graph structure
 		nodes = nullptr;
@@ -314,8 +354,16 @@ void Controller::GuaranteeConnectivity()
 			channels[i] = gcnew Channel(i);
 		}
 		// repositioning 
-		this->SetRandomizedPosition();
-		this->SetUnitDiskEdge();
+		if (graph_topology == 0)
+		{
+			this->CreateRandomEdge();
+			this->SetRandomizedPosition();
+		}
+		else if (graph_topology == 1)
+		{
+			this->SetRandomizedPosition();
+			this->SetUnitDiskEdge();
+		}
 		if (this->isConnected())break;
 	}
 }
