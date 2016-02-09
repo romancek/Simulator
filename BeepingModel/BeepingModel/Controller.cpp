@@ -60,7 +60,7 @@ void Controller::InitializeGraph(int n, int m, double density)
 	}
 	this->CreateGraph();
 	this->ComputeAttribute();
-	int lowerF = 2 * (this->delta - 1) + 1;
+	int lowerF = 3 * (this->delta - 1);
 	this->RefleshFrequency(this->F <  lowerF ? lowerF : this->F);
 }
 
@@ -81,7 +81,7 @@ void Controller::ChangeGraph()
 {
 	this->CreateGraph();
 	this->ComputeAttribute();
-	int lowerF = 2 * (this->delta - 1) + 1;
+	int lowerF = 3 * (this->delta - 1);
 	this->RefleshFrequency(this->F <  lowerF ? lowerF : this->F);
 }
 
