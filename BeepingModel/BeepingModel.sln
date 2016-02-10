@@ -38,17 +38,14 @@ Global
 		{FA0FB00E-DEAA-498E-A6B3-38823FD7E0FA}.Release|Win32.ActiveCfg = Release|Win32
 		{FA0FB00E-DEAA-498E-A6B3-38823FD7E0FA}.Release|Win32.Build.0 = Release|Win32
 		{FA0FB00E-DEAA-498E-A6B3-38823FD7E0FA}.Release|x86.ActiveCfg = Release|Win32
-		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Debug|Win32.ActiveCfg = Debug|x86
-		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Debug|x86.ActiveCfg = Debug|x86
-		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Release|Mixed Platforms.ActiveCfg = Debug|x86
-		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Release|Win32.ActiveCfg = Debug|x86
-		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Release|x86.ActiveCfg = Debug|x86
+		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Debug|Win32.ActiveCfg = Debug
+		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Debug|x86.ActiveCfg = Debug
+		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Release|Mixed Platforms.ActiveCfg = Debug
+		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Release|Win32.ActiveCfg = Debug
+		{0D310163-F99D-40FC-BF30-2E45293F29D2}.Release|x86.ActiveCfg = Debug
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

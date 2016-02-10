@@ -255,7 +255,7 @@ void Visualizer::MakeMultiColors()
 	for (unsigned int i = 0; i <= F;i++)
 	{
 		_color = dist(gen);
-		this->pen_line_multi[i] = gcnew Pen(Color::FromArgb(_color+0xFF000000), PEN_WIDTH);
+		this->pen_line_multi[i] = gcnew Pen(Color::FromArgb(_color+0xFF000000), PEN_WIDTH*5);
 		this->brush_multi[i] = gcnew SolidBrush(Color::FromArgb(_color+0xFF000000));
 	}
 }

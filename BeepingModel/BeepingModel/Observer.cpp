@@ -35,8 +35,9 @@ void Observer::Run()
 		System::Diagnostics::Debug::WriteLine(String::Format("{0}ms/round", t.elapsed()));
 		if ( this->stop )break;
 		if (DetectTerminate())break;
-		Thread::Sleep(_Run_Speed_ms);
+		//Thread::Sleep(_Run_Speed_ms);
 	}
+	this->_vis->Draw();
 }
 
 bool Observer::DetectTerminate()
