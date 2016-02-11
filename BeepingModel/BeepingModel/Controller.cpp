@@ -234,50 +234,12 @@ void Controller::SetRandomizedPosition(void)
 		{
 			array<int>^ position = {dx,dy};
 			this->nodes[i]->SetPosition(position);
-			//this->SetPositionInUnitDisk(i);
 			i++;
 		}
 		else //node already exists
 		{
 			continue;
 		}
-	}
-}
-
-void Controller::SetPositionInUnitDisk(int id)
-{
-	boost::random_device rd;
-	boost::random::mt19937 gen(rd());
-	boost::random::uniform_int_distribution<> distRadius(NODE_SIZE, unitdisk_r);
-	boost::random::uniform_int_distribution<> distAngle(0, 360);
-
-	int dr, da, dx, dy;
-	array<int>^ center = this->nodes[id]->GetPosition();
-	int i = 0;
-	int nid;
-	while (i < this->nodes[id]->neighbors.size())
-	{
-		nid = this->nodes[id]->neighbors.at(i);
-		if (this->nodes[nid]->position == nullptr)
-		{
-			dr = distRadius(gen);
-			da = distAngle(gen);
-			dx = dr * cos(Math::PI / 180 * da);
-			dy = dr * sin(Math::PI / 180 * da);
-			if (center[0] + dx + NODE_SIZE > this->x || center[0] + dx < 0 
-				|| center[1] + dy + NODE_SIZE > this->y || center[1] + dy < 0)continue;
-			if (this->CanPut(center[0]+dx, center[1]+dy))
-			{
-				array<int>^ position = { center[0]+dx, center[1]+dy };
-				this->nodes[nid]->SetPosition(position);
-				this->SetPositionInUnitDisk(nid);
-			}
-			else
-			{
-				continue;
-			}
-		}
-		i++;
 	}
 }
 
