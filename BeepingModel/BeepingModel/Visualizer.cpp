@@ -248,13 +248,10 @@ void Visualizer::MakeMultiColors()
 {
 	this->pen_line_multi = gcnew array<Pen^>(this->F+1);
 	this->brush_multi = gcnew array<SolidBrush^>(this->F+1);
-	boost::random_device rd;
-	boost::random::mt19937 gen(rd());
-	boost::random::uniform_int_distribution<> dist(0, (int)Math::Pow(2,24)-1);
-	int _color;
+	unsigned int _color;
 	for (unsigned int i = 0; i <= F;i++)
 	{
-		_color = dist(gen);
+		_color = (unsigned int)(i*Math::Pow(2,24)/(this->F+1));
 		this->pen_line_multi[i] = gcnew Pen(Color::FromArgb(_color+0xFF000000), PEN_WIDTH*5);
 		this->brush_multi[i] = gcnew SolidBrush(Color::FromArgb(_color+0xFF000000));
 	}
