@@ -4,8 +4,6 @@
 namespace BeepingModel{
 	ref class DataManager
 	{
-	private:
-		picojson::object *obj;
 	public:
 		Controller^ cnt;
 	public:

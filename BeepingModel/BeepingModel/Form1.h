@@ -705,6 +705,8 @@ private: bool SaveCsvFile( String^ path ) {
 	}
 
 private: bool SaveJsonFile( String^ path ) {
+		delete this->data_manager;
+		this->data_manager = gcnew DataManager(this->controller);
 		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
 		writer->WriteLine(this->data_manager->OutPutJSONrefController());
 		writer->Close();

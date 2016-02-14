@@ -6,20 +6,19 @@ using namespace std;
 
 DataManager::DataManager()
 {
-	this->obj = new object;
+	
 }
 
 
 DataManager::DataManager(Controller^ cnt)
 {
-	this->obj = new object;
 	this->cnt = cnt;
 }
 
 
 DataManager::~DataManager()
 {
-	delete this->obj;
+	
 }
 
 
@@ -44,6 +43,7 @@ void DataManager::LoadController(Controller^ cnt)
 
 String^ DataManager::OutPutJSON()
 {
+	object *obj = new object;
 	object *graph = new object;
 	graph->insert(make_pair("D", value((double)(2.55))));
 	graph->insert(make_pair("Global_Round", value((double)(5.55))));
@@ -59,7 +59,7 @@ String^ DataManager::OutPutJSON()
 
 String^ DataManager::OutPutJSONrefController()
 {
-	this->obj = new object;
+	object *obj = new object;
 	object *graph = WriteGraphInfo();
 	array nodes = WriteNodeInfo();
 	//array channels = WriteChannelInfo();
@@ -70,7 +70,7 @@ String^ DataManager::OutPutJSONrefController()
 
 	delete graph;
 	String^ output = gcnew String(value(*obj).serialize().c_str());
-	delete this->obj;
+	delete obj;
 	return output;
 }
 

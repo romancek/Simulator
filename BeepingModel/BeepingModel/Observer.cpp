@@ -123,6 +123,8 @@ void Observer::SimulateWithSame(int n)
 			this->_cnt->Run();
 			if (DetectTerminate())break;
 		}
+		delete this->_dmg;
+		this->_dmg = gcnew DataManager(this->_cnt);
 		String^ path = String::Format("{0}/same_{1}.json", dir, count);
 		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
 		writer->WriteLine(this->_dmg->OutPutJSONrefController());
@@ -144,6 +146,8 @@ void Observer::SimulateWithDifferent(int n)
 			this->_cnt->Run();
 			if (DetectTerminate())break;
 		}
+		delete this->_dmg;
+		this->_dmg = gcnew DataManager(this->_cnt);
 		String^ path = String::Format("{0}/different_{1}.json", dir, count);
 		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
 		writer->WriteLine(this->_dmg->OutPutJSONrefController());
