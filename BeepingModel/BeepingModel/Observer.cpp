@@ -154,3 +154,29 @@ void Observer::SimulateWithDifferent(int n)
 		writer->Close();
 	}
 }
+
+void Observer::Demonstrate()
+{
+	this->stop = false;
+	while (!this->stop)
+	{
+		if (this->stop)break;
+		if (!this->same_topology)
+		{
+			this->_cnt->InitializeGraph(this->_cnt->N, MAXIMUM_CHANNEL, 1);
+		}
+		else
+		{
+			this->_cnt->Initialize();
+		}
+		while (true)
+		{
+			if (this->stop)break;
+			if (_can_draw) this->_vis->Draw();
+			this->_cnt->Run();
+			if (DetectTerminate())break;
+		}
+		this->_vis->Draw();
+		Thread::Sleep(_DrawTerminateState_Interval_ms);
+	}
+}

@@ -228,6 +228,8 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 		{
 			type = 3;
 			grafx->Graphics->FillEllipse(this->brush_multi[n->match_ch], rect);
+			grafx->Graphics->DrawEllipse(this->pen_line_multi[n->match_ch], rect);
+			continue;
 		}
 		else if (n->state == "Terminate")
 		{

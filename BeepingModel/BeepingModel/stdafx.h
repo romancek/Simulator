@@ -21,6 +21,7 @@
 #define _Run_Speed_ms 50 
 #define _MIS_Apper_Stop_ms 5
 #define _CheckInfo_Speed_ms 50
+#define _DrawTerminateState_Interval_ms 5000
 
 /*
  * Algorithm Property

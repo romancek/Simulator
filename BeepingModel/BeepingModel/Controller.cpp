@@ -249,7 +249,7 @@ bool Controller::CanPut(int x,int y)
 	{
 		array<int>^ pos = n->GetPosition();
 		if (pos == nullptr)continue;
-		if (this->GetNodeDistance(x,y,pos[0],pos[1]) < NODE_SIZE)return false;
+		if (this->GetNodeDistance(x,y,pos[0],pos[1]) < NODE_SIZE*this->density)return false;
 	}
 	return true;
 }

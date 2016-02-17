@@ -21,6 +21,7 @@ namespace BeepingModel {
 	private: Observer^ observer;
 	private: DataManager^ data_manager;
 	private: Thread^ Run_Algorithm;
+	private: Thread^ Demo_Algorithm;
 	private: Thread^ UpdateInfo;
 	private: String^ fileName;      // “Ç‚Ý‘‚«ƒtƒ@ƒCƒ‹–¼
 
@@ -40,6 +41,8 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_Delta;
 	private: System::Windows::Forms::Label^  label_FieldSize;
 	private: System::Windows::Forms::Label^  label_ComponentNum;
+	private: System::Windows::Forms::Button^  btn_demo;
+
 
 
 	private: Settings* settings;
@@ -55,6 +58,7 @@ namespace BeepingModel {
 			this->data_manager = gcnew DataManager(this->controller);
 			this->observer = gcnew Observer( this->controller, this->visualizer , this->data_manager);
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
+			this->Demo_Algorithm = gcnew Thread(gcnew ThreadStart(this->observer, &Observer::Demonstrate));
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
 		}
@@ -124,6 +128,7 @@ namespace BeepingModel {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label_ComponentNum = (gcnew System::Windows::Forms::Label());
 			this->label_FieldSize = (gcnew System::Windows::Forms::Label());
 			this->label_Delta = (gcnew System::Windows::Forms::Label());
 			this->label_F = (gcnew System::Windows::Forms::Label());
@@ -133,7 +138,7 @@ namespace BeepingModel {
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->btn_simulate = (gcnew System::Windows::Forms::Button());
-			this->label_ComponentNum = (gcnew System::Windows::Forms::Label());
+			this->btn_demo = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -190,7 +195,7 @@ namespace BeepingModel {
 			// textBox_n
 			// 
 			this->textBox_n->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->textBox_n->Location = System::Drawing::Point(48, 210);
+			this->textBox_n->Location = System::Drawing::Point(48, 221);
 			this->textBox_n->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_n->Name = L"textBox_n";
 			this->textBox_n->Size = System::Drawing::Size(78, 22);
@@ -199,7 +204,7 @@ namespace BeepingModel {
 			// textBox_m
 			// 
 			this->textBox_m->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->textBox_m->Location = System::Drawing::Point(48, 240);
+			this->textBox_m->Location = System::Drawing::Point(48, 251);
 			this->textBox_m->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_m->Name = L"textBox_m";
 			this->textBox_m->Size = System::Drawing::Size(78, 22);
@@ -208,7 +213,7 @@ namespace BeepingModel {
 			// textBox_density
 			// 
 			this->textBox_density->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->textBox_density->Location = System::Drawing::Point(48, 269);
+			this->textBox_density->Location = System::Drawing::Point(48, 280);
 			this->textBox_density->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->textBox_density->Name = L"textBox_density";
 			this->textBox_density->Size = System::Drawing::Size(78, 22);
@@ -222,12 +227,12 @@ namespace BeepingModel {
 			this->btn_set->FlatAppearance->BorderSize = 2;
 			this->btn_set->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btn_set->ForeColor = System::Drawing::Color::White;
-			this->btn_set->Location = System::Drawing::Point(65, 312);
+			this->btn_set->Location = System::Drawing::Point(42, 316);
 			this->btn_set->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_set->Name = L"btn_set";
-			this->btn_set->Size = System::Drawing::Size(46, 26);
+			this->btn_set->Size = System::Drawing::Size(91, 50);
 			this->btn_set->TabIndex = 6;
-			this->btn_set->Text = L"Set";
+			this->btn_set->Text = L"Generation";
 			this->btn_set->UseVisualStyleBackColor = false;
 			this->btn_set->Click += gcnew System::EventHandler(this, &Form1::btn_set_Click);
 			// 
@@ -338,7 +343,7 @@ namespace BeepingModel {
 			// 
 			this->label2->AutoSize = true;
 			this->label2->ForeColor = System::Drawing::Color::White;
-			this->label2->Location = System::Drawing::Point(134, 213);
+			this->label2->Location = System::Drawing::Point(134, 224);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(15, 14);
 			this->label2->TabIndex = 10;
@@ -348,7 +353,7 @@ namespace BeepingModel {
 			// 
 			this->label3->AutoSize = true;
 			this->label3->ForeColor = System::Drawing::Color::White;
-			this->label3->Location = System::Drawing::Point(134, 243);
+			this->label3->Location = System::Drawing::Point(134, 254);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(18, 14);
 			this->label3->TabIndex = 11;
@@ -358,7 +363,7 @@ namespace BeepingModel {
 			// 
 			this->label4->AutoSize = true;
 			this->label4->ForeColor = System::Drawing::Color::White;
-			this->label4->Location = System::Drawing::Point(134, 269);
+			this->label4->Location = System::Drawing::Point(134, 280);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(53, 14);
 			this->label4->TabIndex = 12;
@@ -383,6 +388,16 @@ namespace BeepingModel {
 			this->groupBox1->TabIndex = 13;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Parameter";
+			// 
+			// label_ComponentNum
+			// 
+			this->label_ComponentNum->AutoSize = true;
+			this->label_ComponentNum->ForeColor = System::Drawing::Color::White;
+			this->label_ComponentNum->Location = System::Drawing::Point(16, 219);
+			this->label_ComponentNum->Name = L"label_ComponentNum";
+			this->label_ComponentNum->Size = System::Drawing::Size(125, 14);
+			this->label_ComponentNum->TabIndex = 16;
+			this->label_ComponentNum->Text = L"Component Num : ";
 			// 
 			// label_FieldSize
 			// 
@@ -462,6 +477,7 @@ namespace BeepingModel {
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
 				static_cast<System::Int32>(static_cast<System::Byte>(64)));
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->panel1->Controls->Add(this->btn_demo);
 			this->panel1->Controls->Add(this->btn_simulate);
 			this->panel1->Controls->Add(this->btn_set);
 			this->panel1->Controls->Add(this->label4);
@@ -496,15 +512,23 @@ namespace BeepingModel {
 			this->btn_simulate->UseVisualStyleBackColor = false;
 			this->btn_simulate->Click += gcnew System::EventHandler(this, &Form1::btn_simulate_Click);
 			// 
-			// label_ComponentNum
+			// btn_demo
 			// 
-			this->label_ComponentNum->AutoSize = true;
-			this->label_ComponentNum->ForeColor = System::Drawing::Color::White;
-			this->label_ComponentNum->Location = System::Drawing::Point(16, 219);
-			this->label_ComponentNum->Name = L"label_ComponentNum";
-			this->label_ComponentNum->Size = System::Drawing::Size(125, 14);
-			this->label_ComponentNum->TabIndex = 16;
-			this->label_ComponentNum->Text = L"Component Num : ";
+			this->btn_demo->BackColor = System::Drawing::Color::Transparent;
+			this->btn_demo->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_demo->FlatAppearance->BorderSize = 2;
+			this->btn_demo->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_demo->Font = (gcnew System::Drawing::Font(L"Buxton Sketch", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btn_demo->ForeColor = System::Drawing::Color::Aqua;
+			this->btn_demo->Location = System::Drawing::Point(58, 731);
+			this->btn_demo->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btn_demo->Name = L"btn_demo";
+			this->btn_demo->Size = System::Drawing::Size(63, 34);
+			this->btn_demo->TabIndex = 15;
+			this->btn_demo->Text = L"Demo";
+			this->btn_demo->UseVisualStyleBackColor = false;
+			this->btn_demo->Click += gcnew System::EventHandler(this, &Form1::btn_demo_Click);
 			// 
 			// Form1
 			// 
@@ -750,8 +774,8 @@ private: void InitSetting () {
 		this->settings = new Settings;
 		this->settings->AA = true;
 		this->settings->Can_Draw = true;
-		this->settings->NODE_SIZE = 1;
-		this->settings->PEN_WIDTH = 0.1f;
+		this->settings->NODE_SIZE = 10;
+		this->settings->PEN_WIDTH = 0.5f;
 		this->settings->unitdisk_r = 50;
 		this->settings->F = 10;
 		this->settings->Req_Connectivity = false;
@@ -815,6 +839,14 @@ private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^
 			this->controller->Run();
 			this->visualizer->Draw();
 			this->SetText(String::Format("Global Round : {0}", this->controller->GlobalRound));
+		}
+	}
+
+private: System::Void btn_demo_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (this->observer->Stop)
+		{
+			this->Demo_Algorithm = gcnew Thread(gcnew ThreadStart(this->observer, &Observer::Demonstrate));
+			this->Demo_Algorithm->Start();
 		}
 	}
 

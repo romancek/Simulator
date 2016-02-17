@@ -26,6 +26,7 @@ namespace BeepingModel{
 		bool DetectTerminate();
 		bool isFinished();
 		bool isValid();
+		void Demonstrate();
 
 	public:
 		property bool Stop
