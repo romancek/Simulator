@@ -163,12 +163,13 @@ void Observer::Demonstrate()
 		if (this->stop)break;
 		if (!this->same_topology)
 		{
-			this->_cnt->InitializeGraph(this->_cnt->N, MAXIMUM_CHANNEL, 1);
+			this->_cnt->InitializeGraph(this->_cnt->N, MAXIMUM_CHANNEL, this->_cnt->Density);
 		}
 		else
 		{
 			this->_cnt->Initialize();
 		}
+		this->_vis->Draw();
 		while (true)
 		{
 			if (this->stop)break;
