@@ -26,6 +26,7 @@ namespace BeepingModel{
 		void Draw(void);
 		void DrawSingleChannel(BufferedGraphics^);
 		void DrawMultiChannel(BufferedGraphics^);
+		void DrawOnlyMatchedPair(void);
 		void MakeMultiColors();
 		void Clear(void);
 		void SetParameter(Settings*);

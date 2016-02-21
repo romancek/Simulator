@@ -11,6 +11,7 @@ namespace BeepingModel{
 		unsigned int exec_end;
 		unsigned int exec_interval;
 		bool same_topology;
+		unsigned int algorithm_type;
 	public:
 		Visualizer^ _vis;
 		Controller^ _cnt;

@@ -23,6 +23,7 @@ void Observer::SetCondition(Settings* settings)
 	this->exec_end = settings->execution_condition[1];
 	this->exec_interval = settings->execution_condition[2];
 	this->same_topology = settings->isSameTopology;
+	this->algorithm_type = settings->algorithm_type;
 }
 
 void Observer::Run()
@@ -126,5 +127,10 @@ void Observer::Demonstrate()
 		}
 		this->_vis->Draw();
 		Thread::Sleep(_DrawTerminateState_Interval_ms);
+		if(this->algorithm_type == 1 /* MM */ )
+		{
+			this->_vis->DrawOnlyMatchedPair();
+			Thread::Sleep(_DrawTerminateState_Interval_ms * 3 / 2);
+		}
 	}
 }

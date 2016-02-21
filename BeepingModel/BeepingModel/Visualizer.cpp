@@ -246,6 +246,69 @@ void Visualizer::DrawMultiChannel(BufferedGraphics^ grafx)
 	}
 }
 
+void Visualizer::DrawOnlyMatchedPair()
+{
+	if (this->controller->nodes == nullptr || this->controller->channels == nullptr)return;
+	//Double Buffering
+	BufferedGraphicsContext^ currentContext = BufferedGraphicsManager::Current;
+	BufferedGraphics^ grafx = currentContext->Allocate(this->g, Rectangle(0, 0, this->controller->x, this->controller->y));
+	grafx->Graphics->Clear(Color::White);
+
+	//AA
+	if (this->AA)
+	{
+		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
+	}
+	else
+	{
+		grafx->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::None;
+	}
+
+	//Main Method
+
+	for each(Channel^ ch in this->controller->channels)
+	{
+		array<int>^ ep = ch->EndPoint;
+		if (ep[0] == CH_EMPTY)
+		{
+#ifdef _DEBUG
+			System::Diagnostics::Debug::Fail("Channel has not endpoints node");
+#endif
+		}
+		else if (ep[0] < 0)
+		{
+			continue;
+		}
+
+		Node^ n0 = this->controller->nodes[ep[0]];
+		Node^ n1 = this->controller->nodes[ep[1]];
+
+		array<int>^ p1 = n0->GetPosition();
+		array<int>^ p2 = n1->GetPosition();
+		//MM color
+		if (n0->NodeState == MM && n1->NodeState == MM && n0->match_ch == n1->match_ch)
+		{
+			grafx->Graphics->DrawLine(this->pen_line_multi[n0->match_ch], p1[0] + NODE_SIZE / 2, p1[1] + NODE_SIZE / 2, p2[0] + NODE_SIZE / 2, p2[1] + NODE_SIZE / 2);
+		}
+	}
+
+	for each (Node^ n in this->controller->nodes)
+	{
+		array<int>^ pos = n->GetPosition();
+		Rectangle rect = Rectangle(pos[0], pos[1], NODE_SIZE, NODE_SIZE);
+
+		if (n->NodeState == MM)
+		{
+			grafx->Graphics->FillEllipse(this->brush_multi[n->match_ch], rect);
+			grafx->Graphics->DrawEllipse(this->pen_line_multi[n->match_ch], rect);
+		}
+	}
+
+	//Render & Release Double Buffer
+	grafx->Render();
+	grafx->~BufferedGraphics();
+}
+
 void Visualizer::MakeMultiColors()
 {
 	this->pen_line_multi = gcnew array<Pen^>(this->F+1);
@@ -271,14 +334,14 @@ void Visualizer::SetParameter(Settings* settings)
 	this->PEN_WIDTH = settings->PEN_WIDTH;
 	this->F = settings->F;
 	this->algorithm_type = settings->algorithm_type;
-	if (this->algorithm_type != 1/* not MM */)
-	{
-		this->channel_mode = 0;
-	}
-	else
+	if (this->algorithm_type == 1/* not MM */)
 	{
 		this->channel_mode = 1;
 		this->MakeMultiColors();
+	}
+	else
+	{
+		this->channel_mode = 0;
 	}
 	this->AllocatePens();
 }
