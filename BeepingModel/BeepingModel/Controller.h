@@ -20,7 +20,7 @@ namespace BeepingModel{
 		bool request_connectivity;
 		unsigned int connectivity_check_num;
 		unsigned int component_num;		//number of components
-	public:
+		unsigned int algorithm_type;	//0:MIS,1:MM,2:LE
 		int x,y;
 		int channel_num;
 		int diameter;
@@ -32,7 +32,6 @@ namespace BeepingModel{
 		void InitializeGraph(int);		//remake graph
 		void InitializeGraph(int,int,double);
 		void Initialize(void);			//init node's & channel's value
-		void ChangeGraph(void);
 		void ResizeField(int,int);
 		void CreateGraph();
 		void CreateRandomGraph(void);	//Random graph only
@@ -47,12 +46,17 @@ namespace BeepingModel{
 		void DFS(int,int);
 		double GetNodeDistance(int,int,int,int);
 		void SetGraphParameter(Settings*);
-		unsigned int Random_Device(void);
 		void ComputeAttribute(void);
 		void RefleshFrequency(int);
 		void Run(void);
 		void Run_UpperN(void);
 		void Run_MM(void);
+		void Run_LE(void);
+		bool DetectTerminate();
+		bool isFinished_MM();
+		bool isFinished_MIS();
+		bool isValid_MM();
+		bool isValid_MIS();
 
 		property int N {
 				int get(){return this->n;}

@@ -21,42 +21,6 @@ DataManager::~DataManager()
 	
 }
 
-
-void DataManager::FirstRecord()
-{
-
-}
-
-void DataManager::Record()
-{
-
-}
-
-void DataManager::LoadController(Controller^ cnt)
-{
-
-}
-
-/* 
- * Test OutPut
- */
-
-String^ DataManager::OutPutJSON()
-{
-	object *obj = new object;
-	object *graph = new object;
-	graph->insert(make_pair("D", value((double)(2.55))));
-	graph->insert(make_pair("Global_Round", value((double)(5.55))));
-	graph->insert(make_pair("Radius", value((double)(50))));
-	graph->insert(make_pair("F", value((double)(15))));
-	graph->insert(make_pair("Delta", value((double)(10))));
-	obj->insert(make_pair("N", value((double)(100))));
-	obj->insert(make_pair("M", value((double)(200))));
-	obj->insert(make_pair("GraphInformation", value(*graph)));
-
-	return gcnew String(value(*obj).serialize().c_str());
-}
-
 String^ DataManager::OutPutJSONrefController()
 {
 	object *obj = new object;

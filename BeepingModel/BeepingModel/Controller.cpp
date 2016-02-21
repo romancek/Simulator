@@ -25,21 +25,17 @@ void Controller::InitializeGraph(int topology)
 	channels = gcnew array<Channel^>(this->m);
 	for (int i = 0; i < n; i++)
 	{
-		nodes[i] = gcnew Node(i, this->F);
+		nodes[i] = gcnew Node(i, this->F, this->algorithm_type);
 	}
 	for (int i = 0; i < m; i++)
 	{
 		channels[i] = gcnew Channel(i);
 	}
-#ifdef _DEBUG
-	for each (Node^ n in nodes)
-	{
-		Debug::WriteLine(n->Id);
-	}
-	this->CreateGraph();
-#endif
 }
 
+/*
+Restruct graph
+*/
 void Controller::InitializeGraph(int n, int m, double density)
 {
 	this->n = n;
@@ -52,7 +48,7 @@ void Controller::InitializeGraph(int n, int m, double density)
 	channels = gcnew array<Channel^>(this->m);
 	for (int i = 0; i < n; i++)
 	{
-		nodes[i] = gcnew Node(i, this->F);
+		nodes[i] = gcnew Node(i, this->F, this->algorithm_type);
 	}
 	for (int i = 0; i < m; i++)
 	{
@@ -63,26 +59,21 @@ void Controller::InitializeGraph(int n, int m, double density)
 	int lowerF = 3 * (this->delta - 1);
 	this->RefleshFrequency(this->F <  lowerF ? lowerF : this->F);
 }
-
+/*
+Initialize only nodes and channels
+*/
 void Controller::Initialize()
 {
+	if (this->nodes == nullptr || this->channels == nullptr)return;
 	this->global_round = 1;
 	for each (Node^ n in this->nodes)
 	{
-		n->Reset(this->F);
+		n->Reset(this->F, this->algorithm_type);
 	}
 	for each (Channel^ ch in this->channels)
 	{
 		ch->Reset();
 	}
-}
-
-void Controller::ChangeGraph()
-{
-	this->CreateGraph();
-	this->ComputeAttribute();
-	int lowerF = 3 * (this->delta - 1);
-	this->RefleshFrequency(this->F <  lowerF ? lowerF : this->F);
 }
 
 /*
@@ -105,6 +96,7 @@ void Controller::ComputeAttribute()
 
 void Controller::RefleshFrequency(int ch_num)
 {
+	if (this->nodes == nullptr)return;
 	this->F = ch_num;
 	for each(Node^ n in this->nodes)
 	{
@@ -309,7 +301,7 @@ void Controller::GuaranteeConnectivity()
 		channels = gcnew array<Channel^>(this->m);
 		for (int i = 0; i < n; i++)
 		{
-			nodes[i] = gcnew Node(i, this->F);
+			nodes[i] = gcnew Node(i, this->F, this->algorithm_type);
 		}
 		for (int i = 0; i < m; i++)
 		{
@@ -354,13 +346,13 @@ unsigned int Controller::Traversal()
 	return component_number;
 }
 
-void Controller::DFS(int source,int gnum)
+void Controller::DFS(int source,int cnum)
 {
-	this->nodes[source]->marked = gnum;
+	this->nodes[source]->marked = cnum;
 	for each (int neighbor in this->nodes[source]->neighbors)
 	{
 		if (this->nodes[neighbor]->marked != -1)continue;
-		this->DFS(neighbor,gnum);
+		this->DFS(neighbor,cnum);
 	}
 }
 
@@ -369,56 +361,47 @@ double Controller::GetNodeDistance(int p1x, int p1y, int p2x, int p2y)
 	return sqrt(pow(fabs(double(p1x-p2x)),2)+pow(fabs(double(p1y-p2y)),2));
 }
 
-void Controller::SetGraphParameter(Settings* setting)
+void Controller::SetGraphParameter(Settings* settings)
 {
-	this->graph_topology = setting->topology;
-	this->unitdisk_r = setting->unitdisk_r;
-	this->F = setting->F;
-	this->NODE_SIZE = setting->NODE_SIZE;
-	this->request_connectivity = setting->Req_Connectivity;
-	this->connectivity_check_num = setting->Check_num;
-}
-
-/*
- * Random Value Create with random_device.exe using boost
- */
-unsigned int Controller::Random_Device()
-{
-	ProcessStartInfo^ psi = gcnew ProcessStartInfo( "random_device.exe" );
-	psi->WindowStyle = ProcessWindowStyle::Hidden;
-	Process^ p = Process::Start(psi);
-	p->WaitForExit();
-	unsigned int rd = p->ExitCode;
-	p->Close();
-	return rd;
+	this->graph_topology = settings->topology;
+	this->unitdisk_r = settings->unitdisk_r;
+	this->F = settings->F;
+	this->NODE_SIZE = settings->NODE_SIZE;
+	this->request_connectivity = settings->Req_Connectivity;
+	this->connectivity_check_num = settings->Check_num;
+	this->algorithm_type = settings->algorithm_type;
 }
 
 void Controller::Run(void)
 {
-	//this->Run_UpperN();
-	this->Run_MM();
+	if (this->algorithm_type == 0)
+	{
+		this->Run_UpperN();
+	}
+	else if (this->algorithm_type == 1)
+	{
+		this->Run_MM();
+	}
+	else if (this->algorithm_type == 2)
+	{
+		this->Run_LE();
+	}
 }
 /*
  * Algorithm 1
  */
 void Controller::Run_UpperN(void)
 {
-	using namespace System::Threading;
 	//Adversal Wake-Up
 	boost::random_device rd;
 	boost::random::mt19937 gen( rd() );
-	boost::random::uniform_int_distribution<> dist(0,this->n-1);
-	int i = 0;
-	while(1)
+	for each (Node^ n in this->nodes)
 	{
-		if ( this->n < i )break;
-		int rand_wake_id = dist(gen);
-		if ( this->nodes[rand_wake_id]->NodeState == sleep )
+		if (n->NodeState == sleep)
 		{
-			this->nodes[rand_wake_id]->NodeState = inactive;
+			n->NodeState = inactive;
 			break;
 		}
-		i++;
 	}
 	//First action
 	for each ( Node^ n in this->nodes )
@@ -447,28 +430,28 @@ void Controller::Run_UpperN(void)
 			boost::hellekalek1995 gen( rd() );
 			boost::bernoulli_distribution<> dst( 0.5 );
 			boost::variate_generator< boost::hellekalek1995&, boost::bernoulli_distribution<> > rand( gen, dst );
-			if ( n->next_MIS_state == 0 )
+			if ( n->MIS_state == 0 )
 			{
 				if ( rand() == 1 )
 				{
 					n->ActionState = beeping;
-					n->next_MIS_state = 1;
+					n->MIS_state = 1;
 				}
 				else
 				{
 					n->ActionState = listen;
-					n->next_MIS_state = 3;
+					n->MIS_state = 3;
 				}
 			}
-			else if ( n->next_MIS_state == 1 )
+			else if ( n->MIS_state == 1 )
 			{
 				n->ActionState = listen;
-				n->next_MIS_state = 0;
+				n->MIS_state = 0;
 			}
-			else if ( n->next_MIS_state == 3 )
+			else if ( n->MIS_state == 3 )
 			{
 				n->ActionState = beeping;
-				n->next_MIS_state = 0;
+				n->MIS_state = 0;
 			}
 		}
 	}
@@ -512,10 +495,6 @@ void Controller::Run_UpperN(void)
 			if ( Math::Log(UpperN,2.0) < n->Phase && c*Math::Log(UpperN,2.0) < n->Step )
 			{
 				n->NodeState = MIS;
-#ifdef _DEBUG
-				Debug::WriteLine(String::Format("*****************\n MIS Node appear, ID[{0}],Phase[{1}],Step[{2}] \n*****************",n->Id,n->Phase,n->Step));
-#endif
-				Thread::Sleep(_MIS_Apper_Stop_ms);
 			}
 		}
 		if ( n->NodeState != sleep ) n->Round++;
@@ -802,4 +781,112 @@ void Controller::Run_MM()
 
 	}
 	this->global_round++;
+}
+
+void Controller::Run_LE()
+{
+	for each (Node^ n in this->nodes)
+	{
+		n->Round++;
+	}
+	this->global_round++;
+}
+
+bool Controller::DetectTerminate()
+{
+	if (this->algorithm_type == 0 /* MIS */)
+	{
+		if (isFinished_MIS())
+		{
+			if (!isValid_MIS())
+			{
+				System::Diagnostics::Debug::Fail("Unsatisfy independent");
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+	else if (this->algorithm_type == 1 /* MM */)
+	{
+		if (isFinished_MM())
+		{
+			if (!isValid_MM())
+			{
+				System::Diagnostics::Debug::Fail("Unsatisfy matching");
+			}
+			else
+			{
+				return true;
+			}
+		}		
+	}
+	return false;
+}
+
+bool Controller::isFinished_MM()
+{
+	for each(Node^ n in this->nodes)
+	{
+		if (n->state == "Executing")return false;
+	}
+	return true;
+}
+
+bool Controller::isFinished_MIS()
+{
+	for each(Node^ n in this->nodes)
+	{
+		if (n->NodeState == competing || n->NodeState == sleep){
+			return false;
+		}
+	}
+	return true;
+}
+
+/*
+*	Lonely and at least 1 neighbor is Lonely too -> BAD
+*	MM and at least 2 neighbor is same matching channel -> BAD
+*/
+bool Controller::isValid_MM()
+{
+	for each(Node^ n in this->nodes)
+	{
+		if (n->NodeState == Lonely)
+		{
+			for each(int id in n->neighbors)
+			{
+				if (this->nodes[id]->NodeState == Lonely)return false;
+			}
+		}
+		else if (n->NodeState == MM)
+		{
+			int _num_same_match_ch = 0;
+			for each(int id in n->neighbors)
+			{
+				if (this->nodes[id]->match_ch == n->match_ch)_num_same_match_ch++;
+			}
+			if (_num_same_match_ch > 1 || _num_same_match_ch == 0)return false;
+		}
+	}
+	return true;
+}
+
+/*
+
+*/
+bool Controller::isValid_MIS()
+{
+	for each(Node^ n in this->nodes)
+	{
+		if (n->NodeState == MIS)
+		{
+			for each(int id in n->neighbors)
+			{
+				if (this->nodes[id]->NodeState == MIS)return false;
+			}
+		}
+	}
+	return true;
 }

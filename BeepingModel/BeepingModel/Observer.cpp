@@ -3,13 +3,13 @@ using namespace BeepingModel;
 Observer::Observer(void)
 {
 	this->stop = true;
-	this->_can_draw = true;
+	this->drawing = true;
 }
 
 Observer::Observer(Controller^ controller, Visualizer^ visualizer, DataManager^ datamanager)
 {
 	this->stop = true;
-	this->_can_draw = true;
+	this->drawing = true;
 	this->_cnt = controller;
 	this->_vis = visualizer;
 	this->_dmg = datamanager;
@@ -17,7 +17,7 @@ Observer::Observer(Controller^ controller, Visualizer^ visualizer, DataManager^ 
 
 void Observer::SetCondition(Settings* settings)
 {
-	this->_can_draw = settings->Can_Draw;
+	this->drawing = settings->Drawing;
 	this->exec_times = settings->execution_times;
 	this->exec_start = settings->execution_condition[0];
 	this->exec_end = settings->execution_condition[1];
@@ -31,72 +31,19 @@ void Observer::Run()
 	{
 		this->_cnt->Run();
 		TimeWatch t;
-		if ( _can_draw ) this->_vis->Draw();
+		if ( this->drawing ) this->_vis->Draw();
 		System::Diagnostics::Debug::WriteLine(String::Format("{0}ms/round", t.elapsed()));
 		if ( this->stop )break;
-		if (DetectTerminate())break;
+		if (_cnt->DetectTerminate())break;
 		//Thread::Sleep(_Run_Speed_ms);
 	}
 	this->_vis->Draw();
-}
-
-bool Observer::DetectTerminate()
-{
-	if (isFinished())
-	{
-		if (!isValid())
-		{
-			System::Diagnostics::Debug::Fail("Unsatisfy matching");
-		}
-		else
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Observer::isFinished()
-{
-	for each(Node^ n in this->_cnt->nodes)
-	{
-		if (n->state == "Executing")return false;
-	}
-	return true;
-}
-
-/*
- *	Lonely and at least 1 neighbor is Lonely too -> BAD
- *	MM and at least 2 neighbor is same matching channel -> BAD
- */
-
-bool Observer::isValid()
-{
-	for each(Node^ n in this->_cnt->nodes)
-	{
-		if (n->NodeState == Lonely)
-		{
-			for each(int id in n->neighbors)
-			{
-				if (this->_cnt->nodes[id]->NodeState == Lonely)return false;
-			}
-		}
-		else if (n->NodeState == MM)
-		{
-			int _num_same_match_ch = 0;
-			for each(int id in n->neighbors)
-			{
-				if (this->_cnt->nodes[id]->match_ch == n->match_ch)_num_same_match_ch++;
-			}
-			if (_num_same_match_ch > 1 || _num_same_match_ch == 0)return false;
-		}
-	}
-	return true;
+	this->stop = false;
 }
 
 void Observer::Simulate()
 {
-	this->_can_draw = false;
+	this->drawing = false;
 	for (unsigned int i = exec_start; i <= exec_end; i += exec_interval)
 	{
 		if (this->same_topology)
@@ -121,7 +68,7 @@ void Observer::SimulateWithSame(int n)
 		while (true)
 		{
 			this->_cnt->Run();
-			if (DetectTerminate())break;
+			if (_cnt->DetectTerminate())break;
 		}
 		delete this->_dmg;
 		this->_dmg = gcnew DataManager(this->_cnt);
@@ -144,7 +91,7 @@ void Observer::SimulateWithDifferent(int n)
 		while (true)
 		{
 			this->_cnt->Run();
-			if (DetectTerminate())break;
+			if (_cnt->DetectTerminate())break;
 		}
 		delete this->_dmg;
 		this->_dmg = gcnew DataManager(this->_cnt);
@@ -173,9 +120,9 @@ void Observer::Demonstrate()
 		while (true)
 		{
 			if (this->stop)break;
-			if (_can_draw) this->_vis->Draw();
+			if (this->drawing) this->_vis->Draw();
 			this->_cnt->Run();
-			if (DetectTerminate())break;
+			if (_cnt->DetectTerminate())break;
 		}
 		this->_vis->Draw();
 		Thread::Sleep(_DrawTerminateState_Interval_ms);

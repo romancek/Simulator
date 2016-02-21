@@ -22,5 +22,5 @@ void Channel::SetEndPoint(int v1, int v2)
 
 void Channel::Reset()
 {
-
+	this->state = 0;
 }

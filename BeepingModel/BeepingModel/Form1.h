@@ -43,6 +43,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Label^  label_ComponentNum;
 	private: System::Windows::Forms::Button^  btn_demo;
 	private: System::Windows::Forms::Button^  btn_reset;
+	private: System::Windows::Forms::Label^  label_Algorithm_type;
 
 
 
@@ -138,9 +139,10 @@ namespace BeepingModel {
 			this->label_radius = (gcnew System::Windows::Forms::Label());
 			this->label_ground = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->btn_reset = (gcnew System::Windows::Forms::Button());
 			this->btn_demo = (gcnew System::Windows::Forms::Button());
 			this->btn_simulate = (gcnew System::Windows::Forms::Button());
-			this->btn_reset = (gcnew System::Windows::Forms::Button());
+			this->label_Algorithm_type = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -152,7 +154,7 @@ namespace BeepingModel {
 			this->btn_auto->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_auto->FlatAppearance->BorderSize = 2;
 			this->btn_auto->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_auto->ForeColor = System::Drawing::Color::Gold;
+			this->btn_auto->ForeColor = System::Drawing::Color::White;
 			this->btn_auto->Location = System::Drawing::Point(26, 71);
 			this->btn_auto->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_auto->Name = L"btn_auto";
@@ -168,7 +170,7 @@ namespace BeepingModel {
 			this->btn_step->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_step->FlatAppearance->BorderSize = 2;
 			this->btn_step->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_step->ForeColor = System::Drawing::Color::Gold;
+			this->btn_step->ForeColor = System::Drawing::Color::White;
 			this->btn_step->Location = System::Drawing::Point(26, 22);
 			this->btn_step->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_step->Name = L"btn_step";
@@ -184,7 +186,7 @@ namespace BeepingModel {
 			this->btn_stop->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_stop->FlatAppearance->BorderSize = 2;
 			this->btn_stop->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_stop->ForeColor = System::Drawing::Color::Gold;
+			this->btn_stop->ForeColor = System::Drawing::Color::White;
 			this->btn_stop->Location = System::Drawing::Point(26, 118);
 			this->btn_stop->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_stop->Name = L"btn_stop";
@@ -373,6 +375,7 @@ namespace BeepingModel {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label_Algorithm_type);
 			this->groupBox1->Controls->Add(this->label_ComponentNum);
 			this->groupBox1->Controls->Add(this->label_FieldSize);
 			this->groupBox1->Controls->Add(this->label_Delta);
@@ -499,6 +502,22 @@ namespace BeepingModel {
 			this->panel1->Size = System::Drawing::Size(194, 777);
 			this->panel1->TabIndex = 15;
 			// 
+			// btn_reset
+			// 
+			this->btn_reset->BackColor = System::Drawing::Color::Transparent;
+			this->btn_reset->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_reset->FlatAppearance->BorderSize = 2;
+			this->btn_reset->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_reset->ForeColor = System::Drawing::Color::Gold;
+			this->btn_reset->Location = System::Drawing::Point(112, 71);
+			this->btn_reset->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btn_reset->Name = L"btn_reset";
+			this->btn_reset->Size = System::Drawing::Size(60, 27);
+			this->btn_reset->TabIndex = 16;
+			this->btn_reset->Text = L"Reset";
+			this->btn_reset->UseVisualStyleBackColor = false;
+			this->btn_reset->Click += gcnew System::EventHandler(this, &Form1::btn_reset_Click);
+			// 
 			// btn_demo
 			// 
 			this->btn_demo->BackColor = System::Drawing::Color::Transparent;
@@ -523,7 +542,7 @@ namespace BeepingModel {
 			this->btn_simulate->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
 			this->btn_simulate->FlatAppearance->BorderSize = 2;
 			this->btn_simulate->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_simulate->ForeColor = System::Drawing::Color::Gold;
+			this->btn_simulate->ForeColor = System::Drawing::Color::White;
 			this->btn_simulate->Location = System::Drawing::Point(48, 339);
 			this->btn_simulate->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_simulate->Name = L"btn_simulate";
@@ -533,21 +552,15 @@ namespace BeepingModel {
 			this->btn_simulate->UseVisualStyleBackColor = false;
 			this->btn_simulate->Click += gcnew System::EventHandler(this, &Form1::btn_simulate_Click);
 			// 
-			// btn_reset
+			// label_Algorithm_type
 			// 
-			this->btn_reset->BackColor = System::Drawing::Color::Transparent;
-			this->btn_reset->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
-			this->btn_reset->FlatAppearance->BorderSize = 2;
-			this->btn_reset->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btn_reset->ForeColor = System::Drawing::Color::White;
-			this->btn_reset->Location = System::Drawing::Point(112, 71);
-			this->btn_reset->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
-			this->btn_reset->Name = L"btn_reset";
-			this->btn_reset->Size = System::Drawing::Size(60, 27);
-			this->btn_reset->TabIndex = 16;
-			this->btn_reset->Text = L"Reset";
-			this->btn_reset->UseVisualStyleBackColor = false;
-			this->btn_reset->Click += gcnew System::EventHandler(this, &Form1::btn_reset_Click);
+			this->label_Algorithm_type->AutoSize = true;
+			this->label_Algorithm_type->ForeColor = System::Drawing::Color::White;
+			this->label_Algorithm_type->Location = System::Drawing::Point(17, 250);
+			this->label_Algorithm_type->Name = L"label_Algorithm_type";
+			this->label_Algorithm_type->Size = System::Drawing::Size(75, 14);
+			this->label_Algorithm_type->TabIndex = 17;
+			this->label_Algorithm_type->Text = L"Algorithm :";
 			// 
 			// Form1
 			// 
@@ -581,330 +594,381 @@ namespace BeepingModel {
 		}
 #pragma endregion
 
-private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
-
+	private: 
+		System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 		}
-private: System::Void UpdateDistributedSystem( ){
-		while(1)
-		{
-			if ( this->observer->Stop == false )
+	private:
+		System::Void UpdateDistributedSystem( ){
+			while(1)
 			{
-				this->SetText( String::Format("Global Round : {0}",this->controller->GlobalRound) );
-			}
-			Thread::Sleep(_CheckInfo_Speed_ms);
-		}
-	}
-private: delegate System::Void SetTextDelegate(String^ text);
-private: System::Void SetText( String^ text){
-		if (this->label_ground->InvokeRequired)
-		{	
-			SetTextDelegate^ d = gcnew SetTextDelegate(this, &Form1::SetText);
-			this->Invoke(d, gcnew cli::array<System::Object^> { text });
-		}
-		else
-		{
-			this->label_ground->Text = text;
-		}
-	}
-//TODO AA reset problem
-private: System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
-		if ( this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" )
-		{
-			MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		else
-		{
-			int n = Convert::ToInt32(this->textBox_n->Text,10);
-			int m;
-			if ( this->settings->topology == 1 /*Unit Disk Graph*/)
-			{
-				if (n >= 1000)
+				if ( this->observer->Stop == false )
 				{
-					m = MAXIMUM_CHANNEL;//n*(n-1)/2;
+					this->SetText( String::Format("Global Round : {0}",this->controller->GlobalRound) );
 				}
-				else
-				{
-					m = n*(n - 1) / 2;
-				}
-				this->textBox_m->Clear();
-				this->textBox_m->Paste(Convert::ToString(m));
+				Thread::Sleep(_CheckInfo_Speed_ms);
 			}
-			else /*Random Graph*/
-			{
-				m = Convert::ToInt32(this->textBox_m->Text,10);
-			}
-			//restrict number of edges
-			if ( ((n*(n-1))/2) < m )
-			{
-				MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	private:
+		delegate System::Void SetTextDelegate(String^ text);
+	private:
+		System::Void SetText( String^ text){
+			if (this->label_ground->InvokeRequired)
+			{	
+				SetTextDelegate^ d = gcnew SetTextDelegate(this, &Form1::SetText);
+				this->Invoke(d, gcnew cli::array<System::Object^> { text });
 			}
 			else
 			{
-				double density = Convert::ToDouble(this->textBox_density->Text);
-				if (Math::Pow(2*density*this->settings->NODE_SIZE,2)*n > this->settings->Field_Size[0]*this->settings->Field_Size[1]){
-					MessageBox::Show("n or density or NODE_SIZE is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-					return;
-				}
-				this->controller->SetGraphParameter(settings);
-				this->controller->InitializeGraph( n, m, density);
-				this->settings->F = this->controller->F;
-
-				this->visualizer->SetParameter(settings);
-				this->observer->SetCondition(settings);
-				this->visualizer->Draw();
-				this->PrintParam();
-				this->label_ComponentNum->Text = String::Format("Component Num : {0}",this->controller->component_num );
-				if ( this->settings->topology == 1 )
+				this->label_ground->Text = text;
+			}
+		}
+	//TODO AA reset problem
+	private:
+		System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
+			if ( this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" )
+			{
+				MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			else
+			{
+				int n = Convert::ToInt32(this->textBox_n->Text,10);
+				int m;
+				if ( this->settings->topology == 1 /*Unit Disk Graph*/)
 				{
-					this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);
+					if (n >= 1000)
+					{
+						m = MAXIMUM_CHANNEL;//n*(n-1)/2;
+					}
+					else
+					{
+						m = n*(n - 1) / 2;
+					}
+					this->textBox_m->Clear();
+					this->textBox_m->Paste(Convert::ToString(m));
+				}
+				else /*Random Graph*/
+				{
+					m = Convert::ToInt32(this->textBox_m->Text,10);
+				}
+				//restrict number of edges
+				if ( ((n*(n-1))/2) < m )
+				{
+					MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
 				else
 				{
-					this->label_channels->Text = String::Format("Channels : {0}", this->controller->M);
+					double density = Convert::ToDouble(this->textBox_density->Text);
+					if (Math::Pow(2*density*this->settings->NODE_SIZE,2)*n > this->settings->Field_Size[0]*this->settings->Field_Size[1]){
+						MessageBox::Show("n or density or NODE_SIZE is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+						return;
+					}
+					this->controller->SetGraphParameter(settings);
+					this->controller->InitializeGraph( n, m, density);
+					this->settings->F = this->controller->F;
+
+					this->visualizer->SetParameter(settings);
+					this->observer->SetCondition(settings);
+					this->visualizer->Draw();
+					this->PrintParam();
+					this->label_ComponentNum->Text = String::Format("Component Num : {0}",this->controller->component_num );
+					if ( this->settings->topology == 1 )
+					{
+						this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);
+					}
+					else
+					{
+						this->label_channels->Text = String::Format("Channels : {0}", this->controller->M);
+					}
+					this->label_Delta->Text = String::Format("Maximum Degree : {0}", this->controller->delta);
 				}
-				this->label_Delta->Text = String::Format("Maximum Degree : {0}", this->controller->delta);
 			}
 		}
-	}
 
-private: void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
-		this->label_mouse_position->Text=String::Format("({0},{1})", e->X, e->Y);
-	}
-
-private: void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
-	}
-
-private: System::Void Form1_Closed(System::Object^  sender, System::EventArgs^  e) {
-		this->Close();
-		exit(0);
-	}
-/**
- ** 終了処理
- **/
-private: void Close(){
-		this->Run_Algorithm->Abort();
-		this->UpdateInfo->Abort();
-#ifdef _DEBUG
-		String^ a = String::Format("Thread Abort");
-		System::Diagnostics::Debug::WriteLine(a);
-#endif
-	}
-
-private: System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e) {
-		this->openFileDialog1->Title = L"Open File";
-
-		if (openFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK ) return;
-
-		if ( OpenFile( openFileDialog1->FileName ) == false )
-		{
-			MessageBox::Show("ファイルの読み込みに失敗しました", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			return;
-		}
-		this->fileName = openFileDialog1->FileName;
-	}
-
-private: System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
-		this->saveFileDialog1->Title = L"Save File";
-
-		if ( saveFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK ) return;
-
-		if (SaveFile(saveFileDialog1->FileName) == false)
-		{
-			MessageBox::Show("ファイル名を入力してください", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			return;
+	private: 
+		void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
+			this->label_mouse_position->Text=String::Format("(x,y)=({0},{1})", e->X, e->Y);
 		}
 
-		SaveFile( saveFileDialog1->FileName );
-		this->fileName = saveFileDialog1->FileName;
-	}
-
-/**
- ** Save File
- **/
-private: bool SaveFile( String^ path ) {
-		if ( path->EndsWith(".csv") )
-		{
-			// CSV形式で保存
-			return SaveCsvFile( path );
+	private: 
+		void graph_panel_Paint( Object^ sender, System::Windows::Forms::PaintEventArgs^ e ){
 		}
-		else if ( path->EndsWith(".json") )
-		{
-			// JSON形式で保存
-			return SaveJsonFile( path );
+
+	private:
+		System::Void Form1_Closed(System::Object^  sender, System::EventArgs^  e) {
+			this->Close();
+			exit(0);
 		}
-		else if ( path->EndsWith(".png") )
-		{
-			return SavePngFile( path );
+	/**
+	 ** 終了処理
+	 **/
+	private:
+		void Close(){
+			this->Run_Algorithm->Abort();
+			this->UpdateInfo->Abort();
+		#ifdef _DEBUG
+			String^ a = String::Format("Thread Abort");
+			System::Diagnostics::Debug::WriteLine(a);
+		#endif
 		}
-		else
-		{
-			// その他の場合はCSV形式で保存
-			return SaveCsvFile( path );
+
+	private:
+		System::Void Form1_Open(System::Object^  sender, System::EventArgs^  e) {
+			this->openFileDialog1->Title = L"Open File";
+
+			if (openFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK ) return;
+
+			if ( OpenFile( openFileDialog1->FileName ) == false )
+			{
+				MessageBox::Show("ファイルの読み込みに失敗しました", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			this->fileName = openFileDialog1->FileName;
 		}
-	}
 
-private: bool SaveCsvFile( String^ path ) {
-		StreamWriter^ writer = gcnew StreamWriter( path, false,System::Text::Encoding::GetEncoding("UTF-8"));
-		writer->WriteLine("THIS,IS,TEST,WRITE,FILE");
-		writer->Close();
-		return true;
-	}
+	private:
+		System::Void Form1_FileSave(System::Object^  sender, System::EventArgs^  e) {
+			this->saveFileDialog1->Title = L"Save File";
 
-private: bool SaveJsonFile( String^ path ) {
-		delete this->data_manager;
-		this->data_manager = gcnew DataManager(this->controller);
-		StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
-		writer->WriteLine(this->data_manager->OutPutJSONrefController());
-		writer->Close();
-		return true;
-	}
+			if ( saveFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::OK ) return;
 
-private: bool SavePngFile( String^ path ) {
-		return true;
-	}
+			if (SaveFile(saveFileDialog1->FileName) == false)
+			{
+				MessageBox::Show("ファイル名を入力してください", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
 
-/**
- ** Open File
- **/
-private: bool OpenFile( String^ path ) {
-		if ( path->EndsWith(".csv"))
-		{
-			// CSV形式で開く
-			return LoadCsvFile( path );
+			SaveFile( saveFileDialog1->FileName );
+			this->fileName = saveFileDialog1->FileName;
 		}
-		else if ( path->EndsWith(".json") )
-		{
-			// JSON形式で開く
-			return LoadJsonFile( path );
+
+	/**
+	 ** Save File
+	 **/
+	private:
+		bool SaveFile( String^ path ) {
+			if ( path->EndsWith(".csv") )
+			{
+				// CSV形式で保存
+				return SaveCsvFile( path );
+			}
+			else if ( path->EndsWith(".json") )
+			{
+				// JSON形式で保存
+				return SaveJsonFile( path );
+			}
+			else if ( path->EndsWith(".png") )
+			{
+				return SavePngFile( path );
+			}
+			else
+			{
+				// その他の場合はCSV形式で保存
+				return SaveCsvFile( path );
+			}
 		}
-		else
-		{
-			// その他の場合はCSV形式で開く
-			return LoadCsvFile( path );
+
+	private:
+		bool SaveCsvFile( String^ path ) {
+			StreamWriter^ writer = gcnew StreamWriter( path, false,System::Text::Encoding::GetEncoding("UTF-8"));
+			writer->WriteLine("THIS,IS,TEST,WRITE,FILE");
+			writer->Close();
+			return true;
 		}
-	}
 
-private: bool LoadCsvFile( String^ path ) {
-		return true;
-	}
+	private:
+		bool SaveJsonFile( String^ path ) {
+			delete this->data_manager;
+			this->data_manager = gcnew DataManager(this->controller);
+			StreamWriter^ writer = gcnew StreamWriter(path, false, System::Text::Encoding::GetEncoding("UTF-8"));
+			writer->WriteLine(this->data_manager->OutPutJSONrefController());
+			writer->Close();
+			return true;
+		}
 
-private: bool LoadJsonFile( String^ path ) {
-		return true;
-	}
+	private:
+		bool SavePngFile( String^ path ) {
+			return true;
+		}
 
-private: void InitSetting () {
-		this->settings = new Settings;
-		this->settings->AA = true;
-		this->settings->Can_Draw = true;
-		this->settings->NODE_SIZE = 10;
-		this->settings->PEN_WIDTH = 0.5f;
-		this->settings->unitdisk_r = 50;
-		this->settings->F = 10;
-		this->settings->Req_Connectivity = false;
-		this->settings->Check_num = 100;
-		this->settings->topology = 1;
-		this->settings->execution_times = 100;
-		this->settings->execution_condition[0] = 1000;
-		this->settings->execution_condition[1] = 10000;
-		this->settings->execution_condition[2] = 1000;
-		this->settings->isSameTopology = true;
-		this->settings->Field_Size[0] = this->graph_panel->Size.Width;
-		this->settings->Field_Size[1] = this->graph_panel->Size.Height;
-	}
-private: System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-		FormSetting^ fs = gcnew FormSetting(this->settings);
+	/**
+	 ** Open File
+	 **/
+	private:
+		bool OpenFile( String^ path ) {
+			if ( path->EndsWith(".csv"))
+			{
+				// CSV形式で開く
+				return LoadCsvFile( path );
+			}
+			else if ( path->EndsWith(".json") )
+			{
+				// JSON形式で開く
+				return LoadJsonFile( path );
+			}
+			else
+			{
+				// その他の場合はCSV形式で開く
+				return LoadCsvFile( path );
+			}
+		}
+
+	private:
+		bool LoadCsvFile( String^ path ) {
+			return true;
+		}
+
+	private:
+		bool LoadJsonFile( String^ path ) {
+			return true;
+		}
+
+	private:
+		void InitSetting () {
+			this->settings = new Settings;
+			this->settings->AA = true;
+			this->settings->Drawing = true;
+			this->settings->NODE_SIZE = 10;
+			this->settings->PEN_WIDTH = 0.5f;
+			this->settings->unitdisk_r = 50;
+			this->settings->F = 10;
+			this->settings->Req_Connectivity = false;
+			this->settings->Check_num = 100;
+			this->settings->topology = 1;
+			this->settings->algorithm_type = 1;
+			this->settings->execution_times = 100;
+			this->settings->execution_condition[0] = 1000;
+			this->settings->execution_condition[1] = 10000;
+			this->settings->execution_condition[2] = 1000;
+			this->settings->isSameTopology = true;
+			this->settings->Field_Size[0] = this->graph_panel->Size.Width;
+			this->settings->Field_Size[1] = this->graph_panel->Size.Height;
+		}
+	private:
+		System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			FormSetting^ fs = gcnew FormSetting(this->settings);
 				
-		fs->ShowDialog();
-		if (fs->Cancel())return;
-		settings = fs->GetSetting();
-		if (settings->F != this->controller->F)
-		{
+			fs->ShowDialog();
+			if (fs->Cancel())return;
+			settings = fs->GetSetting();
+			if (settings->algorithm_type != this->controller->algorithm_type)
+			{
+				this->controller->Initialize();
+			}
 			this->controller->RefleshFrequency(settings->F);
 			this->visualizer->SetParameter(settings);
-		}
-		if (settings->Field_Size[0] != this->controller->x || settings->Field_Size[1] != this->controller->y)
-		{
-			this->controller->ResizeField(settings->Field_Size[0], settings->Field_Size[1]);
-		}
-		this->observer->SetCondition(settings);
-		this->visualizer->Draw();
-		this->PrintParam();
-	}
-
-private: System::Void PrintParam() {
-		this->label_radius->Text = String::Format("Radius : {0}",settings->unitdisk_r);
-		this->label_topology->Text = String::Format("Topology : {0}",this->TopologyInt2String(settings->topology));
-		this->label_F->Text = String::Format("F : {0}",settings->F);
-		this->label_FieldSize->Text = String::Format("Field Size : {0},{1}", settings->Field_Size[0], settings->Field_Size[1]);
-	}
-
-private: System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
-		if ( this->observer->Stop )
-		{
-			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run ) );
-			this->Run_Algorithm->Start();
-		}
-		this->observer->Stop = false;
-	}
-
- private: System::Void btn_simulate_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->observer->Simulate();
-	}
-
-private: System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->observer->Stop = true;
-	}
-
-private: System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
-		if ( this->observer->Stop )
-		{
-			this->controller->Run();
+			if (settings->Field_Size[0] != this->controller->x || settings->Field_Size[1] != this->controller->y)
+			{
+				this->controller->ResizeField(settings->Field_Size[0], settings->Field_Size[1]);
+			}
+			this->controller->SetGraphParameter(settings);
+			this->observer->SetCondition(settings);
 			this->visualizer->Draw();
-			this->SetText(String::Format("Global Round : {0}", this->controller->GlobalRound));
+			this->PrintParam();
 		}
-	}
 
-private: System::Void btn_reset_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->controller->Initialize();
-		this->visualizer->Draw();
-		this->observer->Stop = true;
-}
+	private:
+		System::Void PrintParam() {
+			this->label_radius->Text = String::Format("Radius : {0}",settings->unitdisk_r);
+			this->label_topology->Text = String::Format("Topology : {0}",this->TopologyInt2String(settings->topology));
+			this->label_F->Text = String::Format("F : {0}",settings->F);
+			this->label_FieldSize->Text = String::Format("Field Size : {0},{1}", settings->Field_Size[0], settings->Field_Size[1]);
+			this->label_Algorithm_type->Text = String::Format("Algorithm : {0}", AlgorithmUIntToString(settings->algorithm_type));
+		}
+
+	private:
+		System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
+			if ( this->observer->Stop )
+			{
+				this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run ) );
+				this->Run_Algorithm->Start();
+			}
+			this->observer->Stop = false;
+		}
+
+	 private:
+		 System::Void btn_simulate_Click(System::Object^  sender, System::EventArgs^  e) {
+			this->observer->Simulate();
+		}
+
+	private:
+		System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
+			this->observer->Stop = true;
+		}
+
+	private:
+		System::Void btn_step_Click(System::Object^  sender, System::EventArgs^  e) {
+			if ( this->observer->Stop )
+			{
+				this->controller->Run();
+				this->visualizer->Draw();
+				this->SetText(String::Format("Global Round : {0}", this->controller->GlobalRound));
+			}
+		}
+
+	private:
+		System::Void btn_reset_Click(System::Object^  sender, System::EventArgs^  e) {
+			this->controller->Initialize();
+			this->visualizer->Draw();
+			this->observer->Stop = true;
+		}
 
 
-private: System::Void btn_demo_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (this->observer->Stop)
-		{
-			this->Demo_Algorithm = gcnew Thread(gcnew ThreadStart(this->observer, &Observer::Demonstrate));
-			this->Demo_Algorithm->Start();
+	private:
+		System::Void btn_demo_Click(System::Object^  sender, System::EventArgs^  e) {
+			if (this->observer->Stop)
+			{
+				this->Demo_Algorithm = gcnew Thread(gcnew ThreadStart(this->observer, &Observer::Demonstrate));
+				this->Demo_Algorithm->Start();
+			}
 		}
-	}
 
-private: System::String^ TopologyInt2String(int topology){
-		if ( topology == 0 )
-		{
-			return "Random";
+	private:
+		System::String^ TopologyInt2String(int topology){
+			if ( topology == 0 )
+			{
+				return "Random";
+			}
+			else if ( topology == 1 )
+			{
+				return "UnitDisk";
+			}
+			else
+			{
+				return "None";
+			}
 		}
-		else if ( topology == 1 )
-		{
-			return "UnitDisk";
+	private: 
+		System::String^ AlgorithmUIntToString(unsigned int algorithm_type){
+			if (algorithm_type == 0)
+			{
+				return "MIS";
+			}
+			else if (algorithm_type == 1)
+			{
+				return "MM";
+			}
+			else if (algorithm_type == 2)
+			{
+				return "LE";
+			}
+			else
+			{
+				return "None";
+			}
 		}
-		else
-		{
-			return "None";
+	/*
+	 * Dynamic Layout
+	 */
+	private:
+		System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
+			this->graph_panel->Size = System::Drawing::Size( this->Width - 210 - 6, this->Height - 120 );
+			this->settings->Field_Size[0] = this->graph_panel->Width;
+			this->settings->Field_Size[1] = this->graph_panel->Height;
+			this->panel1->Size = System::Drawing::Size( 194, this->Height - 120 );
+			this->panel1->Location = System::Drawing::Point( this->Width - 210, 32 );
+			this->controller->ResizeField( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
+			this->PrintParam();
 		}
-	}
-/*
- * Dynamic Layout
- */
-private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
-		this->graph_panel->Size = System::Drawing::Size( this->Width - 210 - 6, this->Height - 120 );
-		this->settings->Field_Size[0] = this->graph_panel->Width;
-		this->settings->Field_Size[1] = this->graph_panel->Height;
-		this->panel1->Size = System::Drawing::Size( 194, this->Height - 120 );
-		this->panel1->Location = System::Drawing::Point( this->Width - 210, 32 );
-		this->controller->ResizeField( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
-		this->PrintParam();
-	}
-};
+	};
 }
 

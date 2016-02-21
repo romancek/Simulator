@@ -270,7 +270,8 @@ void Visualizer::SetParameter(Settings* settings)
 	this->NODE_SIZE = settings->NODE_SIZE;
 	this->PEN_WIDTH = settings->PEN_WIDTH;
 	this->F = settings->F;
-	if (this->F == 1)
+	this->algorithm_type = settings->algorithm_type;
+	if (this->algorithm_type != 1/* not MM */)
 	{
 		this->channel_mode = 0;
 	}

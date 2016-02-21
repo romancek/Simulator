@@ -10,7 +10,7 @@ Node::Node(void)
 	this->current_ch = 0;
 }
 
-Node::Node(int id, int F)
+Node::Node(int id, int F, unsigned int alg_type)
 {
 	Reset();
 	this->id = id;
@@ -21,7 +21,6 @@ Node::Node(int id, int F)
 	this->neighbors.clear();
 	this->channels.clear();
 	this->local_round = 1;
-	this->states = gcnew array<int>{sleep,Lonely,silent};
 	this->MIS_state = 0;
 	this->udk_r = UDK_R;
 	//Multi-Channel Mode
@@ -35,6 +34,23 @@ Node::Node(int id, int F)
 	this->succ_pattern = false;
 	//Using for DFS
 	this->marked = -1;
+	//use different states for each algorithm
+	unsigned int act, node, lsn;
+	switch (alg_type){
+	case 0: //MIS
+		act = sleep, node = sleep, lsn = silent;
+		break;
+	case 1: //MM
+		act = sleep, node = Lonely, lsn = silent;
+		break;
+	case 2: //LE
+		act = sleep, node = sleep, lsn = silent;
+		break;
+	default:
+		act = sleep, node = sleep, lsn = silent;
+		break;
+	}
+	this->states = gcnew array<int>{act,node,lsn};
 }
 
 void Node::BEEP(int ch_num)
@@ -88,7 +104,7 @@ void Node::Reset()
 	this->step = 1;
 }
 
-void Node::Reset(int F)
+void Node::Reset(int F,unsigned int alg_type)
 {
 	this->listenround = 1;
 	this->phase = 1;
@@ -98,7 +114,6 @@ void Node::Reset(int F)
 	this->state = "Executing";
 	this->candidate = -1;
 	this->local_round = 1;
-	this->states = gcnew array<int>{sleep, Lonely, silent};
 	this->MIS_state = 0;
 	//Multi-Channel Mode
 	this->global_freq = F;
@@ -109,4 +124,21 @@ void Node::Reset(int F)
 	this->slot = nullptr;
 	this->succ_pattern = false;
 	this->marked = -1;
+	//use different states for each algorithm
+	unsigned int act, node, lsn;
+	switch (alg_type){
+	case 0: //MIS
+		act = sleep, node = sleep, lsn = silent;
+		break;
+	case 1: //MM
+		act = sleep, node = Lonely, lsn = silent;
+		break;
+	case 2: //LE
+		act = sleep, node = sleep, lsn = silent;
+		break;
+	default:
+		act = sleep, node = sleep, lsn = silent;
+		break;
+	}
+	this->states = gcnew array<int>{act, node, lsn};
 }

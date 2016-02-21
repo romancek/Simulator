@@ -19,6 +19,7 @@ namespace BeepingModel{
 		int NODE_SIZE;
 		float PEN_WIDTH;
 		unsigned int F;
+		unsigned int algorithm_type;
 	public:
 		Visualizer(void);
 		Visualizer(Controller^,Graphics^);
