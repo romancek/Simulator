@@ -1,6 +1,6 @@
-Simulator
+Distributed Beeping Model Simulator
 =========
-This is simulate the distributed system.
+This is simulate the distributed beep networks.
 
 Node has any algorithms and channels.
 These nodes synchronous wake up.
@@ -20,11 +20,21 @@ These nodes synchronous wake up.
 
 
 # Demo
+
+##Input Graph
+`n=500,UnitDiskGraph,radius=50`
+
+![InputGraph](https://github.com/romancek/Simulator/blob/master/Fig/n500.png)
+
+## Randomized Maximal Independent Set Algorithm
+
+![MIS](https://github.com/romancek/Simulator/blob/master/Fig/mis_n500_fin.png)
+
 ## Randomized Maximal Matching Algorithm
 
-![MM Algorithm](https://github.com/romancek/Simulator/blob/master/Fig/mm_n500.png)
+![MM](https://github.com/romancek/Simulator/blob/master/Fig/mm_n500_fin.png)
 
-![MM_Matched](https://github.com/romancek/Simulator/blob/master/Fig/mm_n500_matched.png)
+#Settings
 
 ![Settings](https://github.com/romancek/Simulator/blob/master/Fig/settings.png)
 
