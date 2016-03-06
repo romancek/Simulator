@@ -63,6 +63,7 @@ public:
 	unsigned int execution_condition[3];	//0:start,1:end,2:interval
 	bool isSameTopology;
 	unsigned int algorithm_type;	//0:MIS_upperN,1:MM2:LeaderElection
+	bool simulation_mode;			//true:simulation,false:don't simulate
 }Settings;
 
 typedef struct {

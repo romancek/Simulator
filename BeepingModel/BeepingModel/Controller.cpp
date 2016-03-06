@@ -14,6 +14,7 @@ Controller::Controller(int x, int y)
 	this->x = x;
 	this->y = y;
 	this->F = 1;
+	this->isExecution = false;
 }
 
 void Controller::InitializeGraph(int topology)
@@ -42,6 +43,7 @@ void Controller::InitializeGraph(int n, int m, double density)
 	this->m = m;
 	this->density = density;
 	this->global_round = 1;
+	this->isExecution = false;
 	nodes = nullptr;
 	channels = nullptr;
 	nodes = gcnew array<Node^>(this->n);
@@ -64,6 +66,7 @@ Initialize only nodes and channels
 */
 void Controller::Initialize()
 {
+	this->isExecution = false;
 	if (this->nodes == nullptr || this->channels == nullptr)return;
 	this->global_round = 1;
 	for each (Node^ n in this->nodes)
@@ -374,6 +377,7 @@ void Controller::SetGraphParameter(Settings* settings)
 
 void Controller::Run(void)
 {
+	this->isExecution = true;
 	if (this->algorithm_type == 0)
 	{
 		this->Run_UpperN();

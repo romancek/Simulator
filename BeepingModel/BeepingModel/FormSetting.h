@@ -63,6 +63,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown_ConnectedCheckNum;
 	private: System::Windows::Forms::GroupBox^  groupBox3;
 	private: System::Windows::Forms::ListBox^  listBox_Algorithm;
+	private: System::Windows::Forms::CheckBox^  checkBox_SimulationMode;
 
 
 	private: bool cancel;
@@ -153,6 +154,7 @@ namespace BeepingModel {
 			this->numericUpDown_Execution_times = (gcnew System::Windows::Forms::NumericUpDown());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
 			this->listBox_Algorithm = (gcnew System::Windows::Forms::ListBox());
+			this->checkBox_SimulationMode = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_UnitDisk_radius))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_channels))->BeginInit();
 			this->groupBox_Drawing->SuspendLayout();
@@ -486,7 +488,7 @@ namespace BeepingModel {
 			this->groupBox1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->groupBox1->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->groupBox1->Location = System::Drawing::Point(29, 279);
+			this->groupBox1->Location = System::Drawing::Point(29, 307);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(679, 114);
 			this->groupBox1->TabIndex = 12;
@@ -642,12 +644,26 @@ namespace BeepingModel {
 			this->listBox_Algorithm->TabIndex = 6;
 			this->listBox_Algorithm->SelectedIndexChanged += gcnew System::EventHandler(this, &FormSetting::listBox_Algorithm_SelectedIndexChanged);
 			// 
+			// checkBox_SimulationMode
+			// 
+			this->checkBox_SimulationMode->AutoSize = true;
+			this->checkBox_SimulationMode->Font = (gcnew System::Drawing::Font(L"Verdana", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->checkBox_SimulationMode->Location = System::Drawing::Point(28, 276);
+			this->checkBox_SimulationMode->Name = L"checkBox_SimulationMode";
+			this->checkBox_SimulationMode->Size = System::Drawing::Size(180, 18);
+			this->checkBox_SimulationMode->TabIndex = 16;
+			this->checkBox_SimulationMode->Text = L"Simulation Mode(On/Off)";
+			this->checkBox_SimulationMode->UseVisualStyleBackColor = true;
+			this->checkBox_SimulationMode->CheckedChanged += gcnew System::EventHandler(this, &FormSetting::checkBox_SimulationMode_CheckedChanged);
+			// 
 			// FormSetting
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(743, 514);
+			this->Controls->Add(this->checkBox_SimulationMode);
 			this->Controls->Add(this->groupBox3);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->groupBox_Parameter);
@@ -690,6 +706,7 @@ namespace BeepingModel {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown_Execution_times))->EndInit();
 			this->groupBox3->ResumeLayout(false);
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -712,6 +729,8 @@ private: void ReflectDisplay ( ) {
 		this->checkBox_isSameTopology->Checked = this->settings->isSameTopology;
 		this->checkBox_Connected->Checked = this->settings->Req_Connectivity;
 		this->numericUpDown_ConnectedCheckNum->Value = this->settings->Check_num;
+		this->checkBox_SimulationMode->Checked = this->settings->simulation_mode;
+		this->groupBox1->Enabled = this->settings->simulation_mode;
 
 		switch ( this->settings->topology )
 		{
@@ -820,6 +839,10 @@ private: System::Void listBox_Algorithm_SelectedIndexChanged(System::Object^  se
 	{
 		this->settings->algorithm_type = 2;
 	}
+}
+private: System::Void checkBox_SimulationMode_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->groupBox1->Enabled = this->checkBox_SimulationMode->Checked;
+	this->settings->simulation_mode = this->checkBox_SimulationMode->Checked;
 }
 };
 }

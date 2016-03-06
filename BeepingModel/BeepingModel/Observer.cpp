@@ -35,11 +35,13 @@ void Observer::Run()
 		if ( this->drawing ) this->_vis->Draw();
 		System::Diagnostics::Debug::WriteLine(String::Format("{0}ms/round", t.elapsed()));
 		if ( this->stop )break;
-		if (_cnt->DetectTerminate())break;
+		if (_cnt->DetectTerminate()){
+			this->stop = true;
+			break;
+		}
 		//Thread::Sleep(_Run_Speed_ms);
 	}
 	this->_vis->Draw();
-	this->stop = false;
 }
 
 void Observer::Simulate()
@@ -47,6 +49,7 @@ void Observer::Simulate()
 	this->drawing = false;
 	for (unsigned int i = exec_start; i <= exec_end; i += exec_interval)
 	{
+		if (this->stop)return;
 		if (this->same_topology)
 		{
 			SimulateWithSame(i);
@@ -108,7 +111,6 @@ void Observer::Demonstrate()
 	this->stop = false;
 	while (!this->stop)
 	{
-		if (this->stop)break;
 		if (!this->same_topology)
 		{
 			this->_cnt->InitializeGraph(this->_cnt->N, MAXIMUM_CHANNEL, this->_cnt->Density);
@@ -125,6 +127,7 @@ void Observer::Demonstrate()
 			this->_cnt->Run();
 			if (_cnt->DetectTerminate())break;
 		}
+		if (this->stop)break;
 		this->_vis->Draw();
 		Thread::Sleep(_DrawTerminateState_Interval_ms);
 		if(this->algorithm_type == 1 /* MM */ )

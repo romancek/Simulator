@@ -27,6 +27,7 @@ namespace BeepingModel{
 		int delta;
 		cli::array<Node^>^ nodes;
 		cli::array<Channel^>^ channels;
+		bool isExecution;
 	public:
 		Controller(int,int);
 		void InitializeGraph(int);		//remake graph

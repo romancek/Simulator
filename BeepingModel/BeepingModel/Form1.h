@@ -21,6 +21,7 @@ namespace BeepingModel {
 	private: Observer^ observer;
 	private: DataManager^ data_manager;
 	private: Thread^ Run_Algorithm;
+	private: Thread^ Simulate_Algorithm;
 	private: Thread^ Demo_Algorithm;
 	private: Thread^ UpdateInfo;
 	private: String^ fileName;      // “Ç‚Ý‘‚«ƒtƒ@ƒCƒ‹–¼
@@ -44,6 +45,7 @@ namespace BeepingModel {
 	private: System::Windows::Forms::Button^  btn_demo;
 	private: System::Windows::Forms::Button^  btn_reset;
 	private: System::Windows::Forms::Label^  label_Algorithm_type;
+	private: System::Windows::Forms::Button^  btn_break;
 
 
 
@@ -60,6 +62,7 @@ namespace BeepingModel {
 			this->data_manager = gcnew DataManager(this->controller);
 			this->observer = gcnew Observer( this->controller, this->visualizer , this->data_manager);
 			this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run) );
+			this->Simulate_Algorithm = gcnew Thread(gcnew ThreadStart(this->observer, &Observer::Simulate));
 			this->Demo_Algorithm = gcnew Thread(gcnew ThreadStart(this->observer, &Observer::Demonstrate));
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
@@ -129,6 +132,7 @@ namespace BeepingModel {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label_Algorithm_type = (gcnew System::Windows::Forms::Label());
 			this->label_ComponentNum = (gcnew System::Windows::Forms::Label());
 			this->label_FieldSize = (gcnew System::Windows::Forms::Label());
 			this->label_Delta = (gcnew System::Windows::Forms::Label());
@@ -141,7 +145,7 @@ namespace BeepingModel {
 			this->btn_reset = (gcnew System::Windows::Forms::Button());
 			this->btn_demo = (gcnew System::Windows::Forms::Button());
 			this->btn_simulate = (gcnew System::Windows::Forms::Button());
-			this->label_Algorithm_type = (gcnew System::Windows::Forms::Label());
+			this->btn_break = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->panel1->SuspendLayout();
@@ -393,6 +397,16 @@ namespace BeepingModel {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Parameter";
 			// 
+			// label_Algorithm_type
+			// 
+			this->label_Algorithm_type->AutoSize = true;
+			this->label_Algorithm_type->ForeColor = System::Drawing::Color::White;
+			this->label_Algorithm_type->Location = System::Drawing::Point(17, 250);
+			this->label_Algorithm_type->Name = L"label_Algorithm_type";
+			this->label_Algorithm_type->Size = System::Drawing::Size(75, 14);
+			this->label_Algorithm_type->TabIndex = 17;
+			this->label_Algorithm_type->Text = L"Algorithm :";
+			// 
 			// label_ComponentNum
 			// 
 			this->label_ComponentNum->AutoSize = true;
@@ -481,6 +495,7 @@ namespace BeepingModel {
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
 				static_cast<System::Int32>(static_cast<System::Byte>(64)));
 			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->panel1->Controls->Add(this->btn_break);
 			this->panel1->Controls->Add(this->btn_reset);
 			this->panel1->Controls->Add(this->btn_demo);
 			this->panel1->Controls->Add(this->btn_simulate);
@@ -526,10 +541,10 @@ namespace BeepingModel {
 			this->btn_demo->Font = (gcnew System::Drawing::Font(L"Verdana", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btn_demo->ForeColor = System::Drawing::Color::Aqua;
-			this->btn_demo->Location = System::Drawing::Point(42, 731);
+			this->btn_demo->Location = System::Drawing::Point(7, 731);
 			this->btn_demo->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 			this->btn_demo->Name = L"btn_demo";
-			this->btn_demo->Size = System::Drawing::Size(91, 34);
+			this->btn_demo->Size = System::Drawing::Size(83, 34);
 			this->btn_demo->TabIndex = 15;
 			this->btn_demo->Text = L"Demo";
 			this->btn_demo->UseVisualStyleBackColor = false;
@@ -551,15 +566,23 @@ namespace BeepingModel {
 			this->btn_simulate->UseVisualStyleBackColor = false;
 			this->btn_simulate->Click += gcnew System::EventHandler(this, &Form1::btn_simulate_Click);
 			// 
-			// label_Algorithm_type
+			// btn_break
 			// 
-			this->label_Algorithm_type->AutoSize = true;
-			this->label_Algorithm_type->ForeColor = System::Drawing::Color::White;
-			this->label_Algorithm_type->Location = System::Drawing::Point(17, 250);
-			this->label_Algorithm_type->Name = L"label_Algorithm_type";
-			this->label_Algorithm_type->Size = System::Drawing::Size(75, 14);
-			this->label_Algorithm_type->TabIndex = 17;
-			this->label_Algorithm_type->Text = L"Algorithm :";
+			this->btn_break->BackColor = System::Drawing::Color::Transparent;
+			this->btn_break->FlatAppearance->BorderColor = System::Drawing::Color::DimGray;
+			this->btn_break->FlatAppearance->BorderSize = 2;
+			this->btn_break->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btn_break->Font = (gcnew System::Drawing::Font(L"Verdana", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btn_break->ForeColor = System::Drawing::Color::White;
+			this->btn_break->Location = System::Drawing::Point(101, 731);
+			this->btn_break->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btn_break->Name = L"btn_break";
+			this->btn_break->Size = System::Drawing::Size(82, 34);
+			this->btn_break->TabIndex = 17;
+			this->btn_break->Text = L"Break";
+			this->btn_break->UseVisualStyleBackColor = false;
+			this->btn_break->Click += gcnew System::EventHandler(this, &Form1::btn_break_Click);
 			// 
 			// Form1
 			// 
@@ -621,70 +644,6 @@ namespace BeepingModel {
 				this->label_ground->Text = text;
 			}
 		}
-	//TODO AA reset problem
-	private:
-		System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
-			if ( this->textBox_n->Text == "" || (this->textBox_m->Text == "" && this->settings->topology == 0)|| this->textBox_density->Text == "" )
-			{
-				MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
-			else
-			{
-				int n = Convert::ToInt32(this->textBox_n->Text,10);
-				int m;
-				if ( this->settings->topology == 1 /*Unit Disk Graph*/)
-				{
-					if (n >= 1000)
-					{
-						m = MAXIMUM_CHANNEL;
-					}
-					else
-					{
-						m = n*(n - 1) / 2;
-					}
-					this->textBox_m->Clear();
-					this->textBox_m->Paste(Convert::ToString(m));
-				}
-				else /*Random Graph*/
-				{
-					m = Convert::ToInt32(this->textBox_m->Text,10);
-				}
-				//restrict number of edges
-				if ( ((n*(n-1))/2) < m )
-				{
-					MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				}
-				else
-				{
-					double density = Convert::ToDouble(this->textBox_density->Text);
-					double ns = this->settings->NODE_SIZE;
-					double x = this->settings->Field_Size[0];
-					double y = this->settings->Field_Size[1];
-					if (Math::Pow(2*density*this->settings->NODE_SIZE,2)*n > this->settings->Field_Size[0]*this->settings->Field_Size[1]){
-						MessageBox::Show("n or density or NODE_SIZE is too large "+String::Format("you must set density to less than {0}",Math::Sqrt(x*y)/2/ns/Math::Sqrt(n)), "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
-						return;
-					}
-					this->controller->SetGraphParameter(settings);
-					this->controller->InitializeGraph( n, m, density);
-					this->settings->F = this->controller->F;
-
-					this->visualizer->SetParameter(settings);
-					this->observer->SetCondition(settings);
-					this->visualizer->Draw();
-					this->PrintParam();
-					this->label_ComponentNum->Text = String::Format("Component Num : {0}",this->controller->component_num );
-					if ( this->settings->topology == 1 )
-					{
-						this->label_channels->Text = String::Format("Channels : {0}",this->controller->channel_num);
-					}
-					else
-					{
-						this->label_channels->Text = String::Format("Channels : {0}", this->controller->M);
-					}
-					this->label_Delta->Text = String::Format("Maximum Degree : {0}", this->controller->delta);
-				}
-			}
-		}
 
 	private: 
 		void graph_panel_MouseMove( Object^ /*sender*/, System::Windows::Forms::MouseEventArgs^ e ){
@@ -706,6 +665,7 @@ namespace BeepingModel {
 	private:
 		void Close(){
 			this->Run_Algorithm->Abort();
+			this->Simulate_Algorithm->Abort();
 			this->UpdateInfo->Abort();
 			this->Demo_Algorithm->Abort();
 		#ifdef _DEBUG
@@ -845,6 +805,10 @@ namespace BeepingModel {
 			this->settings->isSameTopology = true;
 			this->settings->Field_Size[0] = this->graph_panel->Size.Width;
 			this->settings->Field_Size[1] = this->graph_panel->Size.Height;
+			this->textBox_m->Enabled = this->settings->topology == 0;
+			this->settings->simulation_mode = false;
+			this->btn_demo->Enabled = false;
+			this->btn_simulate->Enabled = false;
 		}
 	private:
 		System::Void settingSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -868,6 +832,7 @@ namespace BeepingModel {
 			this->visualizer->Draw();
 			this->PrintParam();	
 			this->textBox_m->Enabled = this->settings->topology == 0;
+			this->btn_simulate->Enabled = this->settings->simulation_mode;
 		}
 
 	private:
@@ -878,6 +843,72 @@ namespace BeepingModel {
 			this->label_FieldSize->Text = String::Format("Field Size : {0},{1}", settings->Field_Size[0], settings->Field_Size[1]);
 			this->label_Algorithm_type->Text = String::Format("Algorithm : {0}", AlgorithmUIntToString(settings->algorithm_type));
 		}
+		//TODO AA reset problem
+	private:
+		System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
+			if (this->textBox_n->Text == "" || (this->textBox_m->Text == "" && this->settings->topology == 0) || this->textBox_density->Text == "")
+			{
+				MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			else
+			{
+				int n = Convert::ToInt32(this->textBox_n->Text, 10);
+				int m;
+				if (this->settings->topology == 1 /*Unit Disk Graph*/)
+				{
+					if (n >= 1000)
+					{
+						m = MAXIMUM_CHANNEL;
+					}
+					else
+					{
+						m = n*(n - 1) / 2;
+					}
+					this->textBox_m->Clear();
+					this->textBox_m->Paste(Convert::ToString(m));
+				}
+				else /*Random Graph*/
+				{
+					m = Convert::ToInt32(this->textBox_m->Text, 10);
+				}
+				//restrict number of edges
+				if (((n*(n - 1)) / 2) < m)
+				{
+					MessageBox::Show("m is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+				else
+				{
+					double density = Convert::ToDouble(this->textBox_density->Text);
+					double ns = this->settings->NODE_SIZE;
+					double x = this->settings->Field_Size[0];
+					double y = this->settings->Field_Size[1];
+					if (Math::Pow(2 * density*this->settings->NODE_SIZE, 2)*n > this->settings->Field_Size[0] * this->settings->Field_Size[1]){
+						MessageBox::Show("n or density or NODE_SIZE is too large " + String::Format("you must set density to less than {0}", Math::Sqrt(x*y) / 2 / ns / Math::Sqrt(n)), "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+						return;
+					}
+					this->controller->SetGraphParameter(settings);
+					this->controller->InitializeGraph(n, m, density);
+					this->settings->F = this->controller->F;
+
+					this->visualizer->SetParameter(settings);
+					this->observer->SetCondition(settings);
+					this->visualizer->Draw();
+					this->PrintParam();
+					this->label_ComponentNum->Text = String::Format("Component Num : {0}", this->controller->component_num);
+					if (this->settings->topology == 1)
+					{
+						this->label_channels->Text = String::Format("Channels : {0}", this->controller->channel_num);
+					}
+					else
+					{
+						this->label_channels->Text = String::Format("Channels : {0}", this->controller->M);
+					}
+					this->label_Delta->Text = String::Format("Maximum Degree : {0}", this->controller->delta);
+					this->btn_demo->Enabled = true;
+					this->btn_simulate->Enabled = true;
+				}
+			}
+		}
 
 	private:
 		System::Void btn_auto_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -885,18 +916,24 @@ namespace BeepingModel {
 			{
 				this->Run_Algorithm = gcnew Thread( gcnew ThreadStart( this->observer, &Observer::Run ) );
 				this->Run_Algorithm->Start();
+				this->observer->Stop = false;
+				this->btn_demo->Enabled = false;
 			}
-			this->observer->Stop = false;
 		}
 
 	 private:
 		 System::Void btn_simulate_Click(System::Object^  sender, System::EventArgs^  e) {
-			this->observer->Simulate();
+			if (this->observer->Stop)
+			{
+				this->Simulate_Algorithm = gcnew Thread(gcnew ThreadStart(this->observer, &Observer::Simulate));
+				this->Simulate_Algorithm->Start();
+			}
 		}
 
 	private:
 		System::Void btn_stop_Click(System::Object^  sender, System::EventArgs^  e) {
 			this->observer->Stop = true;
+			if(this->controller->nodes != nullptr && !this->controller->isExecution)this->btn_demo->Enabled = true;
 		}
 
 	private:
@@ -912,10 +949,10 @@ namespace BeepingModel {
 	private:
 		System::Void btn_reset_Click(System::Object^  sender, System::EventArgs^  e) {
 			this->controller->Initialize();
+			this->SetText(String::Format("Global Round : {0}", this->controller->GlobalRound));
 			this->visualizer->Draw();
 			this->observer->Stop = true;
 		}
-
 
 	private:
 		System::Void btn_demo_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -923,9 +960,29 @@ namespace BeepingModel {
 			{
 				this->Demo_Algorithm = gcnew Thread(gcnew ThreadStart(this->observer, &Observer::Demonstrate));
 				this->Demo_Algorithm->Start();
+				this->btn_auto->Enabled = false;
+				this->btn_step->Enabled = false;
+				this->btn_stop->Enabled = false;
+				this->btn_reset->Enabled = false;
+				this->btn_simulate->Enabled = false;
+				this->btn_demo->Enabled = false;
+				this->btn_set->Enabled = false;
 			}
 		}
-
+	private:
+		System::Void btn_break_Click(System::Object^  sender, System::EventArgs^  e) {
+			this->observer->Stop = true;
+			this->controller->Initialize();
+			this->Demo_Algorithm->Abort();
+			this->SetText(String::Format("Global Round : {0}", this->controller->GlobalRound));
+			this->btn_auto->Enabled = true;
+			this->btn_step->Enabled = true;
+			this->btn_stop->Enabled = true;
+			this->btn_reset->Enabled = true;
+			this->btn_simulate->Enabled = this->settings->simulation_mode;
+			this->btn_demo->Enabled = true;
+			this->btn_set->Enabled = true;
+		}
 	private:
 		System::String^ TopologyInt2String(int topology){
 			if ( topology == 0 )
@@ -973,6 +1030,6 @@ namespace BeepingModel {
 			this->controller->ResizeField( this->graph_panel->Size.Width, this->graph_panel->Size.Height );
 			this->PrintParam();
 		}
-	};
+};
 }
 
