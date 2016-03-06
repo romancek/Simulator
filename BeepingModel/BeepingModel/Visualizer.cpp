@@ -18,10 +18,11 @@ Visualizer::Visualizer(Controller^ c, Graphics^ gr)
 void Visualizer::AllocatePens()
 {
 	//silent,beep,collision
-	this->pen_line = gcnew array<Pen^>(3);
+	this->pen_line = gcnew array<Pen^>(4);
 	this->pen_line[0] = gcnew Pen(Color::Black, PEN_WIDTH);
 	this->pen_line[1] = gcnew Pen(Color::DarkOrange, PEN_WIDTH);
 	this->pen_line[2] = gcnew Pen(Color::Red, PEN_WIDTH);
+	this->pen_line[3] = gcnew Pen(Color::Gainsboro, PEN_WIDTH);
 	//sleep,inactive,competing,MIS
 	this->pen_node = gcnew array<Pen^>(4);
 	this->pen_node[0] = gcnew Pen(Color::White, PEN_WIDTH);
@@ -66,6 +67,25 @@ void Visualizer::Draw(void)
 	}
 
 	//Render & Release Double Buffer
+	grafx->Render();
+	grafx->~BufferedGraphics();
+}
+
+void Visualizer::TestMultiColor()
+{
+	//Double Buffering
+	BufferedGraphicsContext^ currentContext = BufferedGraphicsManager::Current;
+	BufferedGraphics^ grafx = currentContext->Allocate(this->g, Rectangle(0, 0, this->controller->x, this->controller->y));
+	grafx->Graphics->Clear(Color::White);
+	this->pen_line_multi = gcnew array<Pen^>(this->F + 1);
+	this->brush_multi = gcnew array<SolidBrush^>(this->F + 1);
+	unsigned int _color = 0;
+	double _interval = Math::Pow(2, 24) / (this->F + 1);
+	for (unsigned int i = 0; i <= F; i++, _color += (unsigned int)_interval)
+	{
+		grafx->Graphics->DrawLine(gcnew Pen(Color::FromArgb(_color + 0xFF000000), 2.0f), this->controller->x * i / (this->F+1), 0, this->controller->x * i/(this->F+1), this->controller->y);
+	}
+	// Render & Release Double Buffer
 	grafx->Render();
 	grafx->~BufferedGraphics();
 }
@@ -290,6 +310,10 @@ void Visualizer::DrawOnlyMatchedPair()
 		{
 			grafx->Graphics->DrawLine(this->pen_line_multi[n0->match_ch], p1[0] + NODE_SIZE / 2, p1[1] + NODE_SIZE / 2, p2[0] + NODE_SIZE / 2, p2[1] + NODE_SIZE / 2);
 		}
+		else
+		{
+			grafx->Graphics->DrawLine(this->pen_line[3], p1[0] + NODE_SIZE / 2, p1[1] + NODE_SIZE / 2, p2[0] + NODE_SIZE / 2, p2[1] + NODE_SIZE / 2);
+		}
 	}
 
 	for each (Node^ n in this->controller->nodes)
@@ -313,10 +337,10 @@ void Visualizer::MakeMultiColors()
 {
 	this->pen_line_multi = gcnew array<Pen^>(this->F+1);
 	this->brush_multi = gcnew array<SolidBrush^>(this->F+1);
-	unsigned int _color;
-	for (unsigned int i = 0; i <= F;i++)
+	unsigned int _color = 0;
+	double _interval = Math::Pow(2, 24) / (this->F + 1);
+	for (unsigned int i = 0; i <= F; i++,_color+=(unsigned int)_interval)
 	{
-		_color = (unsigned int)(i*Math::Pow(2,24)/(this->F+1));
 		this->pen_line_multi[i] = gcnew Pen(Color::FromArgb(_color+0xFF000000), PEN_WIDTH*5);
 		this->brush_multi[i] = gcnew SolidBrush(Color::FromArgb(_color+0xFF000000));
 	}

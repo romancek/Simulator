@@ -64,7 +64,6 @@ namespace BeepingModel {
 			this->UpdateInfo = gcnew Thread( gcnew ThreadStart(this, &Form1::UpdateDistributedSystem) );
 			this->UpdateInfo->Start();
 		}
-
 	protected:
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。
@@ -625,7 +624,7 @@ namespace BeepingModel {
 	//TODO AA reset problem
 	private:
 		System::Void btn_set_Click(System::Object^  sender, System::EventArgs^  e) {
-			if ( this->textBox_n->Text == "" || this->textBox_m->Text == "" || this->textBox_density->Text == "" )
+			if ( this->textBox_n->Text == "" || (this->textBox_m->Text == "" && this->settings->topology == 0)|| this->textBox_density->Text == "" )
 			{
 				MessageBox::Show("parameter is empty", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
@@ -637,7 +636,7 @@ namespace BeepingModel {
 				{
 					if (n >= 1000)
 					{
-						m = MAXIMUM_CHANNEL;//n*(n-1)/2;
+						m = MAXIMUM_CHANNEL;
 					}
 					else
 					{
@@ -658,8 +657,11 @@ namespace BeepingModel {
 				else
 				{
 					double density = Convert::ToDouble(this->textBox_density->Text);
+					double ns = this->settings->NODE_SIZE;
+					double x = this->settings->Field_Size[0];
+					double y = this->settings->Field_Size[1];
 					if (Math::Pow(2*density*this->settings->NODE_SIZE,2)*n > this->settings->Field_Size[0]*this->settings->Field_Size[1]){
-						MessageBox::Show("n or density or NODE_SIZE is too large", "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
+						MessageBox::Show("n or density or NODE_SIZE is too large "+String::Format("you must set density to less than {0}",Math::Sqrt(x*y)/2/ns/Math::Sqrt(n)), "Simulator", MessageBoxButtons::OK, MessageBoxIcon::Error);
 						return;
 					}
 					this->controller->SetGraphParameter(settings);
@@ -705,6 +707,7 @@ namespace BeepingModel {
 		void Close(){
 			this->Run_Algorithm->Abort();
 			this->UpdateInfo->Abort();
+			this->Demo_Algorithm->Abort();
 		#ifdef _DEBUG
 			String^ a = String::Format("Thread Abort");
 			System::Diagnostics::Debug::WriteLine(a);
@@ -863,7 +866,8 @@ namespace BeepingModel {
 			this->controller->SetGraphParameter(settings);
 			this->observer->SetCondition(settings);
 			this->visualizer->Draw();
-			this->PrintParam();
+			this->PrintParam();	
+			this->textBox_m->Enabled = this->settings->topology == 0;
 		}
 
 	private:

@@ -24,6 +24,7 @@ namespace BeepingModel{
 		Visualizer(void);
 		Visualizer(Controller^,Graphics^);
 		void Draw(void);
+		void TestMultiColor(void);
 		void DrawSingleChannel(BufferedGraphics^);
 		void DrawMultiChannel(BufferedGraphics^);
 		void DrawOnlyMatchedPair(void);
