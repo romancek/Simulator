@@ -19,7 +19,6 @@
     <None Include="app.ico">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BeepingModel.cpp">
